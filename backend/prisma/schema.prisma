@@ -13,3 +13,9 @@ model SomeData {
   required Boolean
   number   Int     @db.SmallInt
 }
+
+model Participant {
+  id       String    @id
+  name     String
+  email    String
+}

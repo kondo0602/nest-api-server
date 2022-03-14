@@ -1,7 +1,7 @@
 export class Participant {
   private id: string
   private name: ParticipantNameVO
-  private email: string
+  private email: ParticipantEmailVO
   private statusId: string
 
   public constructor(props: {
@@ -13,7 +13,7 @@ export class Participant {
     const { id, name, email, statusId } = props
     this.id = id
     this.name = new ParticipantNameVO(name)
-    this.email = email
+    this.email = new ParticipantEmailVO(email)
     this.statusId = statusId
   }
 
@@ -21,7 +21,7 @@ export class Participant {
     return {
       id: this.id,
       name: this.name.getName(),
-      email: this.email,
+      email: this.email.getEmail(),
       statusId: this.statusId,
     }
   }
@@ -35,6 +35,18 @@ class ParticipantNameVO {
   }
 
   public getName() {
+    return this._value
+  }
+}
+
+class ParticipantEmailVO {
+  private readonly _value: string
+
+  public constructor(value: string) {
+    this._value = value
+  }
+
+  public getEmail() {
     return this._value
   }
 }

@@ -9,13 +9,14 @@ export class PostParticipantUseCase {
     this.participantRepo = participantRepo
   }
 
-  public async do(params: { name: string; email: string }) {
-    const { name, email } = params
+  public async do(params: { name: string; email: string; statusId: string }) {
+    const { name, email, statusId } = params
 
     const participantEntity = new Participant({
       id: createRandomIdString(),
       name,
       email,
+      statusId,
     })
     await this.participantRepo.save(participantEntity)
   }

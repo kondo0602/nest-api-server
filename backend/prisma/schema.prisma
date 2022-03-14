@@ -18,4 +18,11 @@ model Participant {
   id       String    @id
   name     String
   email    String
+  Status   Status    @relation(fields: [statusId], references: [id])
+  statusId String
+}
+
+model Status {
+  id       String    @id
+  name     String
 }

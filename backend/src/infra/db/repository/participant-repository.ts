@@ -10,7 +10,7 @@ export class ParticipantRepository implements IParticipantRepository {
   }
 
   public async save(participantEntity: Participant): Promise<Participant> {
-    const { id, name, email } = participantEntity.getAllProperties()
+    const { id, name, email, statusId } = participantEntity.getAllProperties()
 
     const savedParticipantDatamodel = await this.prismaClient.participant.create(
       {
@@ -18,6 +18,7 @@ export class ParticipantRepository implements IParticipantRepository {
           id,
           name,
           email,
+          statusId,
         },
       },
     )

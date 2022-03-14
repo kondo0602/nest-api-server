@@ -34,6 +34,7 @@ export class ParticipantController {
     await usecase.do({
       name: postParticipantDto.name,
       email: postParticipantDto.email,
+      statusId: postParticipantDto.statusId,
     })
   }
 }

@@ -7,11 +7,12 @@ export class GetParticipantResponse {
 
   public constructor(params: { participants: ParticipantDTO[] }) {
     const { participants } = params
-    this.participant = participants.map(({ id, name, email }) => {
+    this.participant = participants.map(({ id, name, email, statusId }) => {
       return new Participant({
         id,
         name,
         email,
+        statusId,
       })
     })
   }
@@ -27,9 +28,18 @@ class Participant {
   @ApiProperty()
   email: string
 
-  public constructor(params: { id: string; name: string; email: string }) {
+  @ApiProperty()
+  statusId: string
+
+  public constructor(params: {
+    id: string
+    name: string
+    email: string
+    statusId: string
+  }) {
     this.id = params.id
     this.name = params.name
     this.email = params.email
+    this.statusId = params.statusId
   }
 }

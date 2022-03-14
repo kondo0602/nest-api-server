@@ -11,4 +11,8 @@ export class PostParticipantRequest {
   @ApiProperty()
   @IsNotEmpty()
   readonly email!: string
+
+  @ApiProperty()
+  @IsNotEmpty()
+  readonly statusId!: string
 }

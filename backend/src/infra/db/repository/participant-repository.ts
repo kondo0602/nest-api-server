@@ -27,4 +27,25 @@ export class ParticipantRepository implements IParticipantRepository {
     })
     return savedParticipantEntity
   }
+
+  public async update(participantEntity: Participant): Promise<Participant> {
+    const { id, name, email, statusId } = participantEntity.getAllProperties()
+
+    const updatedParticipantDatamodel = await this.prismaClient.participant.update(
+      {
+        where: {
+          id: id,
+        },
+        data: {
+          name,
+          email,
+          statusId,
+        },
+      },
+    )
+    const updatedParticipantEntity = new Participant({
+      ...updatedParticipantDatamodel,
+    })
+    return updatedParticipantEntity
+  }
 }

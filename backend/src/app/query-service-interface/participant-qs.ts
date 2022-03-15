@@ -1,3 +1,5 @@
+import { Participant } from 'src/domain/entity/participant'
+
 export class ParticipantDTO {
   public readonly id: string
   public readonly name: string
@@ -19,5 +21,6 @@ export class ParticipantDTO {
 }
 
 export interface IParticipantQS {
+  getParticipantById(id: string): Promise<Participant>
   getAll(): Promise<ParticipantDTO[]>
 }

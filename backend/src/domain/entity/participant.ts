@@ -25,6 +25,13 @@ export class Participant {
       statusId: this.statusId.getStatusId(),
     }
   }
+
+  public changeStatus(statusId: string) {
+    if (this.statusId === new ParticipantStatusIdVO(statusId)) {
+      // TODO: エラー処理
+    }
+    this.statusId = new ParticipantStatusIdVO(statusId)
+  }
 }
 
 class ParticipantNameVO {

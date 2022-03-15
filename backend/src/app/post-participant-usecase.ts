@@ -1,11 +1,18 @@
 import { Participant } from 'src/domain/entity/participant'
 import { createRandomIdString } from 'src/util/random'
+import { IParticipantQS } from '../app/query-service-interface/participant-qs'
 import { IParticipantRepository } from './repository-interface/participant-repository'
+import { EmailDuplicateCheck } from '../domain/domain-service/email-duplicate-check'
 
 export class PostParticipantUseCase {
+  private readonly participantQS: IParticipantQS
   private readonly participantRepo: IParticipantRepository
 
-  public constructor(participantRepo: IParticipantRepository) {
+  public constructor(
+    participantQS: IParticipantQS,
+    participantRepo: IParticipantRepository,
+  ) {
+    this.participantQS = participantQS
     this.participantRepo = participantRepo
   }
 
@@ -18,6 +25,15 @@ export class PostParticipantUseCase {
       email,
       statusId,
     })
+
+    const EmailDuplicateCheckService = new EmailDuplicateCheck(
+      this.participantQS,
+    )
+
+    if (EmailDuplicateCheckService.isDuplicated(email)) {
+      // TODO: エラー処理
+    }
+
     await this.participantRepo.save(participantEntity)
   }
 }

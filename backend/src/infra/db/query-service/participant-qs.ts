@@ -31,6 +31,21 @@ export class ParticipantQS implements IParticipantQS {
     })
   }
 
+  public async getParticipantByEmail(email: string): Promise<Participant> {
+    const participant = await this.prismaClient.participant.findFirst({
+      where: {
+        email: email,
+      },
+    })
+
+    return new Participant({
+      id: participant!.id,
+      name: participant!.name,
+      email: participant!.email,
+      statusId: participant!.statusId,
+    })
+  }
+
   public async getAll(): Promise<ParticipantDTO[]> {
     const allParticipants = await this.prismaClient.participant.findMany()
     return allParticipants.map(

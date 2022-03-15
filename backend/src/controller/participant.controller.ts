@@ -31,8 +31,9 @@ export class ParticipantController {
     @Body() postParticipantDto: PostParticipantRequest,
   ): Promise<void> {
     const prisma = new PrismaClient()
+    const qs = new ParticipantQS(prisma)
     const repo = new ParticipantRepository(prisma)
-    const usecase = new PostParticipantUseCase(repo)
+    const usecase = new PostParticipantUseCase(qs, repo)
     await usecase.do({
       name: postParticipantDto.name,
       email: postParticipantDto.email,

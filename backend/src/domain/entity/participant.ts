@@ -17,6 +17,10 @@ export class Participant {
     this.statusId = new ParticipantStatusIdVO(statusId)
   }
 
+  public getEmail() {
+    return this.email.getEmail()
+  }
+
   public getAllProperties() {
     return {
       id: this.id,

@@ -11,8 +11,7 @@ export class GetParticipantUsecase {
     try {
       return await this.participantQS.getAll()
     } catch (error) {
-      //memo: エラー処理
-      throw error
+      throw new Error('ユーザの取得に失敗しました.')
     }
   }
 }

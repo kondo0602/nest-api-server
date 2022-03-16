@@ -20,7 +20,7 @@ export class ParticipantQS implements IParticipantQS {
     })
 
     if (participant === null) {
-      // TODO: エラー処理
+      throw new Error('ユーザが見つかりませんでした.')
     }
 
     return new Participant({

@@ -1,3 +1,9 @@
+export const enum ParticipantStatus {
+  Enrolled = '1',
+  Pending = '2',
+  Withdrawn = '3',
+}
+
 export class Participant {
   private id: string
   private name: ParticipantNameVO
@@ -32,7 +38,7 @@ export class Participant {
 
   public changeStatus(statusId: string) {
     if (this.statusId === new ParticipantStatusIdVO(statusId)) {
-      // TODO: エラー処理
+      throw new Error('ステータスが更新されていません.')
     }
     this.statusId = new ParticipantStatusIdVO(statusId)
   }
@@ -66,6 +72,13 @@ class ParticipantStatusIdVO {
   private readonly _value: string
 
   public constructor(value: string) {
+    if (
+      value !== ParticipantStatus.Enrolled &&
+      value !== ParticipantStatus.Pending &&
+      value !== ParticipantStatus.Withdrawn
+    ) {
+      throw new Error('存在しない在籍ステータスです.')
+    }
     this._value = value
   }
 

@@ -31,7 +31,7 @@ export class PostParticipantUseCase {
     )
 
     if (EmailDuplicateCheckService.isDuplicated(email)) {
-      // TODO: エラー処理
+      throw new Error('登録済みのメールアドレスです.')
     }
 
     await this.participantRepo.save(participantEntity)

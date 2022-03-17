@@ -44,11 +44,15 @@ export class Participant {
   }
 }
 
-class ParticipantNameVO {
+export class ParticipantNameVO {
   private readonly _value: string
 
   public constructor(value: string) {
     this._value = value
+  }
+
+  public equals(name: string): boolean {
+    return this._value === name
   }
 
   public getName() {
@@ -56,11 +60,15 @@ class ParticipantNameVO {
   }
 }
 
-class ParticipantEmailVO {
+export class ParticipantEmailVO {
   private readonly _value: string
 
   public constructor(value: string) {
     this._value = value
+  }
+
+  public equals(email: string): boolean {
+    return this._value === email
   }
 
   public getEmail() {
@@ -68,7 +76,7 @@ class ParticipantEmailVO {
   }
 }
 
-class ParticipantStatusIdVO {
+export class ParticipantStatusIdVO {
   private readonly _value: string
 
   public constructor(value: string) {
@@ -80,6 +88,10 @@ class ParticipantStatusIdVO {
       throw new Error('存在しない在籍ステータスです.')
     }
     this._value = value
+  }
+
+  public equals(statusId: string): boolean {
+    return this._value === statusId
   }
 
   public getStatusId() {

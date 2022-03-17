@@ -7,8 +7,8 @@ export class EmailDuplicateCheck {
     this.participantQS = participantQS
   }
 
-  public isDuplicated(email: string) {
-    const duplicatedParticipant = this.participantQS.getParticipantByEmail(
+  public async isDuplicated(email: string) {
+    const duplicatedParticipant = await this.participantQS.getParticipantByEmail(
       email,
     )
 

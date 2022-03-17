@@ -19,20 +19,20 @@ export class PostParticipantUseCase {
   public async do(params: { name: string; email: string; statusId: string }) {
     const { name, email, statusId } = params
 
+    const EmailDuplicateCheckService = new EmailDuplicateCheck(
+      this.participantQS,
+    )
+
+    if (await EmailDuplicateCheckService.isDuplicated(email)) {
+      throw new Error('登録済みのメールアドレスです.')
+    }
+
     const participantEntity = new Participant({
       id: createRandomIdString(),
       name,
       email,
       statusId,
     })
-
-    const EmailDuplicateCheckService = new EmailDuplicateCheck(
-      this.participantQS,
-    )
-
-    if (EmailDuplicateCheckService.isDuplicated(email)) {
-      throw new Error('登録済みのメールアドレスです.')
-    }
 
     await this.participantRepo.save(participantEntity)
   }

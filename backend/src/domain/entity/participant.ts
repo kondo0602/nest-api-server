@@ -37,9 +37,12 @@ export class Participant {
   }
 
   public changeStatus(statusId: string) {
-    if (this.statusId === new ParticipantStatusIdVO(statusId)) {
+    const receivedStatus = new ParticipantStatusIdVO(statusId)
+
+    if (receivedStatus.equals(this.statusId.getStatusId())) {
       throw new Error('ステータスが更新されていません.')
     }
+
     this.statusId = new ParticipantStatusIdVO(statusId)
   }
 }

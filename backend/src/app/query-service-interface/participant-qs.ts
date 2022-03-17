@@ -22,6 +22,6 @@ export class ParticipantDTO {
 
 export interface IParticipantQS {
   getParticipantById(id: string): Promise<Participant>
-  getParticipantByEmail(email: string): Promise<ParticipantDTO | null>
+  getParticipantByEmail(email: string): Promise<Participant | null>
   getAll(): Promise<ParticipantDTO[]>
 }

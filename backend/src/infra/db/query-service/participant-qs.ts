@@ -19,28 +19,31 @@ export class ParticipantQS implements IParticipantQS {
       },
     })
 
-    if (participant === null) {
+    if (participant) {
+      return new Participant({
+        ...participant,
+      })
+    } else {
       throw new Error('ユーザが見つかりませんでした.')
     }
-
-    return new Participant({
-      id: participant!.id,
-      name: participant!.name,
-      email: participant!.email,
-      statusId: participant!.statusId,
-    })
   }
 
   public async getParticipantByEmail(
     email: string,
-  ): Promise<ParticipantDTO | null> {
+  ): Promise<Participant | null> {
     const participant = await this.prismaClient.participant.findFirst({
       where: {
         email: email,
       },
     })
 
-    return participant ? new ParticipantDTO({ ...participant }) : null
+    if (participant) {
+      return new Participant({
+        ...participant,
+      })
+    } else {
+      return null
+    }
   }
 
   public async getAll(): Promise<ParticipantDTO[]> {

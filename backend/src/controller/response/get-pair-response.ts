@@ -7,10 +7,11 @@ export class GetPairResponse {
 
   public constructor(params: { pairs: PairDTO[] }) {
     const { pairs } = params
-    this.pair = pairs.map(({ id, name }) => {
+    this.pair = pairs.map(({ id, name, teamId }) => {
       return new Pair({
         id,
         name,
+        teamId,
       })
     })
   }
@@ -23,8 +24,12 @@ class Pair {
   @ApiProperty()
   name: string
 
-  public constructor(params: { id: string; name: string }) {
+  @ApiProperty()
+  teamId: string
+
+  public constructor(params: { id: string; name: string; teamId: string }) {
     this.id = params.id
     this.name = params.name
+    this.teamId = params.teamId
   }
 }

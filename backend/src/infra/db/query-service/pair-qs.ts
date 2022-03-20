@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { PairDTO, IPairQS } from 'src/app/query-service-interface/pair-qs'
+import { Pair } from 'src/domain/entity/pair'
 
 export class PairQS implements IPairQS {
   private prismaClient: PrismaClient
@@ -16,5 +17,21 @@ export class PairQS implements IPairQS {
           ...pairDM,
         }),
     )
+  }
+
+  public async getPairById(pairId: string): Promise<Pair | null> {
+    const pair = await this.prismaClient.pair.findUnique({
+      where: {
+        id: pairId,
+      },
+    })
+
+    if (pair) {
+      return new Pair({
+        ...pair,
+      })
+    } else {
+      return null
+    }
   }
 }

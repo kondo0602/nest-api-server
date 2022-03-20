@@ -8,12 +8,6 @@ generator client {
   provider        = "prisma-client-js"
 }
 
-model SomeData {
-  id        String    @id
-  required Boolean
-  number   Int     @db.SmallInt
-}
-
 model Participant {
   id       String    @id
   name     String
@@ -30,13 +24,15 @@ model Status {
 }
 
 model Pair {
-  id       String    @id
-  name     String
-  Team     Team      @relation(fields: [teamId], references: [id])
-  teamId   String
+  id            String    @id
+  name          String
+  participants  Participant[]
+  Team          Team      @relation(fields: [teamId], references: [id])
+  teamId        String
 }
 
 model Team {
   id       String    @id
   name     String
+  pairs    Pair[]
 }

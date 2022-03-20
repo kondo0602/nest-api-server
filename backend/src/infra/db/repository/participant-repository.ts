@@ -1,6 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 import { IParticipantRepository } from 'src/app/repository-interface/participant-repository'
 import { Participant } from 'src/domain/entity/participant'
+import { Pair } from 'src/domain/entity/pair'
+import { Team } from 'src/domain/entity/team'
 
 export class ParticipantRepository implements IParticipantRepository {
   private prismaClient: PrismaClient
@@ -35,7 +37,9 @@ export class ParticipantRepository implements IParticipantRepository {
     return savedParticipantEntity
   }
 
-  public async update(participantEntity: Participant): Promise<Participant> {
+  public async updateParticipant(
+    participantEntity: Participant,
+  ): Promise<Participant> {
     const {
       id,
       name,
@@ -61,5 +65,25 @@ export class ParticipantRepository implements IParticipantRepository {
       ...updatedParticipantDatamodel,
     })
     return updatedParticipantEntity
+  }
+
+  public async updatePair(pairEntity: Pair): Promise<Pair> {
+    const { id, name, teamId } = pairEntity.getAllProperties()
+
+    const updatedPairDatamodel = await this.prismaClient.pair.update({
+      where: {
+        id: id,
+      },
+      data: {
+        name,
+        teamId,
+      },
+    })
+
+    const updatedPairEntity = new Pair({
+      ...updatedPairDatamodel,
+    })
+
+    return updatedPairEntity
   }
 }

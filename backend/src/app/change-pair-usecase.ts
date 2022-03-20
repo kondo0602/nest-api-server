@@ -20,6 +20,6 @@ export class ChangePairUseCase {
 
     participantEntity.changePair(pairId)
 
-    await this.participantRepo.update(participantEntity)
+    await this.participantRepo.updateParticipant(participantEntity)
   }
 }

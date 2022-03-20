@@ -3,5 +3,6 @@ import { Pair } from 'src/domain/entity/pair'
 
 export interface IParticipantRepository {
   save(participant: Participant): Promise<Participant>
-  update(participant: Participant): Promise<Participant>
+  updateParticipant(participant: Participant): Promise<Participant>
+  updatePair(pair: Pair): Promise<Pair>
 }

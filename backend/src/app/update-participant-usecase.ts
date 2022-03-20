@@ -21,6 +21,6 @@ export class UpdateParticipantUseCase {
 
     participantEntity.changeStatus(statusId)
 
-    await this.participantRepo.update(participantEntity)
+    await this.participantRepo.updateParticipant(participantEntity)
   }
 }

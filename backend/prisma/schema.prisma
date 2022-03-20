@@ -20,9 +20,16 @@ model Participant {
   email    String
   Status   Status    @relation(fields: [statusId], references: [id])
   statusId String
+  Pair     Pair      @relation(fields: [pairId], references: [id])
+  pairId   String
 }
 
 model Status {
+  id       String    @id
+  name     String
+}
+
+model Pair {
   id       String    @id
   name     String
 }

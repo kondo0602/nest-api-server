@@ -32,4 +32,11 @@ model Status {
 model Pair {
   id       String    @id
   name     String
+  Team     Team      @relation(fields: [teamId], references: [id])
+  teamId   String
+}
+
+model Team {
+  id       String    @id
+  name     String
 }

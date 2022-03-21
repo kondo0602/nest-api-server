@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common'
-import { SampleController } from './controller/sample/some-data.controller'
+import { ParticipantController } from './controller/participant.controller'
 
 // memo: DIコンテナとしては使わないため、controllerの追加だけしてください
 @Module({
   imports: [],
-  controllers: [SampleController],
+  controllers: [ParticipantController],
   providers: [],
 })
 export class AppModule {}

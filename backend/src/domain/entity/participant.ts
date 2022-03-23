@@ -26,6 +26,10 @@ export class Participant {
     this.pairId = pairId
   }
 
+  public getId() {
+    return this.id
+  }
+
   public getEmail() {
     return this.email.getEmail()
   }

@@ -34,7 +34,7 @@ export class TeamController {
     const repo = new ParticipantRepository(prisma)
     const usecase = new ChangeTeamUseCase(qs, repo)
     await usecase.do({
-      id: id,
+      pairId: id,
       teamId: changeTeamDto.teamId,
     })
   }

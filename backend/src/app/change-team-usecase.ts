@@ -1,5 +1,6 @@
 import { IPairQS } from './query-service-interface/pair-qs'
 import { IParticipantRepository } from './repository-interface/participant-repository'
+import { ChangeTeam } from '../domain/domain-service/change-team'
 
 export class ChangeTeamUseCase {
   private readonly pairQS: IPairQS
@@ -10,17 +11,11 @@ export class ChangeTeamUseCase {
     this.participantRepo = participantRepo
   }
 
-  public async do(params: { id: string; teamId: string }) {
-    const { id, teamId } = params
+  public async do(params: { pairId: string; teamId: string }) {
+    const { pairId, teamId } = params
 
-    const pairEntity = await this.pairQS.getPairById(id)
+    const changeTeamService = new ChangeTeam(this.participantRepo)
 
-    if (pairEntity) {
-      pairEntity.changeTeam(teamId)
-    } else {
-      throw new Error('ペアが見つかりませんでした.')
-    }
-
-    await this.participantRepo.updatePair(pairEntity)
+    changeTeamService.changeTeam(pairId, teamId)
   }
 }

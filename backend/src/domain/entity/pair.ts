@@ -2,7 +2,7 @@ import { Participant } from 'src/domain/entity/participant'
 
 export class Pair {
   private id: string
-  private name: string
+  private name: PairNameVO
   private participants: Participant[]
   private teamId: string
 
@@ -14,7 +14,7 @@ export class Pair {
   }) {
     const { id, name, participants, teamId } = props
     this.id = id
-    this.name = name
+    this.name = new PairNameVO(name)
     this.participants = participants
     this.teamId = teamId
   }
@@ -24,7 +24,7 @@ export class Pair {
   }
 
   public getName() {
-    return this.name
+    return this.name.getValue()
   }
 
   public getParticipants(): Participant[] {
@@ -52,5 +52,21 @@ export class Pair {
     const receivedTeamId = teamId
 
     this.teamId = teamId
+  }
+}
+
+export class PairNameVO {
+  private readonly _value: string
+
+  public constructor(value: string) {
+    this._value = value
+  }
+
+  public equals(name: string): boolean {
+    return this._value === name
+  }
+
+  public getValue(): string {
+    return this._value
   }
 }

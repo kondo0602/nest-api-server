@@ -51,6 +51,11 @@ export class TeamNameVO {
   private readonly _value: string
 
   public constructor(value: string) {
+    const teamNameRegex = /^[0-9]{1,3}$/
+
+    if (!teamNameRegex.test(value)) {
+      throw new Error('チームの名前は3桁以内の数字にしてください.')
+    }
     this._value = value
   }
 

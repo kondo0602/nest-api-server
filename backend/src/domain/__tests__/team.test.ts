@@ -1,6 +1,6 @@
 import { Participant } from '../entity/participant'
 import { Pair } from '../entity/pair'
-import { Team } from '../entity/team'
+import { Team, TeamNameVO } from '../entity/team'
 import { createRandomIdString } from 'src/util/random'
 import { create } from 'domain'
 
@@ -120,5 +120,30 @@ describe('Pairのテスト', () => {
       team.removePair(pairId)
       expect(team.getPairs()).not.toContain(pair1)
     })
+  })
+})
+
+describe('TeamNameVOのテスト', () => {
+  let teamNameVO: TeamNameVO
+
+  beforeEach(() => {
+    teamNameVO = new TeamNameVO('1')
+  })
+
+  it('数字1〜3文字の名前以外が設定できないこと', () => {
+    expect(new TeamNameVO('1')).toBeInstanceOf(TeamNameVO)
+    expect(new TeamNameVO('11')).toBeInstanceOf(TeamNameVO)
+    expect(new TeamNameVO('111')).toBeInstanceOf(TeamNameVO)
+    expect(() => new TeamNameVO('1111')).toThrow()
+    expect(() => new TeamNameVO('a')).toThrow()
+  })
+
+  it('equals()で同一性の評価が行えること', () => {
+    expect(teamNameVO.equals('1')).toBeTruthy()
+    expect(teamNameVO.equals('2')).toBeFalsy()
+  })
+
+  it('getValue()で値の取得が行えること', () => {
+    expect(teamNameVO.getValue()).toBe('1')
   })
 })

@@ -59,6 +59,12 @@ export class PairNameVO {
   private readonly _value: string
 
   public constructor(value: string) {
+    const pairNameRegex = /^[a-z]$/
+
+    if (!pairNameRegex.test(value)) {
+      throw new Error('ペアの名前は英字小文字1文字にしてください.')
+    }
+
     this._value = value
   }
 

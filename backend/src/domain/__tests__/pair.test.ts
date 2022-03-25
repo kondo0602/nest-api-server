@@ -62,16 +62,24 @@ describe('PairNameVOのテスト', () => {
     let pairNameVO: PairNameVO
 
     beforeEach(() => {
-      pairNameVO = new PairNameVO('name')
+      pairNameVO = new PairNameVO('a')
     })
 
     it('equals()で同一性の評価が行えること', () => {
-      expect(pairNameVO.equals('name')).toBeTruthy()
-      expect(pairNameVO.equals('another_name')).toBeFalsy()
+      expect(pairNameVO.equals('a')).toBeTruthy()
+      expect(pairNameVO.equals('b')).toBeFalsy()
     })
 
     it('getValue()で値の取得が行えること', () => {
-      expect(pairNameVO.getValue()).toBe('name')
+      expect(pairNameVO.getValue()).toBe('a')
+    })
+  })
+
+  describe('異常系', () => {
+    it('英字小文字1文字の名前以外が設定できないこと', () => {
+      expect(() => new PairNameVO('aa')).toThrow()
+      expect(() => new PairNameVO('あ')).toThrow()
+      expect(() => new PairNameVO('1')).toThrow()
     })
   })
 })

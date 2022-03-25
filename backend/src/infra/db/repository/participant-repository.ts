@@ -208,11 +208,11 @@ export class ParticipantRepository implements IParticipantRepository {
         id: id,
       },
       update: {
-        name: name,
+        name: name.getValue(),
       },
       create: {
         id: id,
-        name: name,
+        name: name.getValue(),
       },
     })
 

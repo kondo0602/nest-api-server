@@ -2,13 +2,13 @@ import { Pair } from 'src/domain/entity/pair'
 
 export class Team {
   private id: string
-  private name: string
+  private name: TeamNameVO
   private pairs: Pair[]
 
   public constructor(props: { id: string; name: string; pairs: Pair[] }) {
     const { id, name, pairs } = props
     this.id = id
-    this.name = name
+    this.name = new TeamNameVO(name)
     this.pairs = pairs
   }
 
@@ -44,5 +44,21 @@ export class Team {
 
   public removePair(pairId: string): void {
     this.pairs = this.pairs.filter((pair) => pair.getId() !== pairId)
+  }
+}
+
+export class TeamNameVO {
+  private readonly _value: string
+
+  public constructor(value: string) {
+    this._value = value
+  }
+
+  public equals(name: string): boolean {
+    return this._value === name
+  }
+
+  public getValue(): string {
+    return this._value
   }
 }

@@ -28,10 +28,6 @@ export class Team {
     return this.pairs
   }
 
-  public setPairs(pairs: Pair[]) {
-    this.pairs = pairs
-  }
-
   public getPairByPairId(pairId: string): Pair {
     const pair = this.pairs.find((pair) => pair.getId() === pairId)
 

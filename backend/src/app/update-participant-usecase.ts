@@ -3,24 +3,20 @@ import { IParticipantQS } from './query-service-interface/participant-qs'
 import { IParticipantRepository } from './repository-interface/participant-repository'
 
 export class UpdateParticipantUseCase {
-  private readonly participantQS: IParticipantQS
   private readonly participantRepo: IParticipantRepository
 
-  public constructor(
-    participantQS: IParticipantQS,
-    participantRepo: IParticipantRepository,
-  ) {
-    this.participantQS = participantQS
+  public constructor(participantRepo: IParticipantRepository) {
     this.participantRepo = participantRepo
   }
 
   public async do(params: { id: string; statusId: string }) {
     const { id, statusId } = params
 
-    const participantEntity = await this.participantQS.getParticipantById(id)
+    const targetTeam = await this.participantRepo.getTeamByParticipantId(id)
+    const targetParticipant = await targetTeam.getParticipantByParticipantId(id)
 
-    participantEntity.changeStatus(statusId)
+    targetParticipant.changeStatus(statusId)
 
-    await this.participantRepo.updateParticipant(participantEntity)
+    await this.participantRepo.updateTeam(targetTeam)
   }
 }

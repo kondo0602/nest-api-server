@@ -48,9 +48,8 @@ export class ParticipantController {
     @Body() updateParticipantDto: UpdateParticipantRequest,
   ): Promise<void> {
     const prisma = new PrismaClient()
-    const qs = new ParticipantQS(prisma)
     const repo = new ParticipantRepository(prisma)
-    const usecase = new UpdateParticipantUseCase(qs, repo)
+    const usecase = new UpdateParticipantUseCase(repo)
     await usecase.do({
       id: id,
       statusId: updateParticipantDto.statusId,

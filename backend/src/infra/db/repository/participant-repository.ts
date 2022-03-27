@@ -15,32 +15,6 @@ export class ParticipantRepository implements IParticipantRepository {
     this.prismaClient = prismaClient
   }
 
-  public async save(participantEntity: Participant): Promise<Participant> {
-    const {
-      id,
-      name,
-      email,
-      statusId,
-      pairId,
-    } = participantEntity.getAllProperties()
-
-    const savedParticipantDatamodel = await this.prismaClient.participant.create(
-      {
-        data: {
-          id,
-          name,
-          email,
-          statusId,
-          pairId,
-        },
-      },
-    )
-    const savedParticipantEntity = new Participant({
-      ...savedParticipantDatamodel,
-    })
-    return savedParticipantEntity
-  }
-
   public async getTeamByTeamId(teamId: string): Promise<Team> {
     const team = await this.prismaClient.team.findUnique({
       where: {

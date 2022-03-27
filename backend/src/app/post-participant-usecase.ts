@@ -40,6 +40,12 @@ export class PostParticipantUseCase {
       pairId,
     })
 
-    await this.participantRepo.save(participantEntity)
+    const targetTeam = await this.participantRepo.getTeamByPairId(
+      participantEntity.getPairId(),
+    )
+
+    targetTeam.addParticipant(participantEntity)
+
+    await this.participantRepo.updateTeam(targetTeam)
   }
 }

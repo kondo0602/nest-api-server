@@ -42,7 +42,7 @@ export class Pair {
   public getAllProperties() {
     return {
       id: this.id,
-      name: this.name,
+      name: this.name.getValue(),
       participants: this.participants,
       teamId: this.teamId,
     }

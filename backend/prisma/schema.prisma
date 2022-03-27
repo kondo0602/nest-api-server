@@ -9,30 +9,31 @@ generator client {
 }
 
 model Participant {
-  id       String    @id
+  id       String @id
   name     String
   email    String
-  Status   Status    @relation(fields: [statusId], references: [id])
+  Status   Status @relation(fields: [statusId], references: [id])
   statusId String
-  Pair     Pair      @relation(fields: [pairId], references: [id])
+  Pair     Pair   @relation(fields: [pairId], references: [id], onDelete: Cascade)
   pairId   String
 }
 
 model Status {
-  id       String    @id
-  name     String
+  id          String        @id
+  name        String
+  Participant Participant[]
 }
 
 model Pair {
-  id            String    @id
-  name          String
-  participants  Participant[]
-  Team          Team      @relation(fields: [teamId], references: [id])
-  teamId        String
+  id           String        @id
+  name         String
+  participants Participant[]
+  Team         Team          @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId       String
 }
 
 model Team {
-  id       String    @id
-  name     String
-  pairs    Pair[]
+  id    String @id
+  name  String
+  pairs Pair[]
 }

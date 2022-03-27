@@ -154,105 +154,36 @@ export class ParticipantRepository implements IParticipantRepository {
   public async updateTeam(teamEntity: Team): Promise<Team> {
     const { id, name, pairs } = teamEntity.getAllProperties()
 
-    // const deleteParticipants = pairs.map((pair) => {
-    //   return this.prismaClient.participant.deleteMany({
-    //     where: {
-    //       pairId: pair.getId(),
-    //     },
-    //   })
-    // })
+    const deleteTeam = this.prismaClient.team.delete({
+      where: { id: id },
+    })
 
-    // const deletePairs = this.prismaClient.pair.deleteMany({
-    //   where: { teamId: id },
-    // })
-
-    // const deleteTeam = this.prismaClient.team.deleteMany({
-    //   where: { id: id },
-    // })
-
-    // const createTeam = this.prismaClient.team.create({
-    //   data: { id: id, name: name },
-    // })
-
-    // const createPair = pairs.map((pair) =>
-    //   this.prismaClient.pair.create({
-    //     data: {
-    //       id: pair.getId(),
-    //       name: pair.getName(),
-    //       teamId: pair.getTeamId(),
-    //     },
-    //   }),
-    // )
-
-    // const createParticipants = pairs.map((pair) => {
-    //   return pair.getParticipants().map((participant) => {
-    //     return this.prismaClient.participant.create({
-    //       data: {
-    //         ...participant.getAllProperties(),
-    //       },
-    //     })
-    //   })
-    // })
-
-    // await this.prismaClient.$transaction([
-    //   deleteParticipants,
-    //   deletePairs,
-    //   deleteTeam,
-    //   createTeam,
-    //   createPair,
-    //   createParticipants,
-    // ])
-
-    await this.prismaClient.team.upsert({
-      where: {
-        id: id,
-      },
-      update: {
-        name: name.getValue(),
-      },
-      create: {
+    const createTeam = this.prismaClient.team.create({
+      data: {
         id: id,
         name: name.getValue(),
+        pairs: {
+          create: pairs.map((pair) => {
+            return {
+              id: pair.getId(),
+              name: pair.getName(),
+              participants: {
+                create: pair.getParticipants().map((participant) => {
+                  return {
+                    id: participant.getId(),
+                    name: participant.getName(),
+                    email: participant.getEmail(),
+                    statusId: participant.getStatusId(),
+                  }
+                }),
+              },
+            }
+          }),
+        },
       },
     })
 
-    await prisma.$transaction(
-      pairs.map((pair) => {
-        return this.prismaClient.pair.upsert({
-          where: {
-            id: pair.getId(),
-          },
-          update: {
-            teamId: id,
-          },
-          create: {
-            id: pair.getId(),
-            name: pair.getName(),
-            teamId: id,
-          },
-        })
-      }),
-    )
-
-    // TODO: participantsも当メソッドの中で更新できるようにする
-
-    // await prisma.$transaction(
-    //   pairs.map((pair) => {
-    //     return pair.getParticipants().map((participant) => {
-    //       return this.prismaClient.participant.upsert({
-    //         where: {
-    //           id: participant.getId(),
-    //         },
-    //         update: {
-    //           id: participant.getId(),
-    //         },
-    //         create: {
-    //           ...participant.getAllProperties(),
-    //         },
-    //       })
-    //     })
-    //   }),
-    // )
+    await this.prismaClient.$transaction([deleteTeam, createTeam])
 
     return teamEntity
   }

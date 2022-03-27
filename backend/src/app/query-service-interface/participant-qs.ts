@@ -5,18 +5,21 @@ export class ParticipantDTO {
   public readonly name: string
   public readonly email: string
   public readonly statusId: string
+  public readonly pairId: string
 
   public constructor(props: {
     id: string
     name: string
     email: string
     statusId: string
+    pairId: string
   }) {
-    const { id, name, email, statusId } = props
+    const { id, name, email, statusId, pairId } = props
     this.id = id
     this.name = name
     this.email = email
     this.statusId = statusId
+    this.pairId = pairId
   }
 }
 

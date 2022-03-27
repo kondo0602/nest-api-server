@@ -16,8 +16,13 @@ export class PostParticipantUseCase {
     this.participantRepo = participantRepo
   }
 
-  public async do(params: { name: string; email: string; statusId: string }) {
-    const { name, email, statusId } = params
+  public async do(params: {
+    name: string
+    email: string
+    statusId: string
+    pairId: string
+  }) {
+    const { name, email, statusId, pairId } = params
 
     const EmailDuplicateCheckService = new EmailDuplicateCheck(
       this.participantQS,
@@ -32,6 +37,7 @@ export class PostParticipantUseCase {
       name,
       email,
       statusId,
+      pairId,
     })
 
     await this.participantRepo.save(participantEntity)

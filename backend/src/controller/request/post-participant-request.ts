@@ -15,4 +15,8 @@ export class PostParticipantRequest {
   @ApiProperty()
   @IsNotEmpty()
   readonly statusId!: string
+
+  @ApiProperty()
+  @IsNotEmpty()
+  readonly pairId!: string
 }

@@ -38,6 +38,7 @@ export class ParticipantController {
       name: postParticipantDto.name,
       email: postParticipantDto.email,
       statusId: postParticipantDto.statusId,
+      pairId: postParticipantDto.pairId,
     })
   }
 

@@ -121,6 +121,52 @@ export class ParticipantRepository implements IParticipantRepository {
     }
   }
 
+  public async getTeamByParticipantId(participantId: string): Promise<Team> {
+    const team = await this.prismaClient.team.findFirst({
+      where: {
+        pairs: {
+          some: {
+            participants: {
+              some: {
+                id: participantId,
+              },
+            },
+          },
+        },
+      },
+      include: {
+        pairs: {
+          include: {
+            participants: true,
+          },
+        },
+      },
+    })
+
+    if (team) {
+      return new Team({
+        id: team.id,
+        name: team.id,
+        pairs: team.pairs.map(
+          (pair) =>
+            new Pair({
+              id: pair.id,
+              name: pair.name,
+              participants: pair.participants.map(
+                (participant) =>
+                  new Participant({
+                    ...participant,
+                  }),
+              ),
+              teamId: pair.teamId,
+            }),
+        ),
+      })
+    } else {
+      throw new Error('指定された参加者が所属するチームが見つかりませんでした.')
+    }
+  }
+
   public async updateParticipant(
     participantEntity: Participant,
   ): Promise<Participant> {

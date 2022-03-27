@@ -48,6 +48,28 @@ export class Pair {
     }
   }
 
+  public getParticipantByParticipantId(participantId: string): Participant {
+    const participant = this.participants.find(
+      (participant) => participant.getId() === participantId,
+    )
+
+    if (participant) {
+      return participant
+    } else {
+      throw new Error('指定された参加者が見つかりませんでした.')
+    }
+  }
+
+  public addParticipant(participant: Participant): void {
+    this.participants.push(participant)
+  }
+
+  public removeParticipant(participantId: string): void {
+    this.participants = this.participants.filter(
+      (participant) => participant.getId() !== participantId,
+    )
+  }
+
   public changeTeam(teamId: string) {
     const receivedTeamId = teamId
 

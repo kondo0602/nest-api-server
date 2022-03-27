@@ -54,6 +54,12 @@ describe('Pairのテスト', () => {
       pair.setTeamId('2')
       expect(pair.getTeamId()).toBe('2')
     })
+
+    it('getParticipantByParticipantId()でペアに所属する参加者の取得が行えること', () => {
+      expect(pair.getParticipantByParticipantId(participant1.getId())).toBe(
+        participant1,
+      )
+    })
   })
 })
 

@@ -1,5 +1,6 @@
 import { IParticipantQS } from './query-service-interface/participant-qs'
 import { IParticipantRepository } from './repository-interface/participant-repository'
+import { ChangePair } from '../domain/domain-service/change-pair'
 
 export class ChangePairUseCase {
   private readonly participantQS: IParticipantQS
@@ -13,13 +14,11 @@ export class ChangePairUseCase {
     this.participantRepo = participantRepo
   }
 
-  public async do(params: { id: string; pairId: string }) {
-    const { id, pairId } = params
+  public async do(params: { participantId: string; pairId: string }) {
+    const { participantId, pairId } = params
 
-    const participantEntity = await this.participantQS.getParticipantById(id)
+    const changePairService = new ChangePair(this.participantRepo)
 
-    participantEntity.changePair(pairId)
-
-    await this.participantRepo.updateParticipant(participantEntity)
+    await changePairService.changePair(participantId, pairId)
   }
 }

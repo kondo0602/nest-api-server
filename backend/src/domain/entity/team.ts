@@ -1,4 +1,5 @@
 import { Pair } from 'src/domain/entity/pair'
+import { Participant } from 'src/domain/entity/participant'
 
 export class Team {
   private id: string
@@ -38,12 +39,44 @@ export class Team {
     }
   }
 
+  public getPairByParticipantId(participantId: string): Pair {
+    const pair = this.pairs.find((pair) => {
+      return pair
+        .getParticipants()
+        .find((participant) => participant.getId() === participantId)
+    })
+
+    if (pair) {
+      return pair
+    } else {
+      throw new Error('指定された参加者が所属するペアが見つかりませんでした.')
+    }
+  }
+
+  public getParticipantByParticipantId(participantId: string): Participant {
+    const targetPair = this.getPairByParticipantId(participantId)
+
+    return targetPair.getParticipantByParticipantId(participantId)
+  }
+
   public addPair(pair: Pair): void {
     this.pairs.push(pair)
   }
 
   public removePair(pairId: string): void {
     this.pairs = this.pairs.filter((pair) => pair.getId() !== pairId)
+  }
+
+  public addParticipant(participant: Participant): void {
+    const targetPair = this.getPairByPairId(participant.getPairId())
+    targetPair.addParticipant(participant)
+  }
+
+  public removeParticipant(participantId: string): void {
+    this.pairs = this.pairs.map((pair) => {
+      pair.removeParticipant(participantId)
+      return pair
+    })
   }
 }
 

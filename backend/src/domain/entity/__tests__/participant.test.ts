@@ -4,7 +4,7 @@ import {
   ParticipantEmailVO,
   ParticipantStatusIdVO,
   ParticipantStatus,
-} from '../entity/participant'
+} from '../participant'
 import { createRandomIdString } from 'src/util/random'
 
 describe('Participantのテスト', () => {

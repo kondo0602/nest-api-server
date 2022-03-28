@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client'
-import { PostParticipantUseCase } from '../post-participant-usecase'
-import { ParticipantQS } from 'src/infra/db/query-service/participant-qs'
-import { ParticipantRepository } from 'src/infra/db/repository/participant-repository'
 import { mocked } from 'ts-jest/utils'
 import { MockedObjectDeep } from 'ts-jest/dist/utils/testing'
+import { ParticipantQS } from 'src/infra/db/query-service/participant-qs'
+import { ParticipantRepository } from 'src/infra/db/repository/participant-repository'
+import { PostParticipantUseCase } from '../post-participant-usecase'
 import { Team } from 'src/domain/entity/team'
 import { Pair } from 'src/domain/entity/pair'
 

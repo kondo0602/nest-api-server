@@ -12,22 +12,6 @@ export class ParticipantQS implements IParticipantQS {
     this.prismaClient = prismaClient
   }
 
-  public async getParticipantById(id: string): Promise<Participant> {
-    const participant = await this.prismaClient.participant.findUnique({
-      where: {
-        id: id,
-      },
-    })
-
-    if (participant) {
-      return new Participant({
-        ...participant,
-      })
-    } else {
-      throw new Error('ユーザが見つかりませんでした.')
-    }
-  }
-
   public async getParticipantByEmail(
     email: string,
   ): Promise<Participant | null> {
@@ -39,7 +23,10 @@ export class ParticipantQS implements IParticipantQS {
 
     if (participant) {
       return new Participant({
-        ...participant,
+        id: participant.id,
+        name: participant.name,
+        email: participant.email,
+        statusId: participant.statusId,
       })
     } else {
       return null
@@ -49,9 +36,12 @@ export class ParticipantQS implements IParticipantQS {
   public async getAll(): Promise<ParticipantDTO[]> {
     const allParticipants = await this.prismaClient.participant.findMany()
     return allParticipants.map(
-      (participantDM) =>
+      (participant) =>
         new ParticipantDTO({
-          ...participantDM,
+          id: participant.id,
+          name: participant.name,
+          email: participant.email,
+          statusId: participant.statusId,
         }),
     )
   }

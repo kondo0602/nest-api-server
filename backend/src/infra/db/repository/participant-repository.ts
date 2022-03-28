@@ -6,7 +6,7 @@ import {
 } from 'src/domain/entity/participant'
 import { Pair } from 'src/domain/entity/pair'
 import { Team } from 'src/domain/entity/team'
-import { prisma } from '@testUtil/prisma'
+// import { prisma } from '@testUtil/prisma'
 
 export class ParticipantRepository implements IParticipantRepository {
   private prismaClient: PrismaClient
@@ -41,7 +41,10 @@ export class ParticipantRepository implements IParticipantRepository {
               participants: pair.participants.map(
                 (participant) =>
                   new Participant({
-                    ...participant,
+                    id: participant.id,
+                    name: participant.name,
+                    email: participant.email,
+                    statusId: participant.statusId,
                   }),
               ),
               teamId: pair.teamId,
@@ -74,7 +77,7 @@ export class ParticipantRepository implements IParticipantRepository {
     if (team) {
       return new Team({
         id: team.id,
-        name: team.id,
+        name: team.name,
         pairs: team.pairs.map(
           (pair) =>
             new Pair({
@@ -83,7 +86,10 @@ export class ParticipantRepository implements IParticipantRepository {
               participants: pair.participants.map(
                 (participant) =>
                   new Participant({
-                    ...participant,
+                    id: participant.id,
+                    name: participant.name,
+                    email: participant.email,
+                    statusId: participant.statusId,
                   }),
               ),
               teamId: pair.teamId,
@@ -129,7 +135,10 @@ export class ParticipantRepository implements IParticipantRepository {
               participants: pair.participants.map(
                 (participant) =>
                   new Participant({
-                    ...participant,
+                    id: participant.id,
+                    name: participant.name,
+                    email: participant.email,
+                    statusId: participant.statusId,
                   }),
               ),
               teamId: pair.teamId,

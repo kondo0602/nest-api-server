@@ -15,5 +15,4 @@ export class PairDTO {
 
 export interface IPairQS {
   getAll(): Promise<PairDTO[]>
-  getPairById(pairId: string): Promise<Pair | null>
 }

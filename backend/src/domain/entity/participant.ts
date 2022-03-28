@@ -9,14 +9,14 @@ export class Participant {
   private name: ParticipantNameVO
   private email: ParticipantEmailVO
   private statusId: ParticipantStatusIdVO
-  private pairId: string
+  private pairId?: string
 
   public constructor(props: {
     id: string
     name: string
     email: string
     statusId: string
-    pairId: string
+    pairId?: string
   }) {
     const { id, name, email, statusId, pairId } = props
     this.id = id
@@ -43,7 +43,11 @@ export class Participant {
   }
 
   public getPairId() {
-    return this.pairId
+    if (this.pairId) {
+      return this.pairId
+    } else {
+      throw new Error('現在、活動休止中の参加者です.')
+    }
   }
 
   public getAllProperties() {

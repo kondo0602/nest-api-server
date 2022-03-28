@@ -4,18 +4,17 @@ datasource db {
 }
 
 generator client {
-  previewFeatures = ["nativeTypes"]
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 model Participant {
-  id       String @id
+  id       String  @id
   name     String
   email    String
-  Status   Status @relation(fields: [statusId], references: [id])
+  Status   Status  @relation(fields: [statusId], references: [id])
   statusId String
-  Pair     Pair   @relation(fields: [pairId], references: [id], onDelete: Cascade)
-  pairId   String
+  Pair     Pair?   @relation(fields: [pairId], references: [id], onDelete: Cascade)
+  pairId   String?
 }
 
 model Status {

@@ -120,7 +120,7 @@ export class ParticipantRepository implements IParticipantRepository {
     if (team) {
       return new Team({
         id: team.id,
-        name: team.id,
+        name: team.name,
         pairs: team.pairs.map(
           (pair) =>
             new Pair({

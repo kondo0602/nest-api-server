@@ -60,6 +60,10 @@ export class Pair {
     }
   }
 
+  public getParticipantCount(): number {
+    return this.participants.length
+  }
+
   public addParticipant(participant: Participant): void {
     this.participants.push(participant)
   }

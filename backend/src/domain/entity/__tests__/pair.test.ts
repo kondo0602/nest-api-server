@@ -60,6 +60,10 @@ describe('Pairのテスト', () => {
         participant1,
       )
     })
+
+    it('getParticipantCount()でペアに所属する参加者の人数の取得が行えること', () => {
+      expect(pair.getParticipantCount()).toBe(2)
+    })
   })
 })
 

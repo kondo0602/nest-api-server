@@ -16,6 +16,13 @@ export class ParticipantOnTaskController {
     const prisma = new PrismaClient()
     const repo = new ParticipantOnTaskRepository(prisma)
     const usecase = new UpdateTaskStatusUseCase(repo)
+
+    if (id !== updateTaskStatusDto.userId) {
+      throw new Error(
+        '他の参加者の課題の進捗ステータスを更新することはできません.',
+      )
+    }
+
     await usecase.do({
       participantId: id,
       taskId: updateTaskStatusDto.taskId,

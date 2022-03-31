@@ -8,13 +8,14 @@ generator client {
 }
 
 model Participant {
-  id       String  @id
-  name     String
-  email    String
-  Status   Status  @relation(fields: [statusId], references: [id])
-  statusId String
-  Pair     Pair?   @relation(fields: [pairId], references: [id], onDelete: Cascade)
-  pairId   String?
+  id                String              @id
+  name              String
+  email             String
+  Status            Status              @relation(fields: [statusId], references: [id])
+  statusId          String
+  Pair              Pair?               @relation(fields: [pairId], references: [id], onDelete: Cascade)
+  pairId            String?
+  participantOnTask ParticipantOnTask[]
 }
 
 model Status {
@@ -35,4 +36,26 @@ model Team {
   id    String @id
   name  String
   pairs Pair[]
+}
+
+model Task {
+  id               String              @id
+  content          String
+  ParitipantOnTask ParticipantOnTask[]
+}
+
+model ParticipantOnTask {
+  id            String      @id
+  Status        TaskStatus  @relation(fields: [statusId], references: [id])
+  statusId      String
+  Task          Task        @relation(fields: [taskId], references: [id])
+  taskId        String
+  Participant   Participant @relation(fields: [participantId], references: [id])
+  participantId String
+}
+
+model TaskStatus {
+  id                String              @id
+  name              String
+  ParticipantOnTask ParticipantOnTask[]
 }

@@ -36,6 +36,10 @@ export class ParticipantOnTask {
   }
 
   public changeStatus(statusId: string) {
+    if (this.statusId === TaskStatus.Completed) {
+      throw new Error('完了した課題のステータスは変更できません.')
+    }
+
     this.statusId = statusId
   }
 }

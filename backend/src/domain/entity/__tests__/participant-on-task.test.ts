@@ -27,4 +27,9 @@ describe('ParticipantOnTaskのテスト', () => {
     participantOnTask.changeStatus('2')
     expect(participantOnTask.getStatus()).toBe('2')
   })
+
+  it('ステータス: 3（完了）の課題のステータスIDの更新が行えないこと', () => {
+    participantOnTask.changeStatus('3')
+    expect(() => participantOnTask.changeStatus('1')).toThrow()
+  })
 })

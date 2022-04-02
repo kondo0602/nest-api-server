@@ -4,35 +4,58 @@ datasource db {
 }
 
 generator client {
-  previewFeatures = ["nativeTypes"]
-  provider        = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 model Participant {
-  id       String    @id
-  name     String
-  email    String
-  Status   Status    @relation(fields: [statusId], references: [id])
-  statusId String
-  Pair     Pair      @relation(fields: [pairId], references: [id])
-  pairId   String
+  id                String              @id
+  name              String
+  email             String
+  Status            Status              @relation(fields: [statusId], references: [id])
+  statusId          String
+  Pair              Pair?               @relation(fields: [pairId], references: [id], onDelete: Cascade)
+  pairId            String?
+  participantOnTask ParticipantOnTask[]
 }
 
 model Status {
-  id       String    @id
-  name     String
+  id          String        @id
+  name        String
+  Participant Participant[]
 }
 
 model Pair {
-  id            String    @id
-  name          String
-  participants  Participant[]
-  Team          Team      @relation(fields: [teamId], references: [id])
-  teamId        String
+  id           String        @id
+  name         String
+  participants Participant[]
+  Team         Team          @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId       String
 }
 
 model Team {
-  id       String    @id
-  name     String
-  pairs    Pair[]
+  id    String @id
+  name  String
+  pairs Pair[]
+}
+
+model Task {
+  id               String              @id
+  content          String
+  ParitipantOnTask ParticipantOnTask[]
+}
+
+model ParticipantOnTask {
+  id            String      @id
+  Status        TaskStatus  @relation(fields: [statusId], references: [id])
+  statusId      String
+  Task          Task        @relation(fields: [taskId], references: [id])
+  taskId        String
+  Participant   Participant @relation(fields: [participantId], references: [id])
+  participantId String
+}
+
+model TaskStatus {
+  id                String              @id
+  name              String
+  ParticipantOnTask ParticipantOnTask[]
 }

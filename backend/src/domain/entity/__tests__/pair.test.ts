@@ -1,5 +1,5 @@
-import { Participant } from '../entity/participant'
-import { Pair, PairNameVO } from '../entity/pair'
+import { Participant } from '../participant'
+import { Pair, PairNameVO } from '../pair'
 import { createRandomIdString } from 'src/util/random'
 
 describe('Pairのテスト', () => {
@@ -53,6 +53,16 @@ describe('Pairのテスト', () => {
     it('setTeamId()でペアが所属するチームIDの更新が行えること', () => {
       pair.setTeamId('2')
       expect(pair.getTeamId()).toBe('2')
+    })
+
+    it('getParticipantByParticipantId()でペアに所属する参加者の取得が行えること', () => {
+      expect(pair.getParticipantByParticipantId(participant1.getId())).toBe(
+        participant1,
+      )
+    })
+
+    it('getParticipantCount()でペアに所属する参加者の人数の取得が行えること', () => {
+      expect(pair.getParticipantCount()).toBe(2)
     })
   })
 })

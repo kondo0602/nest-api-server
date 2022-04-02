@@ -3,9 +3,8 @@ import { Pair } from 'src/domain/entity/pair'
 import { Team } from 'src/domain/entity/team'
 
 export interface IParticipantRepository {
-  save(participant: Participant): Promise<Participant>
   getTeamByTeamId(teamId: string): Promise<Team>
   getTeamByPairId(pairId: string): Promise<Team>
-  updateParticipant(participant: Participant): Promise<Participant>
+  getTeamByParticipantId(participantId: string): Promise<Team>
   updateTeam(team: Team): Promise<Team>
 }

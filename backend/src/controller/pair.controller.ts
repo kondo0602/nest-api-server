@@ -34,7 +34,7 @@ export class PairController {
     const repo = new ParticipantRepository(prisma)
     const usecase = new ChangePairUseCase(qs, repo)
     await usecase.do({
-      id: id,
+      participantId: id,
       pairId: changePairDto.pairId,
     })
   }

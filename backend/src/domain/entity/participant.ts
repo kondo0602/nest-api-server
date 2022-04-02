@@ -9,14 +9,14 @@ export class Participant {
   private name: ParticipantNameVO
   private email: ParticipantEmailVO
   private statusId: ParticipantStatusIdVO
-  private pairId: string
+  private pairId?: string
 
   public constructor(props: {
     id: string
     name: string
     email: string
     statusId: string
-    pairId: string
+    pairId?: string
   }) {
     const { id, name, email, statusId, pairId } = props
     this.id = id
@@ -30,20 +30,32 @@ export class Participant {
     return this.id
   }
 
+  public getName() {
+    return this.name.getValue()
+  }
+
   public getEmail() {
-    return this.email.getEmail()
+    return this.email.getValue()
+  }
+
+  public getStatusId() {
+    return this.statusId.getValue()
   }
 
   public getPairId() {
-    return this.pairId
+    if (this.pairId) {
+      return this.pairId
+    } else {
+      throw new Error('現在、活動休止中の参加者です.')
+    }
   }
 
   public getAllProperties() {
     return {
       id: this.id,
-      name: this.name.getName(),
-      email: this.email.getEmail(),
-      statusId: this.statusId.getStatusId(),
+      name: this.getName(),
+      email: this.getEmail(),
+      statusId: this.getStatusId(),
       pairId: this.getPairId(),
     }
   }
@@ -51,7 +63,7 @@ export class Participant {
   public changeStatus(statusId: string) {
     const receivedStatus = new ParticipantStatusIdVO(statusId)
 
-    if (receivedStatus.equals(this.statusId.getStatusId())) {
+    if (receivedStatus.equals(this.statusId.getValue())) {
       throw new Error('ステータスが更新されていません.')
     }
 
@@ -76,7 +88,7 @@ export class ParticipantNameVO {
     return this._value === name
   }
 
-  public getName() {
+  public getValue() {
     return this._value
   }
 }
@@ -92,7 +104,7 @@ export class ParticipantEmailVO {
     return this._value === email
   }
 
-  public getEmail() {
+  public getValue() {
     return this._value
   }
 }
@@ -115,7 +127,7 @@ export class ParticipantStatusIdVO {
     return this._value === statusId
   }
 
-  public getStatusId() {
+  public getValue() {
     return this._value
   }
 }

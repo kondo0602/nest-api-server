@@ -35,14 +35,14 @@ class Participant {
   statusId: string
 
   @ApiProperty()
-  pairId: string
+  pairId?: string
 
   public constructor(params: {
     id: string
     name: string
     email: string
     statusId: string
-    pairId: string
+    pairId?: string
   }) {
     this.id = params.id
     this.name = params.name

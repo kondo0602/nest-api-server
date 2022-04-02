@@ -4,7 +4,7 @@ import {
   ParticipantEmailVO,
   ParticipantStatusIdVO,
   ParticipantStatus,
-} from '../entity/participant'
+} from '../participant'
 import { createRandomIdString } from 'src/util/random'
 
 describe('Participantのテスト', () => {
@@ -74,7 +74,7 @@ describe('ParticipantNameVOのテスト', () => {
     })
 
     it('getName()で値の取得が行えること', () => {
-      expect(new ParticipantNameVO('name').getName()).toBe('name')
+      expect(new ParticipantNameVO('name').getValue()).toBe('name')
     })
   })
 })
@@ -94,7 +94,7 @@ describe('ParticipantEmailVOのテスト', () => {
     })
 
     it('値の取得が行えること', () => {
-      expect(new ParticipantEmailVO('email@example.com').getEmail()).toBe(
+      expect(new ParticipantEmailVO('email@example.com').getValue()).toBe(
         'email@example.com',
       )
     })
@@ -121,7 +121,7 @@ describe('ParticipantStatusIdVOのテスト', () => {
     })
 
     it('値の取得が行えること', () => {
-      expect(new ParticipantStatusIdVO('1').getStatusId()).toBe('1')
+      expect(new ParticipantStatusIdVO('1').getValue()).toBe('1')
     })
   })
 

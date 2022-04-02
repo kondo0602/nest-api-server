@@ -1,6 +1,6 @@
-import { Participant } from '../entity/participant'
-import { Pair } from '../entity/pair'
-import { Team, TeamNameVO } from '../entity/team'
+import { Participant } from '../participant'
+import { Pair } from '../pair'
+import { Team, TeamNameVO } from '../team'
 import { createRandomIdString } from 'src/util/random'
 import { create } from 'domain'
 

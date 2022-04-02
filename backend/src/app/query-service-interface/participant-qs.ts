@@ -5,14 +5,14 @@ export class ParticipantDTO {
   public readonly name: string
   public readonly email: string
   public readonly statusId: string
-  public readonly pairId: string
+  public readonly pairId?: string
 
   public constructor(props: {
     id: string
     name: string
     email: string
     statusId: string
-    pairId: string
+    pairId?: string
   }) {
     const { id, name, email, statusId, pairId } = props
     this.id = id
@@ -24,7 +24,6 @@ export class ParticipantDTO {
 }
 
 export interface IParticipantQS {
-  getParticipantById(id: string): Promise<Participant>
   getParticipantByEmail(email: string): Promise<Participant | null>
   getAll(): Promise<ParticipantDTO[]>
 }

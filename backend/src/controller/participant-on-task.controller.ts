@@ -1,6 +1,10 @@
-import { Body, Controller, Put, Param } from '@nestjs/common'
+import { Body, Controller, Post, Put, Param } from '@nestjs/common'
+import { SearchParticipantsByTaskStatusRequest } from './request/search-participants-by-task-status-request'
+import { SearchParticipantByTaskStatusResponse } from './response/search-participant-by-task-status-response'
 import { UpdateTaskStatusRequest } from './request/update-task-status-request'
+import { GetParticipantsByTaskStatusUsecase } from '../app/search-participants-by-task-status-usecase'
 import { UpdateTaskStatusUseCase } from '../app/update-task-status-usecase'
+import { ParticipantTaskQS } from 'src/infra/db/query-service/search-participant-by-task-status-qs'
 import { ParticipantOnTaskRepository } from 'src/infra/db/repository/participant-on-task-repository'
 import { PrismaClient } from '@prisma/client'
 
@@ -8,6 +12,24 @@ import { PrismaClient } from '@prisma/client'
   path: '/participant-on-task',
 })
 export class ParticipantOnTaskController {
+  @Post()
+  async searchParticipantsByTaskStatus(
+    @Body()
+    searchParticipantsByTaskStatusDto: SearchParticipantsByTaskStatusRequest,
+  ): Promise<SearchParticipantByTaskStatusResponse> {
+    const prisma = new PrismaClient()
+    const qs = new ParticipantTaskQS(prisma)
+    const usecase = new GetParticipantsByTaskStatusUsecase(qs)
+    const result = await usecase.do({
+      taskIdList: searchParticipantsByTaskStatusDto.taskIdList,
+      taskStatus: searchParticipantsByTaskStatusDto.taskStatus,
+    })
+    const response = new SearchParticipantByTaskStatusResponse({
+      participants: result,
+    })
+    return response
+  }
+
   @Put(':id')
   async updateTaskStatus(
     @Param('id') id: string,

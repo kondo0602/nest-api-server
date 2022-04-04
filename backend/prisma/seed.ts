@@ -145,37 +145,37 @@ async function main() {
     data: [
       {
         id: createRandomIdString(),
-        statusId: '1',
+        statusId: '2',
         participantId: '1',
         taskId: '1',
       },
       {
         id: createRandomIdString(),
-        statusId: '1',
+        statusId: '2',
         participantId: '1',
         taskId: '2',
       },
       {
         id: createRandomIdString(),
-        statusId: '1',
+        statusId: '2',
         participantId: '1',
         taskId: '3',
       },
       {
         id: createRandomIdString(),
-        statusId: '1',
+        statusId: '2',
         participantId: '1',
         taskId: '4',
       },
       {
         id: createRandomIdString(),
-        statusId: '1',
+        statusId: '2',
         participantId: '2',
         taskId: '1',
       },
       {
         id: createRandomIdString(),
-        statusId: '1',
+        statusId: '2',
         participantId: '2',
         taskId: '2',
       },

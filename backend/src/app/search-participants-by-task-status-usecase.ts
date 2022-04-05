@@ -15,8 +15,8 @@ export class GetParticipantsByTaskStatusUsecase {
 
     try {
       return await this.participantTaskQS.getParticipantsByTaskStatus(
-        taskIdList,
-        taskStatus,
+        taskIdList, // 指定した複数のタスクの
+        taskStatus, // 課題進捗ステータスがtaskStatusに等しいものを取得する
       )
     } catch (error) {
       throw new Error('ユーザの取得に失敗しました.')

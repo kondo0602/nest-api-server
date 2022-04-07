@@ -13,7 +13,6 @@ describe('Pairのテスト', () => {
       name: 'Yamada Taro',
       email: 'yamada@example.com',
       statusId: '1',
-      pairId: '1',
     })
 
     participant2 = new Participant({
@@ -21,7 +20,6 @@ describe('Pairのテスト', () => {
       name: 'Tanaka Jiro',
       email: 'tanaka@example.com',
       statusId: '1',
-      pairId: '2',
     })
 
     pair = new Pair({

@@ -22,7 +22,6 @@ describe('Pairのテスト', () => {
       name: 'Yamada Taro',
       email: 'yamada@example.com',
       statusId: '1',
-      pairId: '1',
     })
 
     participant2 = new Participant({
@@ -30,7 +29,6 @@ describe('Pairのテスト', () => {
       name: 'Tanaka Jiro',
       email: 'tanaka@example.com',
       statusId: '1',
-      pairId: '1',
     })
 
     participant3 = new Participant({
@@ -38,7 +36,6 @@ describe('Pairのテスト', () => {
       name: 'Sato Saburo',
       email: 'sato@example.com',
       statusId: '1',
-      pairId: '2',
     })
 
     participant4 = new Participant({
@@ -46,7 +43,6 @@ describe('Pairのテスト', () => {
       name: 'Watanabe Shiro',
       email: 'watanabe@example.com',
       statusId: '1',
-      pairId: '2',
     })
 
     participant5 = new Participant({
@@ -54,7 +50,6 @@ describe('Pairのテスト', () => {
       name: 'Shigeno Goro',
       email: 'shigeno@example.com',
       statusId: '1',
-      pairId: '3',
     })
 
     participant6 = new Participant({
@@ -62,7 +57,6 @@ describe('Pairのテスト', () => {
       name: 'Kudo Shitiro',
       email: 'watanabe@example.com',
       statusId: '1',
-      pairId: '3',
     })
 
     pair1 = new Pair({

@@ -37,14 +37,15 @@ export class PostParticipantUseCase {
       name,
       email,
       statusId,
-      pairId,
     })
 
-    const targetTeam = await this.participantRepo.getTeamByPairId(
-      participantEntity.getPairId(),
-    )
+    const targetTeam = await this.participantRepo.getTeamByPairId(pairId)
+    const targetPair = targetTeam.getPairByPairId(pairId)
 
-    targetTeam.addParticipant(participantEntity)
+    targetPair.addParticipant(participantEntity)
+
+    targetTeam.removePair(pairId)
+    targetTeam.addPair(targetPair)
 
     await this.participantRepo.updateTeam(targetTeam)
   }

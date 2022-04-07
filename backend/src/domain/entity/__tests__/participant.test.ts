@@ -3,7 +3,6 @@ import {
   ParticipantNameVO,
   ParticipantEmailVO,
   ParticipantStatusIdVO,
-  ParticipantStatus,
 } from '../participant'
 import { createRandomIdString } from 'src/util/random'
 
@@ -16,7 +15,6 @@ describe('Participantのテスト', () => {
           name: 'Shun Kondo',
           email: 'email@example.com',
           statusId: '1',
-          pairId: '1',
         }),
       ).toBeInstanceOf(Participant)
     })
@@ -28,7 +26,6 @@ describe('Participantのテスト', () => {
           name: 'Shun Kondo',
           email: 'email@example.com',
           statusId: '1',
-          pairId: '1',
         }).getEmail(),
       ).toBe('email@example.com')
     })
@@ -39,7 +36,6 @@ describe('Participantのテスト', () => {
         name: 'Shun Kondo',
         email: 'email@example.com',
         statusId: '1',
-        pairId: '1',
       })
 
       expect(() => participant.changeStatus('2')).not.toThrow()
@@ -53,7 +49,6 @@ describe('Participantのテスト', () => {
         name: 'Shun Kondo',
         email: 'email@example.com',
         statusId: '1',
-        pairId: '1',
       })
 
       expect(() => participant.changeStatus('1')).toThrow()

@@ -66,18 +66,6 @@ export class Team {
   public removePair(pairId: string): void {
     this.pairs = this.pairs.filter((pair) => pair.getId() !== pairId)
   }
-
-  public addParticipant(participant: Participant): void {
-    const targetPair = this.getPairByPairId(participant.getPairId())
-    targetPair.addParticipant(participant)
-  }
-
-  public removeParticipant(participantId: string): void {
-    this.pairs = this.pairs.map((pair) => {
-      pair.removeParticipant(participantId)
-      return pair
-    })
-  }
 }
 
 export class TeamNameVO {

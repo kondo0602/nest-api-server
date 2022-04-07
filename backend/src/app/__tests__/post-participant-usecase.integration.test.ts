@@ -26,9 +26,7 @@ describe('do', () => {
       new Team({
         id: '1',
         name: '1',
-        pairs: [
-          new Pair({ id: '1', name: 'a', participants: [], teamId: '1' }),
-        ],
+        pairs: [new Pair({ id: '1', name: 'a', participants: [] })],
       }),
     )
 

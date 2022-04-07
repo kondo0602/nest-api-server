@@ -25,7 +25,6 @@ export class TestTeamFactory {
               statusId: '1',
             }),
           ],
-          teamId: '1',
         }),
         new Pair({
           id: '2',
@@ -44,7 +43,6 @@ export class TestTeamFactory {
               statusId: '1',
             }),
           ],
-          teamId: '1',
         }),
       ],
     })
@@ -72,7 +70,6 @@ export class TestTeamFactory {
               statusId: '1',
             }),
           ],
-          teamId: '1',
         }),
         new Pair({
           id: '4',
@@ -91,7 +88,6 @@ export class TestTeamFactory {
               statusId: '1',
             }),
           ],
-          teamId: '2',
         }),
       ],
     })

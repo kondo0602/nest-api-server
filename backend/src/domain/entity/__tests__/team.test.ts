@@ -2,7 +2,6 @@ import { Participant } from '../participant'
 import { Pair } from '../pair'
 import { Team, TeamNameVO } from '../team'
 import { createRandomIdString } from 'src/util/random'
-import { create } from 'domain'
 
 describe('Pairのテスト', () => {
   let participant1: Participant
@@ -63,21 +62,18 @@ describe('Pairのテスト', () => {
       id: createRandomIdString(),
       name: 'a',
       participants: [participant1, participant2],
-      teamId: '1',
     })
 
     pair2 = new Pair({
       id: createRandomIdString(),
       name: 'b',
       participants: [participant3, participant4],
-      teamId: '1',
     })
 
     pair3 = new Pair({
       id: createRandomIdString(),
       name: 'c',
       participants: [participant5, participant6],
-      teamId: '1',
     })
 
     team = new Team({

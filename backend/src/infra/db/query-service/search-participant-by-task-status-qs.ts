@@ -3,7 +3,7 @@ import {
   ParticipantTaskDTO,
   IParticipantTaskQS,
 } from 'src/app/query-service-interface/search-participant-by-task-status-qs'
-import { Page, Paging } from 'src/domain/entity/page'
+import { Page, Paging, PagingCondition } from 'src/domain/entity/page'
 
 export class ParticipantTaskQS implements IParticipantTaskQS {
   private prismaClient: PrismaClient
@@ -15,9 +15,8 @@ export class ParticipantTaskQS implements IParticipantTaskQS {
   public async getParticipantsByTaskStatus(
     taskIdList: string[],
     taskStatus: string,
-    pageNumber: number,
+    pagingCondition: PagingCondition,
   ): Promise<Page<ParticipantTaskDTO>> {
-    const PAGE_SIZE = 10
     const participantOnTasks = await this.prismaClient.participantOnTask.findMany(
       {
         where: {
@@ -78,14 +77,15 @@ export class ParticipantTaskQS implements IParticipantTaskQS {
 
     const paging: Paging = {
       totalCount: participantTaskDTOList.length,
-      pageSize: PAGE_SIZE,
-      pageNumber: pageNumber,
+      pageSize: pagingCondition.getPageSize(),
+      pageNumber: pagingCondition.getPageNumber(),
     }
 
     // 指定されたページングの条件に基づいてページングを行う
     const slicedParticipants = participantTaskDTOList.slice(
-      (paging.pageNumber - 1) * PAGE_SIZE,
-      (paging.pageNumber - 1) * PAGE_SIZE + PAGE_SIZE,
+      (paging.pageNumber - 1) * pagingCondition.getPageSize(),
+      (paging.pageNumber - 1) * pagingCondition.getPageSize() +
+        pagingCondition.getPageSize(),
     )
 
     // ページングした参加者をページインタフェースでラップされたDTOに詰め替える

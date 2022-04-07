@@ -1,4 +1,4 @@
-import { Page } from 'src/domain/entity/page'
+import { Page, PagingCondition } from 'src/domain/entity/page'
 
 export class ParticipantTaskDTO {
   public readonly participantId: string
@@ -19,6 +19,6 @@ export interface IParticipantTaskQS {
   getParticipantsByTaskStatus(
     taskIdList: string[],
     taskStatus: string,
-    pageNumber: number,
+    pageCondition: PagingCondition,
   ): Promise<Page<ParticipantTaskDTO>>
 }

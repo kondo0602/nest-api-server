@@ -11,4 +11,8 @@ export class SearchParticipantsByTaskStatusRequest {
   @ApiProperty()
   @IsNotEmpty()
   readonly taskStatus!: string
+
+  @ApiProperty()
+  @IsNotEmpty()
+  readonly pageNumber!: number
 }

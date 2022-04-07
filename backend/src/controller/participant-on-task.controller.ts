@@ -23,6 +23,7 @@ export class ParticipantOnTaskController {
     const result = await usecase.do({
       taskIdList: searchParticipantsByTaskStatusDto.taskIdList,
       taskStatus: searchParticipantsByTaskStatusDto.taskStatus,
+      pageNumber: searchParticipantsByTaskStatusDto.pageNumber,
     })
     const response = new SearchParticipantByTaskStatusResponse({
       participants: result,

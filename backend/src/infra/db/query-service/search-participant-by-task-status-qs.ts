@@ -1,8 +1,9 @@
-import { Participant, PrismaClient, Task } from '@prisma/client'
+import { PrismaClient } from '@prisma/client'
 import {
   ParticipantTaskDTO,
   IParticipantTaskQS,
 } from 'src/app/query-service-interface/search-participant-by-task-status-qs'
+import { Page, Paging } from 'src/domain/entity/page'
 
 export class ParticipantTaskQS implements IParticipantTaskQS {
   private prismaClient: PrismaClient
@@ -14,7 +15,9 @@ export class ParticipantTaskQS implements IParticipantTaskQS {
   public async getParticipantsByTaskStatus(
     taskIdList: string[],
     taskStatus: string,
-  ): Promise<ParticipantTaskDTO[]> {
+    pageNumber: number,
+  ): Promise<Page<ParticipantTaskDTO>> {
+    const PAGE_SIZE = 10
     const participantOnTasks = await this.prismaClient.participantOnTask.findMany(
       {
         where: {
@@ -63,11 +66,34 @@ export class ParticipantTaskQS implements IParticipantTaskQS {
         ),
     )
 
-    return filteredParticipants.map((filterdParticipant) => {
-      return new ParticipantTaskDTO({
-        participantId: filterdParticipant.participantId,
-        participantName: filterdParticipant.participantName,
-      })
-    })
+    // 取得した条件に合致する参加者をDTOに詰め替える
+    const participantTaskDTOList: ParticipantTaskDTO[] = filteredParticipants.map(
+      (filterdParticipant) => {
+        return new ParticipantTaskDTO({
+          participantId: filterdParticipant.participantId,
+          participantName: filterdParticipant.participantName,
+        })
+      },
+    )
+
+    const paging: Paging = {
+      totalCount: participantTaskDTOList.length,
+      pageSize: PAGE_SIZE,
+      pageNumber: pageNumber,
+    }
+
+    // 指定されたページングの条件に基づいてページングを行う
+    const slicedParticipants = participantTaskDTOList.slice(
+      (paging.pageNumber - 1) * PAGE_SIZE,
+      (paging.pageNumber - 1) * PAGE_SIZE + PAGE_SIZE,
+    )
+
+    // ページングした参加者をページインタフェースでラップされたDTOに詰め替える
+    const paginatedParticipants: Page<ParticipantTaskDTO> = {
+      items: slicedParticipants,
+      paging: paging,
+    }
+
+    return paginatedParticipants
   }
 }

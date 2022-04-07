@@ -1,3 +1,5 @@
+import { Page } from 'src/domain/entity/page'
+
 export class ParticipantTaskDTO {
   public readonly participantId: string
   public readonly participantName: string
@@ -17,5 +19,6 @@ export interface IParticipantTaskQS {
   getParticipantsByTaskStatus(
     taskIdList: string[],
     taskStatus: string,
-  ): Promise<ParticipantTaskDTO[]>
+    pageNumber: number,
+  ): Promise<Page<ParticipantTaskDTO>>
 }

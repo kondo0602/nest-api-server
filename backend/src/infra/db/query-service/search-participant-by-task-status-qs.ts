@@ -26,6 +26,11 @@ export class ParticipantTaskQS implements IParticipantTaskQS {
           participant: true,
           task: true,
         },
+        orderBy: {
+          participant: {
+            name: 'asc',
+          },
+        },
       },
     )
 

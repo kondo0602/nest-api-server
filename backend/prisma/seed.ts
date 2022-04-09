@@ -32,10 +32,10 @@ async function main() {
 
   const task = await prisma.task.createMany({
     data: [
-      { id: '1', content: '課題1' },
-      { id: '2', content: '課題2' },
-      { id: '3', content: '課題3' },
-      { id: '4', content: '課題4' },
+      { id: '1', title: '課題1', content: 'DB設計の課題1です.' },
+      { id: '2', title: '課題2', content: 'DB設計の課題2です.' },
+      { id: '3', title: '課題3', content: 'DB設計の課題3です.' },
+      { id: '4', title: '課題4', content: 'DB設計の課題4です.' },
     ],
   })
 
@@ -145,37 +145,37 @@ async function main() {
     data: [
       {
         id: createRandomIdString(),
-        statusId: '1',
+        statusId: '2',
         participantId: '1',
         taskId: '1',
       },
       {
         id: createRandomIdString(),
-        statusId: '1',
+        statusId: '2',
         participantId: '1',
         taskId: '2',
       },
       {
         id: createRandomIdString(),
-        statusId: '1',
+        statusId: '2',
         participantId: '1',
         taskId: '3',
       },
       {
         id: createRandomIdString(),
-        statusId: '1',
+        statusId: '2',
         participantId: '1',
         taskId: '4',
       },
       {
         id: createRandomIdString(),
-        statusId: '1',
+        statusId: '2',
         participantId: '2',
         taskId: '1',
       },
       {
         id: createRandomIdString(),
-        statusId: '1',
+        statusId: '2',
         participantId: '2',
         taskId: '2',
       },

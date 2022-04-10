@@ -23,29 +23,5 @@ describe('Participantのテスト', () => {
         }).getEmail(),
       ).toBe('email@example.com')
     })
-
-    // it('changeStatus()でステータスの変更が行えること', () => {
-    //   const participant = new Participant({
-    //     id: createRandomIdString(),
-    //     name: 'Shun Kondo',
-    //     email: 'email@example.com',
-    //     statusId: '1',
-    //   })
-
-    //   expect(() => participant.changeStatus('2')).not.toThrow()
-    // })
   })
-
-  // describe('異常系', () => {
-  //   it('changeStatus()でステータスの空更新が行えないこと', () => {
-  //     const participant = new Participant({
-  //       id: createRandomIdString(),
-  //       name: 'Shun Kondo',
-  //       email: 'email@example.com',
-  //       statusId: '1',
-  //     })
-
-  //     expect(() => participant.changeStatus('1')).toThrow()
-  //   })
-  // })
 })

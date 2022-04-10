@@ -5,8 +5,9 @@ import { PostParticipantRequest } from './request/post-participant-request'
 import { UpdateParticipantRequest } from './request/update-participant-request'
 import { GetParticipantUsecase } from '../app/get-participant-usecase'
 import { PostParticipantUseCase } from '../app/post-participant-usecase'
-import { UpdateParticipantUseCase } from '../app/update-participant-usecase'
+import { UpdateParticipantUseCase } from '../app/update-participant-status-usecase'
 import { ParticipantRepository } from 'src/infra/db/repository/participant-repository'
+import { RemovedParticipantRepository } from 'src/infra/db/repository/removed-participant-repository'
 import { PrismaClient } from '@prisma/client'
 import { ParticipantQS } from 'src/infra/db/query-service/participant-qs'
 
@@ -48,8 +49,14 @@ export class ParticipantController {
     @Body() updateParticipantDto: UpdateParticipantRequest,
   ): Promise<void> {
     const prisma = new PrismaClient()
-    const repo = new ParticipantRepository(prisma)
-    const usecase = new UpdateParticipantUseCase(repo)
+    const qs = new ParticipantQS(prisma)
+    const participantRepo = new ParticipantRepository(prisma)
+    const removedParticipantRepo = new RemovedParticipantRepository(prisma)
+    const usecase = new UpdateParticipantUseCase(
+      qs,
+      participantRepo,
+      removedParticipantRepo,
+    )
     await usecase.do({
       id: id,
       statusId: updateParticipantDto.statusId,

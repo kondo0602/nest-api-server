@@ -10,11 +10,11 @@ async function main() {
     prisma.pair.deleteMany(),
     prisma.team.deleteMany(),
     prisma.task.deleteMany(),
-    prisma.status.deleteMany(),
+    prisma.participantStatus.deleteMany(),
     prisma.taskStatus.deleteMany(),
   ])
 
-  const status = await prisma.status.createMany({
+  const status = await prisma.participantStatus.createMany({
     data: [
       { id: '1', name: '在籍中' },
       { id: '2', name: '休会中' },

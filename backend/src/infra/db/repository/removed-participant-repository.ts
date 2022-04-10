@@ -12,7 +12,7 @@ export class RemovedParticipantRepository
 
   public async getRemovedParticipantByParticipantId(
     participantId: string,
-  ): Promise<RemovedParticipant> {
+  ): Promise<RemovedParticipant | null> {
     const removedParticipant = await this.prismaClient.removedParticipant.findUnique(
       {
         where: {
@@ -26,7 +26,7 @@ export class RemovedParticipantRepository
         ...removedParticipant,
       })
     } else {
-      throw new Error('指定された参加者が見つかりませんでした.')
+      return null
     }
   }
 

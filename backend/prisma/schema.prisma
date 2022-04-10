@@ -51,7 +51,7 @@ model ParticipantOnTask {
   statusId      String
   task          Task        @relation(fields: [taskId], references: [id], onDelete: Cascade)
   taskId        String
-  participant   Participant @relation(fields: [participantId], references: [id])
+  participant   Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
   participantId String
 }
 

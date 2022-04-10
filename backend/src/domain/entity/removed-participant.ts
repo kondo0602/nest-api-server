@@ -51,13 +51,13 @@ export class RemovedParticipant {
     }
   }
 
-  // public changeStatus(statusId: string) {
-  //   const receivedStatus = new ParticipantStatusIdVO(statusId)
+  public updateStatusId(statusId: string) {
+    const receivedStatusId = new RemovedParticipantStatusIdVO(statusId)
 
-  //   if (receivedStatus.equals(this.statusId.getValue())) {
-  //     throw new Error('ステータスが更新されていません.')
-  //   }
+    if (receivedStatusId.equals(this.statusId.getValue())) {
+      throw new Error('ステータスが更新されていません.')
+    }
 
-  //   this.statusId = new ParticipantStatusIdVO(statusId)
-  // }
+    this.statusId = receivedStatusId
+  }
 }

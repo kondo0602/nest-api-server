@@ -26,7 +26,6 @@ export class ParticipantQS implements IParticipantQS {
         id: participant.id,
         name: participant.name,
         email: participant.email,
-        statusId: participant.statusId,
       })
     } else {
       return null
@@ -47,7 +46,6 @@ export class ParticipantQS implements IParticipantQS {
         id: participant.id,
         name: participant.name,
         email: participant.email,
-        statusId: participant.statusId,
       })
     } else {
       return null

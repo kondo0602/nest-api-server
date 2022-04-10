@@ -1,6 +1,9 @@
 import { ParticipantNameVO } from 'src/domain/entity/participant-name-vo'
 import { ParticipantEmailVO } from 'src/domain/entity/participant-email-vo'
-import { ParticipantStatusIdVO } from 'src/domain/entity/participant-status-id-vo'
+import {
+  ParticipantStatus,
+  ParticipantStatusIdVO,
+} from 'src/domain/entity/participant-status-id-vo'
 
 export class Participant {
   private id: string
@@ -8,17 +11,12 @@ export class Participant {
   private email: ParticipantEmailVO
   private statusId: ParticipantStatusIdVO
 
-  public constructor(props: {
-    id: string
-    name: string
-    email: string
-    statusId: string
-  }) {
-    const { id, name, email, statusId } = props
+  public constructor(props: { id: string; name: string; email: string }) {
+    const { id, name, email } = props
     this.id = id
     this.name = new ParticipantNameVO(name)
     this.email = new ParticipantEmailVO(email)
-    this.statusId = new ParticipantStatusIdVO(statusId)
+    this.statusId = new ParticipantStatusIdVO(ParticipantStatus.Enrolled)
   }
 
   public getId() {

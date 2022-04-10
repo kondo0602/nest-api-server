@@ -30,7 +30,6 @@ describe('do', () => {
         id: '1',
         name: 'Bob',
         email: 'bob@example.com',
-        statusId: '1',
       }),
     )
 

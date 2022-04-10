@@ -39,7 +39,6 @@ describe('do', () => {
       usecase.do({
         name: 'Bob',
         email: 'bob@example.com',
-        statusId: '1',
         pairId: '1',
       }),
     ).resolves.toBe(undefined)

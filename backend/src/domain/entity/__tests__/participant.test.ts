@@ -10,7 +10,6 @@ describe('Participantのテスト', () => {
           id: createRandomIdString(),
           name: 'Shun Kondo',
           email: 'email@example.com',
-          statusId: '1',
         }),
       ).toBeInstanceOf(Participant)
     })
@@ -21,7 +20,6 @@ describe('Participantのテスト', () => {
           id: createRandomIdString(),
           name: 'Shun Kondo',
           email: 'email@example.com',
-          statusId: '1',
         }).getEmail(),
       ).toBe('email@example.com')
     })

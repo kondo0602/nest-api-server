@@ -41,7 +41,6 @@ export class UpdateParticipantUseCase {
         id: removedParticipant.getId(),
         name: removedParticipant.getName(),
         email: removedParticipant.getEmail(),
-        statusId: ParticipantStatus.Enrolled,
       })
 
       // TODO: 最も参加人数が少ないチームの中で、最も参加人数が少ないペアから自動的に自動敵に参加先が選択されるように修正

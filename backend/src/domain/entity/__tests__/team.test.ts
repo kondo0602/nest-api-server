@@ -20,42 +20,36 @@ describe('Pairのテスト', () => {
       id: createRandomIdString(),
       name: 'Yamada Taro',
       email: 'yamada@example.com',
-      statusId: '1',
     })
 
     participant2 = new Participant({
       id: createRandomIdString(),
       name: 'Tanaka Jiro',
       email: 'tanaka@example.com',
-      statusId: '1',
     })
 
     participant3 = new Participant({
       id: createRandomIdString(),
       name: 'Sato Saburo',
       email: 'sato@example.com',
-      statusId: '1',
     })
 
     participant4 = new Participant({
       id: createRandomIdString(),
       name: 'Watanabe Shiro',
       email: 'watanabe@example.com',
-      statusId: '1',
     })
 
     participant5 = new Participant({
       id: createRandomIdString(),
       name: 'Shigeno Goro',
       email: 'shigeno@example.com',
-      statusId: '1',
     })
 
     participant6 = new Participant({
       id: createRandomIdString(),
       name: 'Kudo Shitiro',
       email: 'watanabe@example.com',
-      statusId: '1',
     })
 
     pair1 = new Pair({

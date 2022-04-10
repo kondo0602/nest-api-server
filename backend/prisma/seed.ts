@@ -7,20 +7,27 @@ async function main() {
   const delete1 = await prisma.$transaction([
     prisma.participantOnTask.deleteMany(),
     prisma.participant.deleteMany(),
+    prisma.removedParticipant.deleteMany(),
     prisma.pair.deleteMany(),
     prisma.team.deleteMany(),
     prisma.task.deleteMany(),
     prisma.participantStatus.deleteMany(),
+    prisma.removedParticipantStatus.deleteMany(),
     prisma.taskStatus.deleteMany(),
   ])
 
-  const status = await prisma.participantStatus.createMany({
-    data: [
-      { id: '1', name: '在籍中' },
-      { id: '2', name: '休会中' },
-      { id: '3', name: '退会済' },
-    ],
+  const participantStatus = await prisma.participantStatus.createMany({
+    data: [{ id: '1', name: '在籍中' }],
   })
+
+  const removedParticipantStatus = await prisma.removedParticipantStatus.createMany(
+    {
+      data: [
+        { id: '2', name: '休会中' },
+        { id: '3', name: '退会済' },
+      ],
+    },
+  )
 
   const taskStatus = await prisma.taskStatus.createMany({
     data: [

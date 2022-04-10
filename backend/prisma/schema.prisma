@@ -13,8 +13,8 @@ model Participant {
   email             String
   Status            ParticipantStatus   @relation(fields: [statusId], references: [id])
   statusId          String
-  Pair              Pair?               @relation(fields: [pairId], references: [id], onDelete: Cascade)
-  pairId            String?
+  Pair              Pair                @relation(fields: [pairId], references: [id], onDelete: Cascade)
+  pairId            String
   participantOnTask ParticipantOnTask[]
 }
 

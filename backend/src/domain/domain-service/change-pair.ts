@@ -11,13 +11,20 @@ export class ChangePair {
     const targetTeam = await this.participantRepo.getTeamByParticipantId(
       participantId,
     )
-    const targetParticipant = await targetTeam.getParticipantByParticipantId(
+    const currentPair = targetTeam.getPairByParticipantId(participantId)
+    const targetPair = targetTeam.getPairByPairId(pairId)
+    const targetParticipant = currentPair.getParticipantByParticipantId(
       participantId,
     )
-    await targetParticipant.changePair(pairId)
 
-    await targetTeam.removeParticipant(participantId)
-    await targetTeam.addParticipant(targetParticipant)
+    currentPair.removeParticipant(participantId)
+    targetPair.addParticipant(targetParticipant)
+
+    targetTeam.removePair(currentPair.getId())
+    targetTeam.addPair(currentPair)
+
+    targetTeam.removePair(currentPair.getId())
+    targetTeam.addPair(currentPair)
 
     await this.participantRepo.updateTeam(targetTeam)
   }

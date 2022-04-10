@@ -4,19 +4,16 @@ export class Pair {
   private id: string
   private name: PairNameVO
   private participants: Participant[]
-  private teamId: string
 
   public constructor(props: {
     id: string
     name: string
     participants: Participant[]
-    teamId: string
   }) {
-    const { id, name, participants, teamId } = props
+    const { id, name, participants } = props
     this.id = id
     this.name = new PairNameVO(name)
     this.participants = participants
-    this.teamId = teamId
   }
 
   public getId() {
@@ -31,20 +28,11 @@ export class Pair {
     return this.participants
   }
 
-  public getTeamId() {
-    return this.teamId
-  }
-
-  public setTeamId(teamId: string) {
-    this.teamId = teamId
-  }
-
   public getAllProperties() {
     return {
       id: this.id,
       name: this.name.getValue(),
       participants: this.participants,
-      teamId: this.teamId,
     }
   }
 
@@ -72,12 +60,6 @@ export class Pair {
     this.participants = this.participants.filter(
       (participant) => participant.getId() !== participantId,
     )
-  }
-
-  public changeTeam(teamId: string) {
-    const receivedTeamId = teamId
-
-    this.teamId = teamId
   }
 }
 

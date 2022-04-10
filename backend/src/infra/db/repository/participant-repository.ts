@@ -1,12 +1,8 @@
 import { PrismaClient } from '@prisma/client'
 import { IParticipantRepository } from 'src/app/repository-interface/participant-repository'
-import {
-  Participant,
-  ParticipantStatusIdVO,
-} from 'src/domain/entity/participant'
+import { Participant } from 'src/domain/entity/participant'
 import { Pair } from 'src/domain/entity/pair'
 import { Team } from 'src/domain/entity/team'
-// import { prisma } from '@testUtil/prisma'
 
 export class ParticipantRepository implements IParticipantRepository {
   private prismaClient: PrismaClient
@@ -47,7 +43,6 @@ export class ParticipantRepository implements IParticipantRepository {
                     statusId: participant.statusId,
                   }),
               ),
-              teamId: pair.teamId,
             }),
         ),
       })
@@ -92,7 +87,6 @@ export class ParticipantRepository implements IParticipantRepository {
                     statusId: participant.statusId,
                   }),
               ),
-              teamId: pair.teamId,
             }),
         ),
       })
@@ -141,7 +135,6 @@ export class ParticipantRepository implements IParticipantRepository {
                     statusId: participant.statusId,
                   }),
               ),
-              teamId: pair.teamId,
             }),
         ),
       })
@@ -152,6 +145,23 @@ export class ParticipantRepository implements IParticipantRepository {
 
   public async updateTeam(teamEntity: Team): Promise<Team> {
     const { id, name, pairs } = teamEntity.getAllProperties()
+
+    const tmpParticipantOnTask = await this.prismaClient.participantOnTask.findMany(
+      {
+        where: {
+          participantId: {
+            in: teamEntity
+              .getPairs()
+              .map((pair) => {
+                return pair
+                  .getParticipants()
+                  .map((participant) => participant.getId())
+              })
+              .reduce((acc, val) => acc.concat(val), []),
+          },
+        },
+      },
+    )
 
     const deleteTeam = this.prismaClient.team.delete({
       where: { id: id },
@@ -182,7 +192,17 @@ export class ParticipantRepository implements IParticipantRepository {
       },
     })
 
-    await this.prismaClient.$transaction([deleteTeam, createTeam])
+    const createParticipantOnTask = this.prismaClient.participantOnTask.createMany(
+      {
+        data: tmpParticipantOnTask,
+      },
+    )
+
+    await this.prismaClient.$transaction([
+      deleteTeam,
+      createTeam,
+      createParticipantOnTask,
+    ])
 
     return teamEntity
   }

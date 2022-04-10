@@ -2,7 +2,6 @@ import { Participant } from '../participant'
 import { Pair } from '../pair'
 import { Team, TeamNameVO } from '../team'
 import { createRandomIdString } from 'src/util/random'
-import { create } from 'domain'
 
 describe('Pairのテスト', () => {
   let participant1: Participant
@@ -22,7 +21,6 @@ describe('Pairのテスト', () => {
       name: 'Yamada Taro',
       email: 'yamada@example.com',
       statusId: '1',
-      pairId: '1',
     })
 
     participant2 = new Participant({
@@ -30,7 +28,6 @@ describe('Pairのテスト', () => {
       name: 'Tanaka Jiro',
       email: 'tanaka@example.com',
       statusId: '1',
-      pairId: '1',
     })
 
     participant3 = new Participant({
@@ -38,7 +35,6 @@ describe('Pairのテスト', () => {
       name: 'Sato Saburo',
       email: 'sato@example.com',
       statusId: '1',
-      pairId: '2',
     })
 
     participant4 = new Participant({
@@ -46,7 +42,6 @@ describe('Pairのテスト', () => {
       name: 'Watanabe Shiro',
       email: 'watanabe@example.com',
       statusId: '1',
-      pairId: '2',
     })
 
     participant5 = new Participant({
@@ -54,7 +49,6 @@ describe('Pairのテスト', () => {
       name: 'Shigeno Goro',
       email: 'shigeno@example.com',
       statusId: '1',
-      pairId: '3',
     })
 
     participant6 = new Participant({
@@ -62,28 +56,24 @@ describe('Pairのテスト', () => {
       name: 'Kudo Shitiro',
       email: 'watanabe@example.com',
       statusId: '1',
-      pairId: '3',
     })
 
     pair1 = new Pair({
       id: createRandomIdString(),
       name: 'a',
       participants: [participant1, participant2],
-      teamId: '1',
     })
 
     pair2 = new Pair({
       id: createRandomIdString(),
       name: 'b',
       participants: [participant3, participant4],
-      teamId: '1',
     })
 
     pair3 = new Pair({
       id: createRandomIdString(),
       name: 'c',
       participants: [participant5, participant6],
-      teamId: '1',
     })
 
     team = new Team({

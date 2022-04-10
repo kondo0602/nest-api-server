@@ -13,7 +13,6 @@ describe('Pairのテスト', () => {
       name: 'Yamada Taro',
       email: 'yamada@example.com',
       statusId: '1',
-      pairId: '1',
     })
 
     participant2 = new Participant({
@@ -21,14 +20,12 @@ describe('Pairのテスト', () => {
       name: 'Tanaka Jiro',
       email: 'tanaka@example.com',
       statusId: '1',
-      pairId: '2',
     })
 
     pair = new Pair({
       id: createRandomIdString(),
       name: 'a',
       participants: [participant1, participant2],
-      teamId: '1',
     })
   })
 
@@ -44,15 +41,6 @@ describe('Pairのテスト', () => {
     it('getParticipants()でペアに所属する参加者の取得が行えること', () => {
       expect(pair.getParticipants()).toContain(participant1)
       expect(pair.getParticipants()).toContain(participant2)
-    })
-
-    it('getTeamId()でペアが所属するチームIDの取得が行えること', () => {
-      expect(pair.getTeamId()).toBe('1')
-    })
-
-    it('setTeamId()でペアが所属するチームIDの更新が行えること', () => {
-      pair.setTeamId('2')
-      expect(pair.getTeamId()).toBe('2')
     })
 
     it('getParticipantByParticipantId()でペアに所属する参加者の取得が行えること', () => {

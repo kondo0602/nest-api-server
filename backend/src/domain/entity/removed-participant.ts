@@ -1,12 +1,17 @@
 import { ParticipantNameVO } from 'src/domain/entity/participant-name-vo'
 import { ParticipantEmailVO } from 'src/domain/entity/participant-email-vo'
-import { ParticipantStatusIdVO } from 'src/domain/entity/participant-status-id-vo'
+import { RemovedParticipantStatusIdVO } from 'src/domain/entity/removed-participant-status-id-vo'
 
-export class Participant {
+export const enum RemovedParticipantStatus {
+  Pending = '2',
+  Withdrawn = '3',
+}
+
+export class RemovedParticipant {
   private id: string
   private name: ParticipantNameVO
   private email: ParticipantEmailVO
-  private statusId: ParticipantStatusIdVO
+  private statusId: RemovedParticipantStatusIdVO
 
   public constructor(props: {
     id: string
@@ -18,7 +23,7 @@ export class Participant {
     this.id = id
     this.name = new ParticipantNameVO(name)
     this.email = new ParticipantEmailVO(email)
-    this.statusId = new ParticipantStatusIdVO(statusId)
+    this.statusId = new RemovedParticipantStatusIdVO(statusId)
   }
 
   public getId() {

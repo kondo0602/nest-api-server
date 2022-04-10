@@ -10,4 +10,5 @@ export interface IRemovedParticipantRepository {
   updateRemovedParticipant(
     removedPartcipant: RemovedParticipant,
   ): Promise<RemovedParticipant>
+  deleteRemovedParticipant(participantId: string): Promise<void>
 }

@@ -76,4 +76,12 @@ export class RemovedParticipantRepository
 
     return removedParticipant
   }
+
+  public async deleteRemovedParticipant(participantId: string): Promise<void> {
+    await this.prismaClient.removedParticipant.delete({
+      where: {
+        id: participantId,
+      },
+    })
+  }
 }

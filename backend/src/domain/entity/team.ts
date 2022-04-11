@@ -53,6 +53,16 @@ export class Team {
     }
   }
 
+  public getPairWithFewestParticipants() {
+    const pairWithFewestParticipants = this.pairs.reduce((pair, nextPair) => {
+      return pair.getParticipantCount() < nextPair.getParticipantCount()
+        ? pair
+        : nextPair
+    })
+
+    return pairWithFewestParticipants
+  }
+
   public addPair(pair: Pair): void {
     this.pairs.push(pair)
   }

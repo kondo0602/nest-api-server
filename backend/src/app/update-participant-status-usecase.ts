@@ -1,12 +1,11 @@
-import { Participant } from 'src/domain/entity/participant'
 import { ParticipantStatus } from 'src/domain/entity/participant-status-id-vo'
-import { RemovedParticipant } from 'src/domain/entity/removed-participant'
 import { RemovedParticipantStatus } from 'src/domain/entity/removed-participant-status-id-vo'
 import { IParticipantQS } from 'src/app/query-service-interface/participant-qs'
 import { IParticipantRepository } from './repository-interface/participant-repository'
 import { IRemovedParticipantRepository } from './repository-interface/removed-participant-repository'
 import { ParticipantEnrolledCheck } from 'src/domain/domain-service/participant-enrolled-check'
 import { ParticipantActivate } from 'src/domain/domain-service/participant-activate'
+import { ParticipantDeactivate } from 'src/domain/domain-service/participant-deactivate'
 
 export class UpdateParticipantUseCase {
   private readonly participantQS: IParticipantQS
@@ -45,26 +44,12 @@ export class UpdateParticipantUseCase {
 
       if (await participantEnrolledCheckService.isEnrolled(id)) {
         // Participant -> RemovedParticipant
-        const targetTeam = await this.participantRepo.getTeamByParticipantId(id)
-        const targetPair = targetTeam.getPairByParticipantId(id)
-        const targetParticipant = targetPair.getParticipantByParticipantId(id)
+        const participantDeactivateService = new ParticipantDeactivate(
+          this.participantRepo,
+          this.removedParticipantRepo,
+        )
 
-        // TODO: 参加者の減少でチームが2名以下になってしまう場合、管理者にメールが送信されるように修正
-        // TODO: 参加者の減少でペアが1名以下になってしまう場合、残った参加者が自動的に他のペアに合流するように修正
-        targetPair.removeParticipant(id)
-        targetTeam.removePair(targetPair.getId())
-        targetTeam.addPair(targetPair)
-
-        this.participantRepo.updateTeam(targetTeam)
-
-        const removedParticipant = new RemovedParticipant({
-          id: targetParticipant.getId(),
-          name: targetParticipant.getName(),
-          email: targetParticipant.getEmail(),
-          statusId: statusId,
-        })
-
-        this.removedParticipantRepo.createRemovedParticipant(removedParticipant)
+        await participantDeactivateService.participantDeactivate(id, statusId)
       } else {
         // RemovedParticipant -> RemovedParticipant
         const targetParticipant = await this.removedParticipantRepo.getRemovedParticipantByParticipantId(

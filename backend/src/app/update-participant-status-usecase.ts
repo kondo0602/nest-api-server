@@ -6,6 +6,7 @@ import { IParticipantQS } from 'src/app/query-service-interface/participant-qs'
 import { IParticipantRepository } from './repository-interface/participant-repository'
 import { IRemovedParticipantRepository } from './repository-interface/removed-participant-repository'
 import { ParticipantEnrolledCheck } from 'src/domain/domain-service/participant-enrolled-check'
+import { ParticipantActivate } from 'src/domain/domain-service/participant-activate'
 
 export class UpdateParticipantUseCase {
   private readonly participantQS: IParticipantQS
@@ -27,36 +28,12 @@ export class UpdateParticipantUseCase {
 
     if (statusId === ParticipantStatus.Enrolled) {
       // RemovedParticipant -> Participant
-      const removedParticipant = await this.removedParticipantRepo.getRemovedParticipantByParticipantId(
-        id,
+      const participantActivateService = new ParticipantActivate(
+        this.participantRepo,
+        this.removedParticipantRepo,
       )
 
-      if (!removedParticipant) {
-        throw new Error('指定された参加者が見つかりませんでした.')
-      }
-
-      await this.removedParticipantRepo.deleteRemovedParticipant(id)
-
-      const participant = new Participant({
-        id: removedParticipant.getId(),
-        name: removedParticipant.getName(),
-        email: removedParticipant.getEmail(),
-      })
-
-      // TODO: 最も参加人数が少ないチームの中で、最も参加人数が少ないペアから自動的に自動敵に参加先が選択されるように修正
-      // TODO: ペアへの参加によってペアが4名になってしまう場合、自動的に2つのペアに分解されるように修正
-      const targetTeam = await this.participantRepo.getTeamByTeamId(
-        'f17d89e1-ab4a-498d-a419-cf03a1cb3b67',
-      )
-      const targetPair = targetTeam.getPairByPairId(
-        'd69df444-7533-47a9-944d-fb28fa94a33d',
-      )
-
-      targetPair.addParticipant(participant)
-      targetTeam.removePair(targetPair.getId())
-      targetTeam.addPair(targetPair)
-
-      await this.participantRepo.updateTeam(targetTeam)
+      await participantActivateService.participantActivate(id)
     } else if (
       statusId === RemovedParticipantStatus.Pending ||
       statusId === RemovedParticipantStatus.Withdrawn

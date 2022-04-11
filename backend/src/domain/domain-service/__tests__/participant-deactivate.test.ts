@@ -1,12 +1,11 @@
 import { PrismaClient } from '@prisma/client'
 import { mocked } from 'ts-jest/utils'
 import { MockedObjectDeep } from 'ts-jest/dist/utils/testing'
-import { RemovedParticipant } from 'src/domain/entity/removed-participant'
 import { ParticipantRepository } from 'src/infra/db/repository/participant-repository'
 import { RemovedParticipantRepository } from 'src/infra/db/repository/removed-participant-repository'
 import { TestTeamFactory } from '../../entity/__tests__/test-team-factory'
+import { TestRemovedParticipantFactory } from 'src/domain/entity/__tests__/test-removed-participant-factory'
 import { ParticipantDeactivate } from '../participant-deactivate'
-import { createRandomIdString } from 'src/util/random'
 
 jest.mock('@prisma/client')
 jest.mock('src/infra/db/repository/participant-repository')
@@ -31,12 +30,7 @@ describe('do', () => {
     )
 
     mockRemovedParticipantRepo.getRemovedParticipantByParticipantId.mockResolvedValueOnce(
-      new RemovedParticipant({
-        id: createRandomIdString(),
-        name: 'Yamada Taro',
-        email: 'yamada@example.com',
-        statusId: '2',
-      }),
+      TestRemovedParticipantFactory.createPendingParticipant(),
     )
 
     const participantDeactivateService = new ParticipantDeactivate(

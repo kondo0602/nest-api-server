@@ -2,11 +2,6 @@ import { ParticipantNameVO } from 'src/domain/entity/participant-name-vo'
 import { ParticipantEmailVO } from 'src/domain/entity/participant-email-vo'
 import { RemovedParticipantStatusIdVO } from 'src/domain/entity/removed-participant-status-id-vo'
 
-export const enum RemovedParticipantStatus {
-  Pending = '2',
-  Withdrawn = '3',
-}
-
 export class RemovedParticipant {
   private id: string
   private name: ParticipantNameVO

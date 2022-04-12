@@ -24,7 +24,7 @@ describe('do', () => {
     )
   })
 
-  it('対象の参加者が存在する場合、例外が発生しないこと', async () => {
+  it('対象の参加者が存在する場合、例外が発生しないこと', () => {
     mockParticipantRepo.getTeamByParticipantId.mockResolvedValueOnce(
       TestTeamFactory.createTeam(),
     )

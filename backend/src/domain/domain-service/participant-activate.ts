@@ -2,6 +2,7 @@ import { Pair } from 'src/domain/entity/pair'
 import { Participant } from 'src/domain/entity/participant'
 import { IParticipantRepository } from 'src/app/repository-interface/participant-repository'
 import { IRemovedParticipantRepository } from 'src/app/repository-interface/removed-participant-repository'
+import { GetUnusedPairName } from 'src/domain/domain-service/get-unused-pair-name'
 import { createRandomIdString } from 'src/util/random'
 
 export class ParticipantActivate {
@@ -43,9 +44,15 @@ export class ParticipantActivate {
       const choicedParticipant = participants[0]
       targetPair.removeParticipant(choicedParticipant!.getId())
 
+      const GetUnusedPairNameService = new GetUnusedPairName(
+        this.participantRepo,
+      )
+
       const newPair = new Pair({
         id: createRandomIdString(),
-        name: 'z',
+        name: await GetUnusedPairNameService.getUnusedPairName(
+          targetTeam.getId(),
+        ),
         participants: [choicedParticipant!, activateParticipant],
       })
       targetTeam.addPair(newPair)

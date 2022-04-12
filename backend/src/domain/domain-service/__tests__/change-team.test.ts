@@ -24,7 +24,7 @@ describe('do', () => {
     )
   })
 
-  it('他のチームへの移動の場合、例外が発生しないこと', async () => {
+  it('他のチームへの移動の場合、例外が発生しないこと', () => {
     const ChangeTeamService = new ChangeTeam(mockParticipantRepo)
 
     return expect(ChangeTeamService.changeTeam('1', '2')).resolves.toBe(

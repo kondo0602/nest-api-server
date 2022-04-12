@@ -20,7 +20,7 @@ describe('do', () => {
     )
   })
 
-  it('同じチームに所属するペアへの移動の場合、例外が発生しないこと', async () => {
+  it('同じチームに所属するペアへの移動の場合、例外が発生しないこと', () => {
     const ChangePairService = new ChangePair(mockParticipantRepo)
 
     return expect(ChangePairService.changePair('1', '2')).resolves.toBe(

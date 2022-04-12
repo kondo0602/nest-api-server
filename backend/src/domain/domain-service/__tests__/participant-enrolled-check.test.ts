@@ -24,7 +24,7 @@ describe('do', () => {
     )
   })
 
-  it('指定された参加者が在籍中である場合、trueが返ること', async () => {
+  it('指定された参加者が在籍中である場合、trueが返ること', () => {
     mockParticipantQS.getParticipantByParticipantId.mockResolvedValueOnce(
       new Participant({
         id: '1',
@@ -43,7 +43,7 @@ describe('do', () => {
     ).resolves.toBe(true)
   })
 
-  it('指定された参加者が在籍中でない場合、falseが返ること', async () => {
+  it('指定された参加者が在籍中でない場合、falseが返ること', () => {
     mockParticipantQS.getParticipantByEmail.mockResolvedValueOnce(null)
     mockRemovedParticipantRepository.getRemovedParticipantByParticipantId.mockResolvedValueOnce(
       new RemovedParticipant({
@@ -64,7 +64,7 @@ describe('do', () => {
     ).resolves.toBe(false)
   })
 
-  it('指定された参加者が存在しない場合、例外がthrowされること', async () => {
+  it('指定された参加者が存在しない場合、例外がthrowされること', () => {
     mockParticipantQS.getParticipantByEmail.mockResolvedValueOnce(null)
     mockRemovedParticipantRepository.getRemovedParticipantByParticipantId.mockResolvedValueOnce(
       null,

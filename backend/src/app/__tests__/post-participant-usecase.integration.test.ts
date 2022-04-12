@@ -21,7 +21,7 @@ describe('do', () => {
     mockParticipantRepo = mocked(new ParticipantRepository(prisma), true)
   })
 
-  it('例外が発生しないこと', async () => {
+  it('例外が発生しないこと', () => {
     mockParticipantRepo.getTeamByPairId.mockResolvedValueOnce(
       new Team({
         id: '1',

@@ -34,7 +34,8 @@ export class ParticipantDeactivate {
       // 参加人数が少ないペアも定員で合流できない場合
       if (fewestPair.getParticipantCount() > 2) {
         targetTeam.addPair(targetPair)
-        console.log('管理者宛にメール送信')
+        // TODO: コンソール出力 -> 管理者へのメール送信に処理を変更する
+        console.log(`${targetParticipant.getName()}さんが抜けました.`)
         // 休会/退会によってペアが残された参加者1名になってしまう場合
       } else if (targetPair.getParticipantCount() < 2) {
         const leftParticipants = targetPair.getParticipants()
@@ -52,6 +53,14 @@ export class ParticipantDeactivate {
       // チーム内に他のペアがいない場合
     } else {
       targetTeam.addPair(targetPair)
+    }
+
+    // 休会/退会によってチームが2名以下になる場合
+    if (targetTeam.getParticipantCount() <= 2) {
+      // TODO: コンソール出力 -> 管理者へのメール送信に処理を変更する
+      console.log(
+        `${targetParticipant.getName()}さんが抜けたことによって、チーム${targetTeam.getName()}が${targetTeam.getParticipantCount()}名になりました.`,
+      )
     }
 
     this.participantRepo.updateTeam(targetTeam)

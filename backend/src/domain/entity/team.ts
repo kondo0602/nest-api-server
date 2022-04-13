@@ -25,6 +25,10 @@ export class Team {
     return this.id
   }
 
+  public getName() {
+    return this.name.getValue()
+  }
+
   public getPairs() {
     return this.pairs
   }

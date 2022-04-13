@@ -96,6 +96,10 @@ describe('Pairのテスト', () => {
       expect(team.getId()).toMatch(/[0-9|a-z|-]{36}/)
     })
 
+    it('getName()でチーム名の取得が行えること', () => {
+      expect(team.getName()).toBe('1')
+    })
+
     it('getPairs()でチームに所属するペアの取得が行えること', () => {
       expect(team.getPairs()).toContain(pair1)
       expect(team.getPairs()).toContain(pair2)

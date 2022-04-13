@@ -63,6 +63,13 @@ export class Team {
     return pairWithFewestParticipants
   }
 
+  public getParticipantCount(): number {
+    return this.pairs.reduce(
+      (count, pair) => count + pair.getParticipantCount(),
+      0,
+    )
+  }
+
   public addPair(pair: Pair): void {
     this.pairs.push(pair)
   }

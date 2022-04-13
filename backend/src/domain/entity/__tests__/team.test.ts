@@ -111,6 +111,10 @@ describe('Pairのテスト', () => {
       expect(team.getPairWithFewestParticipants()).toBe(pair1)
     })
 
+    it('getParticipantCount()でチームに所属する人数の取得が行えること', () => {
+      expect(team.getParticipantCount()).toBe(5)
+    })
+
     it('addPair()でチームに所属するペアの追加が行えること', () => {
       team.addPair(pair3)
       expect(team.getPairs()).toContain(pair3)

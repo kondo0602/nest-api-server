@@ -20,10 +20,30 @@ export class ParticipantDeactivate {
     const targetParticipant = targetPair.getParticipantByParticipantId(id)
 
     // TODO: 参加者の減少でチームが2名以下になってしまう場合、管理者にメールが送信されるように修正
-    // TODO: 参加者の減少でペアが1名以下になってしまう場合、残った参加者が自動的に他のペアに合流するように修正
-    targetPair.removeParticipant(id)
     targetTeam.removePair(targetPair.getId())
-    targetTeam.addPair(targetPair)
+    targetPair.removeParticipant(id)
+
+    // 参加者の減少でペアが1名以下になる場合、残った参加者を同じチームの人数が少ないペアに合流させる
+    if (targetPair.getParticipantCount() < 2) {
+      // 同じチームの参加人数が少ないペア取得
+      const fewestPair = targetTeam.getPairWithFewestParticipants()
+
+      // 残されたペアの残された参加者取得
+      const lonelyParticipants = targetPair.getParticipants()
+
+      // 少ないペアにその参加者を移動させる
+      lonelyParticipants.forEach((participant) =>
+        fewestPair.addParticipant(participant),
+      )
+
+      // 残ったペアは消す
+      targetTeam.removePair(targetPair.getId())
+
+      targetTeam.removePair(fewestPair.getId())
+      targetTeam.addPair(fewestPair)
+    } else {
+      targetTeam.addPair(targetPair)
+    }
 
     this.participantRepo.updateTeam(targetTeam)
 

@@ -2,6 +2,8 @@ import { Pair } from 'src/domain/entity/pair'
 import { Participant } from 'src/domain/entity/participant'
 
 export class Team {
+  static readonly MINIIMUM_NUMBER_OF_PARTICIPANTS: number = 2
+
   private id: string
   private name: TeamNameVO
   private pairs: Pair[]

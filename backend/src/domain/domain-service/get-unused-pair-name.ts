@@ -20,7 +20,7 @@ export class GetUnusedPairName {
 
     const unusedPairName = unusedPairNames.shift()
 
-    if (typeof unusedPairName !== undefined) {
+    if (typeof unusedPairName !== 'undefined') {
       return unusedPairName!
     } else {
       throw new Error('使用可能なペア名がありません.')

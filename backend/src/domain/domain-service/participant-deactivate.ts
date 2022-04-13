@@ -19,28 +19,37 @@ export class ParticipantDeactivate {
     const targetPair = targetTeam.getPairByParticipantId(id)
     const targetParticipant = targetPair.getParticipantByParticipantId(id)
 
-    // TODO: 参加者の減少でチームが2名以下になってしまう場合、管理者にメールが送信されるように修正
     targetTeam.removePair(targetPair.getId())
+
+    // 休会 or 退会する参加者を削除する
     targetPair.removeParticipant(id)
 
-    // 参加者の減少でペアが1名以下になる場合、残った参加者を同じチームの人数が少ないペアに合流させる
-    if (targetPair.getParticipantCount() < 2) {
-      // 同じチームの参加人数が少ないペア取得
-      const fewestPair = targetTeam.getPairWithFewestParticipants()
+    // 同じチームの中から最も参加人数が少ないペアを取得する
+    const fewestPair = targetTeam.getPairs().length
+      ? targetTeam.getPairWithFewestParticipants()
+      : null
 
-      // 残されたペアの残された参加者取得
-      const lonelyParticipants = targetPair.getParticipants()
+    // 参加者が休会/退会したペア以外にも、チーム内にペアがいる場合
+    if (fewestPair) {
+      // 参加人数が少ないペアも定員で合流できない場合
+      if (fewestPair.getParticipantCount() > 2) {
+        targetTeam.addPair(targetPair)
+        console.log('管理者宛にメール送信')
+        // 休会/退会によってペアが残された参加者1名になってしまう場合
+      } else if (targetPair.getParticipantCount() < 2) {
+        const leftParticipants = targetPair.getParticipants()
 
-      // 少ないペアにその参加者を移動させる
-      lonelyParticipants.forEach((participant) =>
-        fewestPair.addParticipant(participant),
-      )
+        leftParticipants.forEach((participant) =>
+          fewestPair.addParticipant(participant),
+        )
 
-      // 残ったペアは消す
-      targetTeam.removePair(targetPair.getId())
-
-      targetTeam.removePair(fewestPair.getId())
-      targetTeam.addPair(fewestPair)
+        targetTeam.removePair(fewestPair.getId())
+        targetTeam.addPair(fewestPair)
+        // 休会/退会したペアがいなくなって終わりの場合
+      } else {
+        targetTeam.addPair(targetPair)
+      }
+      // チーム内に他のペアがいない場合
     } else {
       targetTeam.addPair(targetPair)
     }

@@ -37,9 +37,11 @@ export class ParticipantActivate {
     const targetTeam = await this.participantRepo.getTeamWithFewestParticipants()
     const targetPair = targetTeam.getPairWithFewestParticipants()
 
-    // ペアに参加させた結果、ペアの人数が4人になってしまわないか確認する
-    if (targetPair.getParticipantCount() === 3) {
-      // 4人になる場合、最も参加人数が少ないペアのうち1人と新規参加者で新しいペアを作成する
+    // ペアに参加させた結果、ペアの定員を超えてしまわないか確認する
+    if (
+      targetPair.getParticipantCount() > Pair.MAXIMUM_NUMBER_OF_PARTICIPANTS
+    ) {
+      // ペアの定員を超えてしまう場合、最も参加人数が少ないペアのうち1人と新規参加者で新しいペアを作成する
       const participants = targetPair.getParticipants()
       const choicedParticipant = participants[0]
       targetPair.removeParticipant(choicedParticipant!.getId())
@@ -57,7 +59,7 @@ export class ParticipantActivate {
       })
       targetTeam.addPair(newPair)
     } else {
-      // 4人にならない場合、最も参加人数の少ないペアに参加者を所属させる
+      // ペアの定員を超えない場合、最も参加人数の少ないペアに参加者を所属させる
       targetPair.addParticipant(activateParticipant)
     }
 

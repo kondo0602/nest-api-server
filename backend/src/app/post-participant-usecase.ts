@@ -16,13 +16,8 @@ export class PostParticipantUseCase {
     this.participantRepo = participantRepo
   }
 
-  public async do(params: {
-    name: string
-    email: string
-    statusId: string
-    pairId: string
-  }) {
-    const { name, email, statusId, pairId } = params
+  public async do(params: { name: string; email: string; pairId: string }) {
+    const { name, email, pairId } = params
 
     const EmailDuplicateCheckService = new EmailDuplicateCheck(
       this.participantQS,
@@ -36,7 +31,6 @@ export class PostParticipantUseCase {
       id: createRandomIdString(),
       name,
       email,
-      statusId,
     })
 
     const targetTeam = await this.participantRepo.getTeamByPairId(pairId)

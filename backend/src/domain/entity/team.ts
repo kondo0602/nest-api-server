@@ -53,12 +53,6 @@ export class Team {
     }
   }
 
-  public getParticipantByParticipantId(participantId: string): Participant {
-    const targetPair = this.getPairByParticipantId(participantId)
-
-    return targetPair.getParticipantByParticipantId(participantId)
-  }
-
   public addPair(pair: Pair): void {
     this.pairs.push(pair)
   }

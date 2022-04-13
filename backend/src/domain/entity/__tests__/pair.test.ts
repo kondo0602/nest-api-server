@@ -12,14 +12,12 @@ describe('Pairのテスト', () => {
       id: createRandomIdString(),
       name: 'Yamada Taro',
       email: 'yamada@example.com',
-      statusId: '1',
     })
 
     participant2 = new Participant({
       id: createRandomIdString(),
       name: 'Tanaka Jiro',
       email: 'tanaka@example.com',
-      statusId: '1',
     })
 
     pair = new Pair({

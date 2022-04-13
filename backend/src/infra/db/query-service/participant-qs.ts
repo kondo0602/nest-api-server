@@ -12,6 +12,26 @@ export class ParticipantQS implements IParticipantQS {
     this.prismaClient = prismaClient
   }
 
+  public async getParticipantByParticipantId(
+    participantId: string,
+  ): Promise<Participant | null> {
+    const participant = await this.prismaClient.participant.findFirst({
+      where: {
+        id: participantId,
+      },
+    })
+
+    if (participant) {
+      return new Participant({
+        id: participant.id,
+        name: participant.name,
+        email: participant.email,
+      })
+    } else {
+      return null
+    }
+  }
+
   public async getParticipantByEmail(
     email: string,
   ): Promise<Participant | null> {
@@ -26,7 +46,6 @@ export class ParticipantQS implements IParticipantQS {
         id: participant.id,
         name: participant.name,
         email: participant.email,
-        statusId: participant.statusId,
       })
     } else {
       return null

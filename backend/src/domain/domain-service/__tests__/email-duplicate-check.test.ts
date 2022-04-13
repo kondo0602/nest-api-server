@@ -16,13 +16,12 @@ describe('do', () => {
     mockParticipantQS = mocked(new ParticipantQS(prisma), true)
   })
 
-  it('既に登録されているメールアドレスである場合、trueが返ること', async () => {
+  it('既に登録されているメールアドレスである場合、trueが返ること', () => {
     mockParticipantQS.getParticipantByEmail.mockResolvedValueOnce(
       new Participant({
         id: '1',
         name: 'Bob',
         email: 'bob@example.com',
-        statusId: '1',
       }),
     )
 
@@ -35,7 +34,7 @@ describe('do', () => {
     ).resolves.toBe(true)
   })
 
-  it('未登録のメールアドレスである場合、falseが返ること', async () => {
+  it('未登録のメールアドレスである場合、falseが返ること', () => {
     mockParticipantQS.getParticipantByEmail.mockResolvedValueOnce(null)
 
     const EmailDuplicateCheckService = new EmailDuplicateCheck(

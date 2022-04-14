@@ -1,6 +1,9 @@
 import { Participant } from 'src/domain/entity/participant'
 
 export class Pair {
+  static readonly MAXIMUM_NUMBER_OF_PARTICIPANTS: number = 3
+  static readonly MINIIMUM_NUMBER_OF_PARTICIPANTS: number = 2
+
   private id: string
   private name: PairNameVO
   private participants: Participant[]

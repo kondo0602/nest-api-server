@@ -6,5 +6,6 @@ export interface IParticipantRepository {
   getTeamByTeamId(teamId: string): Promise<Team>
   getTeamByPairId(pairId: string): Promise<Team>
   getTeamByParticipantId(participantId: string): Promise<Team>
+  getTeamWithFewestParticipants(): Promise<Team>
   updateTeam(team: Team): Promise<Team>
 }

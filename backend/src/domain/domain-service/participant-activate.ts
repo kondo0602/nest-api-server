@@ -1,6 +1,9 @@
+import { Pair } from 'src/domain/entity/pair'
 import { Participant } from 'src/domain/entity/participant'
 import { IParticipantRepository } from 'src/app/repository-interface/participant-repository'
 import { IRemovedParticipantRepository } from 'src/app/repository-interface/removed-participant-repository'
+import { GetUnusedPairName } from 'src/domain/domain-service/get-unused-pair-name'
+import { createRandomIdString } from 'src/util/random'
 
 export class ParticipantActivate {
   private readonly participantRepo: IParticipantRepository
@@ -25,18 +28,41 @@ export class ParticipantActivate {
 
     await this.removedParticipantRepo.deleteRemovedParticipant(participantId)
 
-    const participant = new Participant({
+    const activateParticipant = new Participant({
       id: removedParticipant.getId(),
       name: removedParticipant.getName(),
       email: removedParticipant.getEmail(),
     })
 
-    // TODO: 最も参加人数が少ないチームの中で、最も参加人数が少ないペアから自動的に自動敵に参加先が選択されるように修正
-    // TODO: ペアへの参加によってペアが4名になってしまう場合、自動的に2つのペアに分解されるように修正
-    const targetTeam = await this.participantRepo.getTeamByTeamId('1')
-    const targetPair = targetTeam.getPairByPairId('1')
+    const targetTeam = await this.participantRepo.getTeamWithFewestParticipants()
+    const targetPair = targetTeam.getPairWithFewestParticipants()
 
-    targetPair.addParticipant(participant)
+    // ペアに参加させた結果、ペアの定員を超えてしまわないか確認する
+    if (
+      targetPair.getParticipantCount() > Pair.MAXIMUM_NUMBER_OF_PARTICIPANTS
+    ) {
+      // ペアの定員を超えてしまう場合、最も参加人数が少ないペアのうち1人と新規参加者で新しいペアを作成する
+      const participants = targetPair.getParticipants()
+      const choicedParticipant = participants[0]
+      targetPair.removeParticipant(choicedParticipant!.getId())
+
+      const GetUnusedPairNameService = new GetUnusedPairName(
+        this.participantRepo,
+      )
+
+      const newPair = new Pair({
+        id: createRandomIdString(),
+        name: await GetUnusedPairNameService.getUnusedPairName(
+          targetTeam.getId(),
+        ),
+        participants: [choicedParticipant!, activateParticipant],
+      })
+      targetTeam.addPair(newPair)
+    } else {
+      // ペアの定員を超えない場合、最も参加人数の少ないペアに参加者を所属させる
+      targetPair.addParticipant(activateParticipant)
+    }
+
     targetTeam.removePair(targetPair.getId())
     targetTeam.addPair(targetPair)
 

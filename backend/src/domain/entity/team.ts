@@ -2,6 +2,8 @@ import { Pair } from 'src/domain/entity/pair'
 import { Participant } from 'src/domain/entity/participant'
 
 export class Team {
+  static readonly MINIIMUM_NUMBER_OF_PARTICIPANTS: number = 2
+
   private id: string
   private name: TeamNameVO
   private pairs: Pair[]
@@ -23,6 +25,10 @@ export class Team {
 
   public getId() {
     return this.id
+  }
+
+  public getName() {
+    return this.name.getValue()
   }
 
   public getPairs() {
@@ -61,6 +67,13 @@ export class Team {
     })
 
     return pairWithFewestParticipants
+  }
+
+  public getParticipantCount(): number {
+    return this.pairs.reduce(
+      (count, pair) => count + pair.getParticipantCount(),
+      0,
+    )
   }
 
   public addPair(pair: Pair): void {

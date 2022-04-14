@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma, Prisma, PrismaClient } from '@prisma/client'
 import { IParticipantRepository } from 'src/app/repository-interface/participant-repository'
 import { Participant } from 'src/domain/entity/participant'
 import { Pair } from 'src/domain/entity/pair'
@@ -137,6 +137,106 @@ export class ParticipantRepository implements IParticipantRepository {
       })
     } else {
       throw new Error('指定された参加者が所属するチームが見つかりませんでした.')
+    }
+  }
+
+  public async getTeamWithFewestParticipants(): Promise<Team> {
+    type result = { teamId: string }
+
+    // 最も所属人数が少ないチームのIDの一覧を取得する
+    const teamIds: result[] = await this.prismaClient.$queryRaw(
+      Prisma.sql`
+        SELECT
+          "Team"."id" AS "teamId"
+        FROM
+          "Team"
+        LEFT JOIN
+          (
+          SELECT
+            "Team"."id",
+            COUNT("Participant"."id") as participants
+          FROM
+            "Team"
+          LEFT JOIN
+            "Pair"
+          ON
+            "Team"."id" = "Pair"."teamId"
+          LEFT JOIN
+            "Participant"
+          ON
+            "Pair"."id" = "Participant"."pairId"
+          GROUP BY
+            "Team"."id"
+          ) AS "Tmp"
+        ON
+          "Team"."id" = "Tmp"."id"
+        WHERE
+          "Tmp"."participants" =
+            (
+              SELECT
+                MIN("participants")
+              FROM
+              (
+                SELECT
+                  "Team"."id",
+                  COUNT("Participant"."id") as participants
+                FROM
+                  "Team"
+                LEFT JOIN
+                  "Pair"
+                ON
+                  "Team"."id" = "Pair"."teamId"
+                LEFT JOIN
+                  "Participant"
+                ON
+                  "Pair"."id" = "Participant"."pairId"
+                GROUP BY
+                  "Team"."id"
+              ) AS "Tmp"
+            )
+        `,
+    )
+
+    // 取得したチームIDの一覧から無作為に1つを選択する
+    const choicedTeamId = teamIds[Math.floor(Math.random() * teamIds.length)]!
+      .teamId
+
+    // 選択したIDでprisma経由でオブジェクトを取得し、エンティティに詰め替えて返す
+    const team = await this.prismaClient.team.findUnique({
+      where: {
+        id: choicedTeamId,
+      },
+      include: {
+        pairs: {
+          include: {
+            participants: true,
+          },
+        },
+      },
+    })
+
+    if (team) {
+      return new Team({
+        id: team.id,
+        name: team.name,
+        pairs: team.pairs.map(
+          (pair) =>
+            new Pair({
+              id: pair.id,
+              name: pair.name,
+              participants: pair.participants.map(
+                (participant) =>
+                  new Participant({
+                    id: participant.id,
+                    name: participant.name,
+                    email: participant.email,
+                  }),
+              ),
+            }),
+        ),
+      })
+    } else {
+      throw new Error('チームが見つかりませんでした.')
     }
   }
 

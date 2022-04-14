@@ -10,6 +10,8 @@ describe('Pairのテスト', () => {
   let participant4: Participant
   let participant5: Participant
   let participant6: Participant
+  let participant7: Participant
+  let participant8: Participant
   let pair1: Pair
   let pair2: Pair
   let pair3: Pair
@@ -52,6 +54,18 @@ describe('Pairのテスト', () => {
       email: 'watanabe@example.com',
     })
 
+    participant7 = new Participant({
+      id: createRandomIdString(),
+      name: 'Kato Shitiro',
+      email: 'kato@example.com',
+    })
+
+    participant8 = new Participant({
+      id: createRandomIdString(),
+      name: 'Fujita Hachiro',
+      email: 'fujita@example.com',
+    })
+
     pair1 = new Pair({
       id: createRandomIdString(),
       name: 'a',
@@ -61,13 +75,13 @@ describe('Pairのテスト', () => {
     pair2 = new Pair({
       id: createRandomIdString(),
       name: 'b',
-      participants: [participant3, participant4],
+      participants: [participant3, participant4, participant7],
     })
 
     pair3 = new Pair({
       id: createRandomIdString(),
       name: 'c',
-      participants: [participant5, participant6],
+      participants: [participant5, participant6, participant8],
     })
 
     team = new Team({
@@ -82,6 +96,10 @@ describe('Pairのテスト', () => {
       expect(team.getId()).toMatch(/[0-9|a-z|-]{36}/)
     })
 
+    it('getName()でチーム名の取得が行えること', () => {
+      expect(team.getName()).toBe('1')
+    })
+
     it('getPairs()でチームに所属するペアの取得が行えること', () => {
       expect(team.getPairs()).toContain(pair1)
       expect(team.getPairs()).toContain(pair2)
@@ -91,6 +109,14 @@ describe('Pairのテスト', () => {
       const pairId = pair1.getId()
 
       expect(team.getPairByPairId(pairId)).toBe(pair1)
+    })
+
+    it('getPairWithFewestParticipants()でチームに所属する最も人数が少ないペアの取得が行えること', () => {
+      expect(team.getPairWithFewestParticipants()).toBe(pair1)
+    })
+
+    it('getParticipantCount()でチームに所属する人数の取得が行えること', () => {
+      expect(team.getParticipantCount()).toBe(5)
     })
 
     it('addPair()でチームに所属するペアの追加が行えること', () => {

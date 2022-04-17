@@ -148,6 +148,23 @@ async function main() {
     },
   })
 
+  const removedParticipant = await prisma.removedParticipant.createMany({
+    data: [
+      {
+        id: '8',
+        name: 'Kai',
+        email: 'kai@example.com',
+        statusId: '2',
+      },
+      {
+        id: '9',
+        name: 'Shinya',
+        email: 'shinya@example.com',
+        statusId: '2',
+      },
+    ],
+  })
+
   const participantOnTask = await prisma.participantOnTask.createMany({
     data: [
       {

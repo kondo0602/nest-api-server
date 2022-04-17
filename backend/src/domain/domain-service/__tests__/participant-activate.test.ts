@@ -12,11 +12,11 @@ jest.mock('src/infra/db/repository/participant-repository')
 jest.mock('src/infra/db/repository/removed-participant-repository')
 
 describe('do', () => {
+  const prisma = new PrismaClient()
   let mockParticipantRepo: MockedObjectDeep<ParticipantRepository>
   let mockRemovedParticipantRepo: MockedObjectDeep<RemovedParticipantRepository>
 
   beforeAll(() => {
-    const prisma = new PrismaClient()
     mockParticipantRepo = mocked(new ParticipantRepository(prisma), true)
     mockRemovedParticipantRepo = mocked(
       new RemovedParticipantRepository(prisma),
@@ -34,6 +34,7 @@ describe('do', () => {
     )
 
     const participantActivateService = new ParticipantActivate(
+      prisma,
       mockParticipantRepo,
       mockRemovedParticipantRepo,
     )
@@ -51,6 +52,7 @@ describe('do', () => {
     )
 
     const participantActivateService = new ParticipantActivate(
+      prisma,
       mockParticipantRepo,
       mockRemovedParticipantRepo,
     )

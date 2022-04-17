@@ -52,6 +52,7 @@ export class ParticipantController {
     const participantRepo = new ParticipantRepository(prisma)
     const removedParticipantRepo = new RemovedParticipantRepository(prisma)
     const usecase = new UpdateParticipantUseCase(
+      prisma,
       qs,
       participantRepo,
       removedParticipantRepo,

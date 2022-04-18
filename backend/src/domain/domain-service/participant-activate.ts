@@ -1,18 +1,24 @@
+import { PrismaClient } from '@prisma/client'
+import { Team } from 'src/domain/entity/team'
 import { Pair } from 'src/domain/entity/pair'
 import { Participant } from 'src/domain/entity/participant'
+import { RemovedParticipant } from 'src/domain/entity/removed-participant'
 import { IParticipantRepository } from 'src/app/repository-interface/participant-repository'
 import { IRemovedParticipantRepository } from 'src/app/repository-interface/removed-participant-repository'
 import { GetUnusedPairName } from 'src/domain/domain-service/get-unused-pair-name'
 import { createRandomIdString } from 'src/util/random'
 
 export class ParticipantActivate {
+  private readonly prismaClient: PrismaClient
   private readonly participantRepo: IParticipantRepository
   private readonly removedParticipantRepo: IRemovedParticipantRepository
 
   public constructor(
+    prismaClient: PrismaClient,
     participantRepo: IParticipantRepository,
     removedParticipantRepo: IRemovedParticipantRepository,
   ) {
+    this.prismaClient = prismaClient
     this.participantRepo = participantRepo
     this.removedParticipantRepo = removedParticipantRepo
   }
@@ -25,8 +31,6 @@ export class ParticipantActivate {
     if (!removedParticipant) {
       throw new Error('指定された参加者が見つかりませんでした.')
     }
-
-    await this.removedParticipantRepo.deleteRemovedParticipant(participantId)
 
     const activateParticipant = new Participant({
       id: removedParticipant.getId(),
@@ -66,6 +70,68 @@ export class ParticipantActivate {
     targetTeam.removePair(targetPair.getId())
     targetTeam.addPair(targetPair)
 
-    await this.participantRepo.updateTeam(targetTeam)
+    // 更新したエンティティの永続化に使用するクエリを取得する
+    const deleteRemovedParticipantQuery = this.getDeleteRemovedParticipantQuery(
+      removedParticipant,
+    )
+    const deleteTeamQuery = this.getDeleteTeamQuery(targetTeam)
+    const createTeamQuery = this.getCreateTeamQuery(targetTeam)
+
+    await this.prismaClient.$transaction([
+      deleteRemovedParticipantQuery,
+      deleteTeamQuery,
+      createTeamQuery,
+    ])
+  }
+
+  private getDeleteRemovedParticipantQuery(
+    removedParticipant: RemovedParticipant,
+  ) {
+    const deleteRemovedParticipantQuery = this.prismaClient.removedParticipant.delete(
+      {
+        where: { id: removedParticipant.getId() },
+      },
+    )
+
+    return deleteRemovedParticipantQuery
+  }
+
+  private getDeleteTeamQuery(team: Team) {
+    const deleteTeamQuery = this.prismaClient.team.delete({
+      where: { id: team.getId() },
+    })
+
+    return deleteTeamQuery
+  }
+
+  private getCreateTeamQuery(team: Team) {
+    const { id, name, pairs } = team.getAllProperties()
+
+    const createTeamQuery = this.prismaClient.team.create({
+      data: {
+        id: id,
+        name: name.getValue(),
+        pairs: {
+          create: pairs.map((pair) => {
+            return {
+              id: pair.getId(),
+              name: pair.getName(),
+              participants: {
+                create: pair.getParticipants().map((participant) => {
+                  return {
+                    id: participant.getId(),
+                    name: participant.getName(),
+                    email: participant.getEmail(),
+                    statusId: participant.getStatusId(),
+                  }
+                }),
+              },
+            }
+          }),
+        },
+      },
+    })
+
+    return createTeamQuery
   }
 }

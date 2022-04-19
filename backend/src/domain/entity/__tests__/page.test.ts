@@ -1,4 +1,8 @@
-import { PagingCondition, PageSizeVO, PageNumberVO } from '../page'
+import {
+  PagingCondition,
+  PageSizeVO,
+  PageNumberVO,
+} from 'src/domain/entity/page'
 
 describe('PageConditionのテスト', () => {
   let pagingCondition: PagingCondition

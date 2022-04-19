@@ -1,5 +1,3 @@
-import { Pair } from 'src/domain/entity/pair'
-
 export class PairDTO {
   public readonly id: string
   public readonly name: string

@@ -1,5 +1,4 @@
-import { User } from '../user'
-import { UserNameVO } from 'src/domain/entity/user-name-vo'
+import { User } from 'src/domain/entity/user'
 import { createRandomIdString } from 'src/util/random'
 
 describe('Userのテスト', () => {

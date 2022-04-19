@@ -1,6 +1,6 @@
 import { IUserQS } from './query-service-interface/user-qs'
 import { IUserRepository } from './repository-interface/user-repository'
-import { ChangePair } from '../domain/domain-service/change-pair'
+import { ChangePair } from 'src/domain/domain-service/change-pair'
 
 export class ChangePairUseCase {
   private readonly userQS: IUserQS

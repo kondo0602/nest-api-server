@@ -3,9 +3,9 @@ import { mocked } from 'ts-jest/utils'
 import { MockedObjectDeep } from 'ts-jest/dist/utils/testing'
 import { UserRepository } from 'src/infra/db/repository/user-repository'
 import { RemovedUserRepository } from 'src/infra/db/repository/removed-user-repository'
-import { TestTeamFactory } from '../../entity/__tests__/test-team-factory'
+import { TestTeamFactory } from 'src/domain/entity/__tests__/test-team-factory'
 import { TestRemovedUserFactory } from 'src/domain/entity/__tests__/test-removed-user-factory'
-import { UserActivate } from '../user-activate'
+import { UserActivate } from 'src/domain/domain-service/user-activate'
 
 jest.mock('@prisma/client')
 jest.mock('src/infra/db/repository/user-repository')

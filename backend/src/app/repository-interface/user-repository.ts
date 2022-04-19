@@ -1,5 +1,3 @@
-import { User } from 'src/domain/entity/user'
-import { Pair } from 'src/domain/entity/pair'
 import { Team } from 'src/domain/entity/team'
 
 export interface IUserRepository {

@@ -2,7 +2,7 @@ import { User } from 'src/domain/entity/user'
 import { createRandomIdString } from 'src/util/random'
 import { IUserQS } from './query-service-interface/user-qs'
 import { IUserRepository } from './repository-interface/user-repository'
-import { EmailDuplicateCheck } from '../domain/domain-service/email-duplicate-check'
+import { EmailDuplicateCheck } from 'src/domain/domain-service/email-duplicate-check'
 
 export class PostUserUseCase {
   private readonly userQS: IUserQS

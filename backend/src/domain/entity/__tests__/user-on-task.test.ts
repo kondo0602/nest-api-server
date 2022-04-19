@@ -1,4 +1,4 @@
-import { UserOnTask, TaskStatus } from '../user-on-task'
+import { UserOnTask } from 'src/domain/entity/user-on-task'
 import { createRandomIdString } from 'src/util/random'
 
 describe('UserOnTaskのテスト', () => {

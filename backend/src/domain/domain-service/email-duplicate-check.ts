@@ -1,4 +1,4 @@
-import { IUserQS } from '../../app/query-service-interface/user-qs'
+import { IUserQS } from 'src/app/query-service-interface/user-qs'
 
 export class EmailDuplicateCheck {
   private readonly userQS: IUserQS

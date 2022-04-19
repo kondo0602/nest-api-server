@@ -2,8 +2,8 @@ import { PrismaClient } from '@prisma/client'
 import { mocked } from 'ts-jest/utils'
 import { MockedObjectDeep } from 'ts-jest/dist/utils/testing'
 import { UserQS } from 'src/infra/db/query-service/user-qs'
-import { EmailDuplicateCheck } from '../email-duplicate-check'
-import { User } from '../../entity/user'
+import { EmailDuplicateCheck } from 'src/domain/domain-service/email-duplicate-check'
+import { User } from 'src/domain/entity/user'
 import * as faker from 'faker'
 
 jest.mock('@prisma/client')

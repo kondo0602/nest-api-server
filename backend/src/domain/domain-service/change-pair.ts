@@ -1,4 +1,4 @@
-import { IUserRepository } from '../../app/repository-interface/user-repository'
+import { IUserRepository } from 'src/app/repository-interface/user-repository'
 
 export class ChangePair {
   private readonly userRepo: IUserRepository

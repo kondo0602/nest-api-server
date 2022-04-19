@@ -1,6 +1,6 @@
 import { Team } from '../team'
 import { Pair } from '../pair'
-import { Participant } from '../participant'
+import { User } from '../user'
 
 export class TestTeamFactory {
   static createTeam(): Team {
@@ -11,13 +11,13 @@ export class TestTeamFactory {
         new Pair({
           id: '1',
           name: 'a',
-          participants: [
-            new Participant({
+          users: [
+            new User({
               id: '1',
               name: 'Alice',
               email: 'alice@example.com',
             }),
-            new Participant({
+            new User({
               id: '2',
               name: 'Bob',
               email: 'bob@example.com',
@@ -27,13 +27,13 @@ export class TestTeamFactory {
         new Pair({
           id: '2',
           name: 'b',
-          participants: [
-            new Participant({
+          users: [
+            new User({
               id: '3',
               name: 'Cachy',
               email: 'cachy@example.com',
             }),
-            new Participant({
+            new User({
               id: '4',
               name: 'Dan',
               email: 'dan@example.com',
@@ -52,13 +52,13 @@ export class TestTeamFactory {
         new Pair({
           id: '3',
           name: 'c',
-          participants: [
-            new Participant({
+          users: [
+            new User({
               id: '5',
               name: 'Evans',
               email: 'evans@example.com',
             }),
-            new Participant({
+            new User({
               id: '6',
               name: 'Gen',
               email: 'gen@example.com',
@@ -68,13 +68,13 @@ export class TestTeamFactory {
         new Pair({
           id: '4',
           name: 'd',
-          participants: [
-            new Participant({
+          users: [
+            new User({
               id: '7',
               name: 'Him',
               email: 'him@example.com',
             }),
-            new Participant({
+            new User({
               id: '8',
               name: 'Iana',
               email: 'iana@example.com',

@@ -4,7 +4,7 @@ import { GetTeamResponse } from './response/get-team-response'
 import { ChangeTeamRequest } from './request/change-team-request'
 import { GetTeamUsecase } from '../app/get-team-usecase'
 import { ChangeTeamUseCase } from '../app/change-team-usecase'
-import { ParticipantRepository } from 'src/infra/db/repository/participant-repository'
+import { UserRepository } from 'src/infra/db/repository/user-repository'
 import { PrismaClient } from '@prisma/client'
 import { PairQS } from 'src/infra/db/query-service/pair-qs'
 import { TeamQS } from 'src/infra/db/query-service/team-qs'
@@ -31,7 +31,7 @@ export class TeamController {
   ): Promise<void> {
     const prisma = new PrismaClient()
     const qs = new PairQS(prisma)
-    const repo = new ParticipantRepository(prisma)
+    const repo = new UserRepository(prisma)
     const usecase = new ChangeTeamUseCase(qs, repo)
     await usecase.do({
       pairId: id,

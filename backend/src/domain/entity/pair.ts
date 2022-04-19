@@ -1,4 +1,4 @@
-import { Participant } from 'src/domain/entity/participant'
+import { User } from 'src/domain/entity/user'
 
 export class Pair {
   static readonly MAXIMUM_NUMBER_OF_PARTICIPANTS: number = 3
@@ -6,17 +6,13 @@ export class Pair {
 
   private id: string
   private name: PairNameVO
-  private participants: Participant[]
+  private users: User[]
 
-  public constructor(props: {
-    id: string
-    name: string
-    participants: Participant[]
-  }) {
-    const { id, name, participants } = props
+  public constructor(props: { id: string; name: string; users: User[] }) {
+    const { id, name, users } = props
     this.id = id
     this.name = new PairNameVO(name)
-    this.participants = participants
+    this.users = users
   }
 
   public getId() {
@@ -27,42 +23,38 @@ export class Pair {
     return this.name.getValue()
   }
 
-  public getParticipants(): Participant[] {
-    return this.participants
+  public getUsers(): User[] {
+    return this.users
   }
 
   public getAllProperties() {
     return {
       id: this.id,
       name: this.name.getValue(),
-      participants: this.participants,
+      users: this.users,
     }
   }
 
-  public getParticipantByParticipantId(participantId: string): Participant {
-    const participant = this.participants.find(
-      (participant) => participant.getId() === participantId,
-    )
+  public getUserByUserId(userId: string): User {
+    const user = this.users.find((user) => user.getId() === userId)
 
-    if (participant) {
-      return participant
+    if (user) {
+      return user
     } else {
       throw new Error('指定された参加者が見つかりませんでした.')
     }
   }
 
-  public getParticipantCount(): number {
-    return this.participants.length
+  public getUserCount(): number {
+    return this.users.length
   }
 
-  public addParticipant(participant: Participant): void {
-    this.participants.push(participant)
+  public addUser(user: User): void {
+    this.users.push(user)
   }
 
-  public removeParticipant(participantId: string): void {
-    this.participants = this.participants.filter(
-      (participant) => participant.getId() !== participantId,
-    )
+  public removeUser(userId: string): void {
+    this.users = this.users.filter((user) => user.getId() !== userId)
   }
 }
 

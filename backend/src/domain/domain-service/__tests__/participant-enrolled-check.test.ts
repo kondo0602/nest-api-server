@@ -1,52 +1,47 @@
 import { PrismaClient } from '@prisma/client'
 import { mocked } from 'ts-jest/utils'
 import { MockedObjectDeep } from 'ts-jest/dist/utils/testing'
-import { ParticipantQS } from 'src/infra/db/query-service/participant-qs'
-import { RemovedParticipantRepository } from 'src/infra/db/repository/removed-participant-repository'
-import { ParticipantEnrolledCheck } from 'src/domain/domain-service/participant-enrolled-check'
-import { Participant } from 'src/domain/entity/participant'
-import { RemovedParticipant } from 'src/domain/entity/removed-participant'
+import { UserQS } from 'src/infra/db/query-service/user-qs'
+import { RemovedUserRepository } from 'src/infra/db/repository/removed-user-repository'
+import { UserEnrolledCheck } from 'src/domain/domain-service/user-enrolled-check'
+import { User } from 'src/domain/entity/user'
+import { RemovedUser } from 'src/domain/entity/removed-user'
 
 jest.mock('@prisma/client')
-jest.mock('src/infra/db/query-service/participant-qs')
-jest.mock('src/infra/db/repository/removed-participant-repository')
+jest.mock('src/infra/db/query-service/user-qs')
+jest.mock('src/infra/db/repository/removed-user-repository')
 
 describe('do', () => {
-  let mockParticipantQS: MockedObjectDeep<ParticipantQS>
-  let mockRemovedParticipantRepository: MockedObjectDeep<RemovedParticipantRepository>
+  let mockUserQS: MockedObjectDeep<UserQS>
+  let mockRemovedUserRepository: MockedObjectDeep<RemovedUserRepository>
 
   beforeAll(() => {
     const prisma = new PrismaClient()
-    mockParticipantQS = mocked(new ParticipantQS(prisma), true)
-    mockRemovedParticipantRepository = mocked(
-      new RemovedParticipantRepository(prisma),
-      true,
-    )
+    mockUserQS = mocked(new UserQS(prisma), true)
+    mockRemovedUserRepository = mocked(new RemovedUserRepository(prisma), true)
   })
 
   it('指定された参加者が在籍中である場合、trueが返ること', () => {
-    mockParticipantQS.getParticipantByParticipantId.mockResolvedValueOnce(
-      new Participant({
+    mockUserQS.getUserByUserId.mockResolvedValueOnce(
+      new User({
         id: '1',
         name: 'Bob',
         email: 'bob@example.com',
       }),
     )
 
-    const ParticipantEnrolledCheckService = new ParticipantEnrolledCheck(
-      mockParticipantQS,
-      mockRemovedParticipantRepository,
+    const UserEnrolledCheckService = new UserEnrolledCheck(
+      mockUserQS,
+      mockRemovedUserRepository,
     )
 
-    return expect(
-      ParticipantEnrolledCheckService.isEnrolled('1'),
-    ).resolves.toBe(true)
+    return expect(UserEnrolledCheckService.isEnrolled('1')).resolves.toBe(true)
   })
 
   it('指定された参加者が在籍中でない場合、falseが返ること', () => {
-    mockParticipantQS.getParticipantByEmail.mockResolvedValueOnce(null)
-    mockRemovedParticipantRepository.getRemovedParticipantByParticipantId.mockResolvedValueOnce(
-      new RemovedParticipant({
+    mockUserQS.getUserByEmail.mockResolvedValueOnce(null)
+    mockRemovedUserRepository.getRemovedUserByUserId.mockResolvedValueOnce(
+      new RemovedUser({
         id: '1',
         name: 'Bob',
         email: 'bob@example.com',
@@ -54,29 +49,23 @@ describe('do', () => {
       }),
     )
 
-    const ParticipantEnrolledCheckService = new ParticipantEnrolledCheck(
-      mockParticipantQS,
-      mockRemovedParticipantRepository,
+    const UserEnrolledCheckService = new UserEnrolledCheck(
+      mockUserQS,
+      mockRemovedUserRepository,
     )
 
-    return expect(
-      ParticipantEnrolledCheckService.isEnrolled('1'),
-    ).resolves.toBe(false)
+    return expect(UserEnrolledCheckService.isEnrolled('1')).resolves.toBe(false)
   })
 
   it('指定された参加者が存在しない場合、例外がthrowされること', () => {
-    mockParticipantQS.getParticipantByEmail.mockResolvedValueOnce(null)
-    mockRemovedParticipantRepository.getRemovedParticipantByParticipantId.mockResolvedValueOnce(
-      null,
+    mockUserQS.getUserByEmail.mockResolvedValueOnce(null)
+    mockRemovedUserRepository.getRemovedUserByUserId.mockResolvedValueOnce(null)
+
+    const UserEnrolledCheckService = new UserEnrolledCheck(
+      mockUserQS,
+      mockRemovedUserRepository,
     )
 
-    const ParticipantEnrolledCheckService = new ParticipantEnrolledCheck(
-      mockParticipantQS,
-      mockRemovedParticipantRepository,
-    )
-
-    return expect(
-      ParticipantEnrolledCheckService.isEnrolled('1'),
-    ).rejects.toThrow()
+    return expect(UserEnrolledCheckService.isEnrolled('1')).rejects.toThrow()
   })
 })

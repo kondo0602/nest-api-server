@@ -1,66 +1,66 @@
-import { Participant } from '../participant'
+import { User } from '../user'
 import { Pair } from '../pair'
 import { Team, TeamNameVO } from '../team'
 import { createRandomIdString } from 'src/util/random'
 
 describe('Pairのテスト', () => {
-  let participant1: Participant
-  let participant2: Participant
-  let participant3: Participant
-  let participant4: Participant
-  let participant5: Participant
-  let participant6: Participant
-  let participant7: Participant
-  let participant8: Participant
+  let user1: User
+  let user2: User
+  let user3: User
+  let user4: User
+  let user5: User
+  let user6: User
+  let user7: User
+  let user8: User
   let pair1: Pair
   let pair2: Pair
   let pair3: Pair
   let team: Team
 
   beforeEach(() => {
-    participant1 = new Participant({
+    user1 = new User({
       id: createRandomIdString(),
       name: 'Yamada Taro',
       email: 'yamada@example.com',
     })
 
-    participant2 = new Participant({
+    user2 = new User({
       id: createRandomIdString(),
       name: 'Tanaka Jiro',
       email: 'tanaka@example.com',
     })
 
-    participant3 = new Participant({
+    user3 = new User({
       id: createRandomIdString(),
       name: 'Sato Saburo',
       email: 'sato@example.com',
     })
 
-    participant4 = new Participant({
+    user4 = new User({
       id: createRandomIdString(),
       name: 'Watanabe Shiro',
       email: 'watanabe@example.com',
     })
 
-    participant5 = new Participant({
+    user5 = new User({
       id: createRandomIdString(),
       name: 'Shigeno Goro',
       email: 'shigeno@example.com',
     })
 
-    participant6 = new Participant({
+    user6 = new User({
       id: createRandomIdString(),
       name: 'Kudo Shitiro',
       email: 'watanabe@example.com',
     })
 
-    participant7 = new Participant({
+    user7 = new User({
       id: createRandomIdString(),
       name: 'Kato Shitiro',
       email: 'kato@example.com',
     })
 
-    participant8 = new Participant({
+    user8 = new User({
       id: createRandomIdString(),
       name: 'Fujita Hachiro',
       email: 'fujita@example.com',
@@ -69,19 +69,19 @@ describe('Pairのテスト', () => {
     pair1 = new Pair({
       id: createRandomIdString(),
       name: 'a',
-      participants: [participant1, participant2],
+      users: [user1, user2],
     })
 
     pair2 = new Pair({
       id: createRandomIdString(),
       name: 'b',
-      participants: [participant3, participant4, participant7],
+      users: [user3, user4, user7],
     })
 
     pair3 = new Pair({
       id: createRandomIdString(),
       name: 'c',
-      participants: [participant5, participant6, participant8],
+      users: [user5, user6, user8],
     })
 
     team = new Team({
@@ -111,12 +111,12 @@ describe('Pairのテスト', () => {
       expect(team.getPairByPairId(pairId)).toBe(pair1)
     })
 
-    it('getPairWithFewestParticipants()でチームに所属する最も人数が少ないペアの取得が行えること', () => {
-      expect(team.getPairWithFewestParticipants()).toBe(pair1)
+    it('getPairWithFewestUsers()でチームに所属する最も人数が少ないペアの取得が行えること', () => {
+      expect(team.getPairWithFewestUsers()).toBe(pair1)
     })
 
-    it('getParticipantCount()でチームに所属する人数の取得が行えること', () => {
-      expect(team.getParticipantCount()).toBe(5)
+    it('getUserCount()でチームに所属する人数の取得が行えること', () => {
+      expect(team.getUserCount()).toBe(5)
     })
 
     it('addPair()でチームに所属するペアの追加が行えること', () => {

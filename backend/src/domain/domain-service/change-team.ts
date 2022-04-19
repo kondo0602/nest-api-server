@@ -1,21 +1,21 @@
-import { IParticipantRepository } from '../../app/repository-interface/participant-repository'
+import { IUserRepository } from '../../app/repository-interface/user-repository'
 
 export class ChangeTeam {
-  private readonly participantRepo: IParticipantRepository
+  private readonly userRepo: IUserRepository
 
-  public constructor(participantRepo: IParticipantRepository) {
-    this.participantRepo = participantRepo
+  public constructor(userRepo: IUserRepository) {
+    this.userRepo = userRepo
   }
 
   public async changeTeam(pairId: string, teamId: string) {
-    const currentTeam = await this.participantRepo.getTeamByPairId(pairId)
+    const currentTeam = await this.userRepo.getTeamByPairId(pairId)
     const currentPair = currentTeam.getPairByPairId(pairId)
-    const newTeam = await this.participantRepo.getTeamByTeamId(teamId)
+    const newTeam = await this.userRepo.getTeamByTeamId(teamId)
 
     currentTeam.removePair(pairId)
     newTeam.addPair(currentPair)
 
-    await this.participantRepo.updateTeam(currentTeam)
-    await this.participantRepo.updateTeam(newTeam)
+    await this.userRepo.updateTeam(currentTeam)
+    await this.userRepo.updateTeam(newTeam)
   }
 }

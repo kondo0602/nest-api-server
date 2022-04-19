@@ -1,24 +1,21 @@
-import { IParticipantQS } from './query-service-interface/participant-qs'
-import { IParticipantRepository } from './repository-interface/participant-repository'
+import { IUserQS } from './query-service-interface/user-qs'
+import { IUserRepository } from './repository-interface/user-repository'
 import { ChangePair } from '../domain/domain-service/change-pair'
 
 export class ChangePairUseCase {
-  private readonly participantQS: IParticipantQS
-  private readonly participantRepo: IParticipantRepository
+  private readonly userQS: IUserQS
+  private readonly userRepo: IUserRepository
 
-  public constructor(
-    participantQS: IParticipantQS,
-    participantRepo: IParticipantRepository,
-  ) {
-    this.participantQS = participantQS
-    this.participantRepo = participantRepo
+  public constructor(userQS: IUserQS, userRepo: IUserRepository) {
+    this.userQS = userQS
+    this.userRepo = userRepo
   }
 
-  public async do(params: { participantId: string; pairId: string }) {
-    const { participantId, pairId } = params
+  public async do(params: { userId: string; pairId: string }) {
+    const { userId, pairId } = params
 
-    const changePairService = new ChangePair(this.participantRepo)
+    const changePairService = new ChangePair(this.userRepo)
 
-    await changePairService.changePair(participantId, pairId)
+    await changePairService.changePair(userId, pairId)
   }
 }

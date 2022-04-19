@@ -1,43 +1,40 @@
 import { PrismaClient } from '@prisma/client'
 import { mocked } from 'ts-jest/utils'
 import { MockedObjectDeep } from 'ts-jest/dist/utils/testing'
-import { ParticipantRepository } from 'src/infra/db/repository/participant-repository'
-import { RemovedParticipantRepository } from 'src/infra/db/repository/removed-participant-repository'
+import { UserRepository } from 'src/infra/db/repository/user-repository'
+import { RemovedUserRepository } from 'src/infra/db/repository/removed-user-repository'
 import { TestTeamFactory } from '../../entity/__tests__/test-team-factory'
-import { TestRemovedParticipantFactory } from 'src/domain/entity/__tests__/test-removed-participant-factory'
-import { ParticipantDeactivate } from '../participant-deactivate'
+import { TestRemovedUserFactory } from 'src/domain/entity/__tests__/test-removed-user-factory'
+import { UserDeactivate } from '../user-deactivate'
 
 jest.mock('@prisma/client')
-jest.mock('src/infra/db/repository/participant-repository')
-jest.mock('src/infra/db/repository/removed-participant-repository')
+jest.mock('src/infra/db/repository/user-repository')
+jest.mock('src/infra/db/repository/removed-user-repository')
 
 describe('do', () => {
-  let mockParticipantRepo: MockedObjectDeep<ParticipantRepository>
-  let mockRemovedParticipantRepo: MockedObjectDeep<RemovedParticipantRepository>
+  let mockUserRepo: MockedObjectDeep<UserRepository>
+  let mockRemovedUserRepo: MockedObjectDeep<RemovedUserRepository>
 
   beforeAll(() => {
     const prisma = new PrismaClient()
-    mockParticipantRepo = mocked(new ParticipantRepository(prisma), true)
-    mockRemovedParticipantRepo = mocked(
-      new RemovedParticipantRepository(prisma),
-      true,
-    )
+    mockUserRepo = mocked(new UserRepository(prisma), true)
+    mockRemovedUserRepo = mocked(new RemovedUserRepository(prisma), true)
   })
 
   it('対象の参加者が存在する場合、例外が発生しないこと', () => {
-    mockParticipantRepo.getTeamByParticipantId.mockResolvedValueOnce(
+    mockUserRepo.getTeamByUserId.mockResolvedValueOnce(
       TestTeamFactory.createTeam(),
     )
 
-    mockRemovedParticipantRepo.getRemovedParticipantByParticipantId.mockResolvedValueOnce(
-      TestRemovedParticipantFactory.createPendingParticipant(),
+    mockRemovedUserRepo.getRemovedUserByUserId.mockResolvedValueOnce(
+      TestRemovedUserFactory.createPendingUser(),
     )
 
-    const participantDeactivateService = new ParticipantDeactivate(
-      mockParticipantRepo,
-      mockRemovedParticipantRepo,
+    const userDeactivateService = new UserDeactivate(
+      mockUserRepo,
+      mockRemovedUserRepo,
     )
 
-    participantDeactivateService.participantDeactivate('1', '2')
+    userDeactivateService.userDeactivate('1', '2')
   })
 })

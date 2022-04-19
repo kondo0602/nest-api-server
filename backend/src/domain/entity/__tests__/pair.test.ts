@@ -1,5 +1,5 @@
-import { User } from '../user'
-import { Pair, PairNameVO } from '../pair'
+import { Pair, PairNameVO } from 'src/domain/entity/pair'
+import { User } from 'src/domain/entity/user'
 import { createRandomIdString } from 'src/util/random'
 
 describe('Pairのテスト', () => {

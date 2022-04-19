@@ -1,4 +1,4 @@
-import { Task } from '../task'
+import { Task } from 'src/domain/entity/task'
 import * as faker from 'faker'
 
 describe('Taskのテスト', () => {

@@ -1,9 +1,9 @@
 import { PrismaClient } from '@prisma/client'
 import { mocked } from 'ts-jest/utils'
 import { MockedObjectDeep } from 'ts-jest/dist/utils/testing'
-import { UserRepository } from '../../../infra/db/repository/user-repository'
-import { ChangeTeam } from '../change-team'
-import { TestTeamFactory } from '../../entity/__tests__/test-team-factory'
+import { UserRepository } from 'src/infra/db/repository/user-repository'
+import { ChangeTeam } from 'src/domain/domain-service/change-team'
+import { TestTeamFactory } from 'src/domain/entity/__tests__/test-team-factory'
 
 jest.mock('@prisma/client')
 jest.mock('src/infra/db/repository/user-repository')

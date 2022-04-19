@@ -1,6 +1,6 @@
-import { Team } from '../team'
-import { Pair } from '../pair'
-import { User } from '../user'
+import { Team } from 'src/domain/entity/team'
+import { Pair } from 'src/domain/entity/pair'
+import { User } from 'src/domain/entity/user'
 import * as faker from 'faker'
 
 export class TestTeamFactory {

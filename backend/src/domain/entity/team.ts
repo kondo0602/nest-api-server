@@ -1,5 +1,4 @@
 import { Pair } from 'src/domain/entity/pair'
-import { User } from 'src/domain/entity/user'
 
 export class Team {
   static readonly MINIIMUM_NUMBER_OF_PARTICIPANTS: number = 2

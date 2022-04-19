@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { UserRepository } from 'src/infra/db/repository/user-repository'
 import { RemovedUserRepository } from 'src/infra/db/repository/removed-user-repository'
-import { UserActivate } from '../user-activate'
+import { UserActivate } from 'src/domain/domain-service/user-activate'
 import { User } from 'src/domain/entity/user'
 import { RemovedUser } from 'src/domain/entity/removed-user'
 

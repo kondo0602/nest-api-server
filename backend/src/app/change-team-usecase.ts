@@ -1,6 +1,6 @@
 import { IPairQS } from './query-service-interface/pair-qs'
 import { IUserRepository } from './repository-interface/user-repository'
-import { ChangeTeam } from '../domain/domain-service/change-team'
+import { ChangeTeam } from 'src/domain/domain-service/change-team'
 
 export class ChangeTeamUseCase {
   private readonly pairQS: IPairQS

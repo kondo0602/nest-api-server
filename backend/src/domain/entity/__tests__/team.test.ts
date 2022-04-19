@@ -119,6 +119,10 @@ describe('Pairのテスト', () => {
       expect(team.getUserCount()).toBe(5)
     })
 
+    it('getUnusedPairName()でチーム内でまだ使用していないペア名の取得が行えること', () => {
+      expect(team.getUnusedPairName()).toBe('c')
+    })
+
     it('addPair()でチームに所属するペアの追加が行えること', () => {
       team.addPair(pair3)
       expect(team.getPairs()).toContain(pair3)

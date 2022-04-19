@@ -5,7 +5,6 @@ import { User } from 'src/domain/entity/user'
 import { RemovedUser } from 'src/domain/entity/removed-user'
 import { IUserRepository } from 'src/app/repository-interface/user-repository'
 import { IRemovedUserRepository } from 'src/app/repository-interface/removed-user-repository'
-import { GetUnusedPairName } from 'src/domain/domain-service/get-unused-pair-name'
 import { createRandomIdString } from 'src/util/random'
 
 export class UserActivate {
@@ -48,13 +47,9 @@ export class UserActivate {
       const choicedUser = users[0]
       targetPair.removeUser(choicedUser!.getId())
 
-      const GetUnusedPairNameService = new GetUnusedPairName(this.userRepo)
-
       const newPair = new Pair({
         id: createRandomIdString(),
-        name: await GetUnusedPairNameService.getUnusedPairName(
-          targetTeam.getId(),
-        ),
+        name: targetTeam.getUnusedPairName(),
         users: [choicedUser!, activateUser],
       })
       targetTeam.addPair(newPair)

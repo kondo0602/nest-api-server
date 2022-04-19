@@ -65,6 +65,27 @@ export class Team {
     return pairWithFewestUsers
   }
 
+  /**
+   * チーム内で未使用のペア名のうち、アルファベット順で先頭にくる文字を返す.
+   */
+  public getUnusedPairName(): string {
+    const usablePairNames: string[] = [...'abcdefghijklmnopqrstuvwxyz']
+
+    const usedPairNames = this.getPairs().map((pair) => pair.getName())
+
+    const unusedPairNames = usablePairNames.filter(
+      (pairName) => !usedPairNames.includes(pairName),
+    )
+
+    const unusedPairName = unusedPairNames.shift()
+
+    if (typeof unusedPairName !== 'undefined') {
+      return unusedPairName!
+    } else {
+      throw new Error('使用可能なペア名がありません.')
+    }
+  }
+
   public getUserCount(): number {
     return this.pairs.reduce((count, pair) => count + pair.getUserCount(), 0)
   }

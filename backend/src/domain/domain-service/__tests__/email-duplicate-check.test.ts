@@ -4,6 +4,7 @@ import { MockedObjectDeep } from 'ts-jest/dist/utils/testing'
 import { UserQS } from 'src/infra/db/query-service/user-qs'
 import { EmailDuplicateCheck } from '../email-duplicate-check'
 import { User } from '../../entity/user'
+import * as faker from 'faker'
 
 jest.mock('@prisma/client')
 jest.mock('src/infra/db/query-service/user-qs')
@@ -19,8 +20,8 @@ describe('do', () => {
   it('既に登録されているメールアドレスである場合、trueが返ること', () => {
     mockUserQS.getUserByEmail.mockResolvedValueOnce(
       new User({
-        id: '1',
-        name: 'Bob',
+        id: faker.random.uuid(),
+        name: faker.name.findName(),
         email: 'bob@example.com',
       }),
     )

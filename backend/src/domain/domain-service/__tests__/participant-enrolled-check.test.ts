@@ -6,6 +6,7 @@ import { RemovedUserRepository } from 'src/infra/db/repository/removed-user-repo
 import { UserEnrolledCheck } from 'src/domain/domain-service/user-enrolled-check'
 import { User } from 'src/domain/entity/user'
 import { RemovedUser } from 'src/domain/entity/removed-user'
+import * as faker from 'faker'
 
 jest.mock('@prisma/client')
 jest.mock('src/infra/db/query-service/user-qs')
@@ -25,8 +26,8 @@ describe('do', () => {
     mockUserQS.getUserByUserId.mockResolvedValueOnce(
       new User({
         id: '1',
-        name: 'Bob',
-        email: 'bob@example.com',
+        name: faker.name.findName(),
+        email: faker.internet.email(),
       }),
     )
 
@@ -43,8 +44,8 @@ describe('do', () => {
     mockRemovedUserRepository.getRemovedUserByUserId.mockResolvedValueOnce(
       new RemovedUser({
         id: '1',
-        name: 'Bob',
-        email: 'bob@example.com',
+        name: faker.name.findName(),
+        email: faker.internet.email(),
         statusId: '2',
       }),
     )

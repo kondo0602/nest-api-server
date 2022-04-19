@@ -1,6 +1,7 @@
 import { Team } from '../team'
 import { Pair } from '../pair'
 import { User } from '../user'
+import * as faker from 'faker'
 
 export class TestTeamFactory {
   static createTeam(): Team {
@@ -14,13 +15,13 @@ export class TestTeamFactory {
           users: [
             new User({
               id: '1',
-              name: 'Alice',
-              email: 'alice@example.com',
+              name: faker.name.findName(),
+              email: faker.internet.email(),
             }),
             new User({
               id: '2',
-              name: 'Bob',
-              email: 'bob@example.com',
+              name: faker.name.findName(),
+              email: faker.internet.email(),
             }),
           ],
         }),
@@ -30,13 +31,13 @@ export class TestTeamFactory {
           users: [
             new User({
               id: '3',
-              name: 'Cachy',
-              email: 'cachy@example.com',
+              name: faker.name.findName(),
+              email: faker.internet.email(),
             }),
             new User({
               id: '4',
-              name: 'Dan',
-              email: 'dan@example.com',
+              name: faker.name.findName(),
+              email: faker.internet.email(),
             }),
           ],
         }),
@@ -55,13 +56,13 @@ export class TestTeamFactory {
           users: [
             new User({
               id: '5',
-              name: 'Evans',
-              email: 'evans@example.com',
+              name: faker.name.findName(),
+              email: faker.internet.email(),
             }),
             new User({
               id: '6',
-              name: 'Gen',
-              email: 'gen@example.com',
+              name: faker.name.findName(),
+              email: faker.internet.email(),
             }),
           ],
         }),
@@ -71,13 +72,13 @@ export class TestTeamFactory {
           users: [
             new User({
               id: '7',
-              name: 'Him',
-              email: 'him@example.com',
+              name: faker.name.findName(),
+              email: faker.internet.email(),
             }),
             new User({
               id: '8',
-              name: 'Iana',
-              email: 'iana@example.com',
+              name: faker.name.findName(),
+              email: faker.internet.email(),
             }),
           ],
         }),

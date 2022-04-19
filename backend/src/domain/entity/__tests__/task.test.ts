@@ -1,14 +1,14 @@
 import { Task } from '../task'
-import { createRandomIdString } from 'src/util/random'
+import * as faker from 'faker'
 
 describe('Taskのテスト', () => {
   let task: Task
 
   beforeEach(() => {
     task = new Task({
-      id: createRandomIdString(),
-      title: '課題1',
-      content: 'DB設計の課題1です.',
+      id: faker.random.uuid(),
+      title: faker.lorem.word(),
+      content: faker.lorem.sentence(),
     })
   })
 

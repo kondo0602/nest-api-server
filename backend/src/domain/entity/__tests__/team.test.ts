@@ -1,7 +1,7 @@
 import { User } from '../user'
 import { Pair } from '../pair'
 import { Team, TeamNameVO } from '../team'
-import { createRandomIdString } from 'src/util/random'
+import * as faker from 'faker'
 
 describe('Pairのテスト', () => {
   let user1: User
@@ -19,73 +19,73 @@ describe('Pairのテスト', () => {
 
   beforeEach(() => {
     user1 = new User({
-      id: createRandomIdString(),
-      name: 'Yamada Taro',
-      email: 'yamada@example.com',
+      id: faker.random.uuid(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
     })
 
     user2 = new User({
-      id: createRandomIdString(),
-      name: 'Tanaka Jiro',
-      email: 'tanaka@example.com',
+      id: faker.random.uuid(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
     })
 
     user3 = new User({
-      id: createRandomIdString(),
-      name: 'Sato Saburo',
-      email: 'sato@example.com',
+      id: faker.random.uuid(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
     })
 
     user4 = new User({
-      id: createRandomIdString(),
-      name: 'Watanabe Shiro',
-      email: 'watanabe@example.com',
+      id: faker.random.uuid(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
     })
 
     user5 = new User({
-      id: createRandomIdString(),
-      name: 'Shigeno Goro',
-      email: 'shigeno@example.com',
+      id: faker.random.uuid(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
     })
 
     user6 = new User({
-      id: createRandomIdString(),
-      name: 'Kudo Shitiro',
-      email: 'watanabe@example.com',
+      id: faker.random.uuid(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
     })
 
     user7 = new User({
-      id: createRandomIdString(),
-      name: 'Kato Shitiro',
-      email: 'kato@example.com',
+      id: faker.random.uuid(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
     })
 
     user8 = new User({
-      id: createRandomIdString(),
-      name: 'Fujita Hachiro',
-      email: 'fujita@example.com',
+      id: faker.random.uuid(),
+      name: faker.name.findName(),
+      email: faker.internet.email(),
     })
 
     pair1 = new Pair({
-      id: createRandomIdString(),
+      id: faker.random.uuid(),
       name: 'a',
       users: [user1, user2],
     })
 
     pair2 = new Pair({
-      id: createRandomIdString(),
+      id: faker.random.uuid(),
       name: 'b',
       users: [user3, user4, user7],
     })
 
     pair3 = new Pair({
-      id: createRandomIdString(),
+      id: faker.random.uuid(),
       name: 'c',
       users: [user5, user6, user8],
     })
 
     team = new Team({
-      id: createRandomIdString(),
+      id: faker.random.uuid(),
       name: '1',
       pairs: [pair1, pair2],
     })

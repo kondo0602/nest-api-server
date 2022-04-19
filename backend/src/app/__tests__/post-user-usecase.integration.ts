@@ -6,6 +6,7 @@ import { UserRepository } from 'src/infra/db/repository/user-repository'
 import { PostUserUseCase } from '../post-user-usecase'
 import { Team } from 'src/domain/entity/team'
 import { Pair } from 'src/domain/entity/pair'
+import * as faker from 'faker'
 
 jest.mock('@prisma/client')
 jest.mock('src/infra/db/query-service/user-qs')
@@ -34,8 +35,8 @@ describe('do', () => {
 
     return expect(
       usecase.do({
-        name: 'Bob',
-        email: 'bob@example.com',
+        name: faker.name.findName(),
+        email: faker.internet.email(),
         pairId: '1',
       }),
     ).resolves.toBe(undefined)

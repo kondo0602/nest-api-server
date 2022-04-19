@@ -1,28 +1,26 @@
-import { IParticipantOnTaskRepository } from './repository-interface/participant-on-task-repository'
+import { IUserOnTaskRepository } from './repository-interface/user-on-task-repository'
 
 export class UpdateTaskStatusUseCase {
-  private readonly participantTaskRepo: IParticipantOnTaskRepository
+  private readonly userTaskRepo: IUserOnTaskRepository
 
-  public constructor(participantTaskRepo: IParticipantOnTaskRepository) {
-    this.participantTaskRepo = participantTaskRepo
+  public constructor(userTaskRepo: IUserOnTaskRepository) {
+    this.userTaskRepo = userTaskRepo
   }
 
   public async do(params: {
-    participantId: string
+    userId: string
     taskId: string
     statusId: string
   }) {
-    const { participantId, taskId, statusId } = params
+    const { userId, taskId, statusId } = params
 
-    const participantOnTaskEntity = await this.participantTaskRepo.getParticipantOnTaskByParticipantIdAndTaskId(
-      participantId,
+    const userOnTaskEntity = await this.userTaskRepo.getUserOnTaskByUserIdAndTaskId(
+      userId,
       taskId,
     )
 
-    participantOnTaskEntity.changeStatus(statusId)
+    userOnTaskEntity.changeStatus(statusId)
 
-    await this.participantTaskRepo.updateParticipantOnTask(
-      participantOnTaskEntity,
-    )
+    await this.userTaskRepo.updateUserOnTask(userOnTaskEntity)
   }
 }

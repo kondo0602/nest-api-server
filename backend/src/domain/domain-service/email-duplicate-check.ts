@@ -1,17 +1,15 @@
-import { IParticipantQS } from '../../app/query-service-interface/participant-qs'
+import { IUserQS } from '../../app/query-service-interface/user-qs'
 
 export class EmailDuplicateCheck {
-  private readonly participantQS: IParticipantQS
+  private readonly userQS: IUserQS
 
-  public constructor(participantQS: IParticipantQS) {
-    this.participantQS = participantQS
+  public constructor(userQS: IUserQS) {
+    this.userQS = userQS
   }
 
   public async isDuplicated(email: string) {
-    const duplicatedParticipant = await this.participantQS.getParticipantByEmail(
-      email,
-    )
+    const duplicatedUser = await this.userQS.getUserByEmail(email)
 
-    return duplicatedParticipant != null
+    return duplicatedUser != null
   }
 }

@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common'
-import { ParticipantController } from './controller/participant.controller'
+import { UserController } from './controller/user.controller'
 import { PairController } from './controller/pair.controller'
 import { TeamController } from './controller/team.controller'
-import { ParticipantOnTaskController } from './controller/participant-on-task.controller'
+import { UserOnTaskController } from './controller/user-on-task.controller'
 
 // memo: DIコンテナとしては使わないため、controllerの追加だけしてください
 @Module({
   imports: [],
   controllers: [
-    ParticipantController,
+    UserController,
     PairController,
     TeamController,
-    ParticipantOnTaskController,
+    UserOnTaskController,
   ],
   providers: [],
 })

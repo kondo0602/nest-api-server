@@ -1,16 +1,16 @@
-import { IParticipantRepository } from 'src/app/repository-interface/participant-repository'
+import { IUserRepository } from 'src/app/repository-interface/user-repository'
 
 export class GetUnusedPairName {
   private readonly usablePairNames: string[] = [...'abcdefghijklmnopqrstuvwxyz']
 
-  private readonly participantRepo: IParticipantRepository
+  private readonly userRepo: IUserRepository
 
-  public constructor(participantRepo: IParticipantRepository) {
-    this.participantRepo = participantRepo
+  public constructor(userRepo: IUserRepository) {
+    this.userRepo = userRepo
   }
 
   public async getUnusedPairName(teamId: string): Promise<string> {
-    const targetTeam = await this.participantRepo.getTeamByTeamId(teamId)
+    const targetTeam = await this.userRepo.getTeamByTeamId(teamId)
 
     const usedPairNames = targetTeam.getPairs().map((pair) => pair.getName())
 

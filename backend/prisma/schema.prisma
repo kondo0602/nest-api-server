@@ -7,29 +7,29 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Participant {
-  id                String              @id
-  name              String
-  email             String
-  Status            ParticipantStatus   @relation(fields: [statusId], references: [id])
-  statusId          String
-  Pair              Pair                @relation(fields: [pairId], references: [id], onDelete: Cascade)
-  pairId            String
-  participantOnTask ParticipantOnTask[]
+model User {
+  id         String       @id
+  name       String
+  email      String
+  Status     UserStatus   @relation(fields: [statusId], references: [id])
+  statusId   String
+  Pair       Pair         @relation(fields: [pairId], references: [id], onDelete: Cascade)
+  pairId     String
+  userOnTask UserOnTask[]
 }
 
-model ParticipantStatus {
-  id          String        @id
-  name        String
-  Participant Participant[]
+model UserStatus {
+  id   String @id
+  name String
+  User User[]
 }
 
 model Pair {
-  id           String        @id
-  name         String
-  participants Participant[]
-  Team         Team          @relation(fields: [teamId], references: [id], onDelete: Cascade)
-  teamId       String
+  id     String @id
+  name   String
+  users  User[]
+  Team   Team   @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  teamId String
 }
 
 model Team {
@@ -39,38 +39,38 @@ model Team {
 }
 
 model Task {
-  id               String              @id
+  id               String       @id
   title            String
   content          String
-  ParitipantOnTask ParticipantOnTask[]
+  ParitipantOnTask UserOnTask[]
 }
 
-model ParticipantOnTask {
-  id            String      @id
-  Status        TaskStatus  @relation(fields: [statusId], references: [id])
-  statusId      String
-  task          Task        @relation(fields: [taskId], references: [id], onDelete: Cascade)
-  taskId        String
-  participant   Participant @relation(fields: [participantId], references: [id], onDelete: Cascade)
-  participantId String
+model UserOnTask {
+  id       String     @id
+  Status   TaskStatus @relation(fields: [statusId], references: [id])
+  statusId String
+  task     Task       @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId   String
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
 }
 
 model TaskStatus {
-  id                String              @id
-  name              String
-  ParticipantOnTask ParticipantOnTask[]
+  id         String       @id
+  name       String
+  UserOnTask UserOnTask[]
 }
 
-model RemovedParticipant {
-  id       String                   @id
+model RemovedUser {
+  id       String            @id
   name     String
   email    String
-  Status   RemovedParticipantStatus @relation(fields: [statusId], references: [id])
+  Status   RemovedUserStatus @relation(fields: [statusId], references: [id])
   statusId String
 }
 
-model RemovedParticipantStatus {
-  id                 String               @id
-  name               String
-  RemovedParticipant RemovedParticipant[]
+model RemovedUserStatus {
+  id          String        @id
+  name        String
+  RemovedUser RemovedUser[]
 }

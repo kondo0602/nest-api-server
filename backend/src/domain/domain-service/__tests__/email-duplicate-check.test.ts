@@ -1,33 +1,31 @@
 import { PrismaClient } from '@prisma/client'
 import { mocked } from 'ts-jest/utils'
 import { MockedObjectDeep } from 'ts-jest/dist/utils/testing'
-import { ParticipantQS } from 'src/infra/db/query-service/participant-qs'
+import { UserQS } from 'src/infra/db/query-service/user-qs'
 import { EmailDuplicateCheck } from '../email-duplicate-check'
-import { Participant } from '../../entity/participant'
+import { User } from '../../entity/user'
 
 jest.mock('@prisma/client')
-jest.mock('src/infra/db/query-service/participant-qs')
+jest.mock('src/infra/db/query-service/user-qs')
 
 describe('do', () => {
-  let mockParticipantQS: MockedObjectDeep<ParticipantQS>
+  let mockUserQS: MockedObjectDeep<UserQS>
 
   beforeAll(() => {
     const prisma = new PrismaClient()
-    mockParticipantQS = mocked(new ParticipantQS(prisma), true)
+    mockUserQS = mocked(new UserQS(prisma), true)
   })
 
   it('既に登録されているメールアドレスである場合、trueが返ること', () => {
-    mockParticipantQS.getParticipantByEmail.mockResolvedValueOnce(
-      new Participant({
+    mockUserQS.getUserByEmail.mockResolvedValueOnce(
+      new User({
         id: '1',
         name: 'Bob',
         email: 'bob@example.com',
       }),
     )
 
-    const EmailDuplicateCheckService = new EmailDuplicateCheck(
-      mockParticipantQS,
-    )
+    const EmailDuplicateCheckService = new EmailDuplicateCheck(mockUserQS)
 
     return expect(
       EmailDuplicateCheckService.isDuplicated('bob@example.com'),
@@ -35,11 +33,9 @@ describe('do', () => {
   })
 
   it('未登録のメールアドレスである場合、falseが返ること', () => {
-    mockParticipantQS.getParticipantByEmail.mockResolvedValueOnce(null)
+    mockUserQS.getUserByEmail.mockResolvedValueOnce(null)
 
-    const EmailDuplicateCheckService = new EmailDuplicateCheck(
-      mockParticipantQS,
-    )
+    const EmailDuplicateCheckService = new EmailDuplicateCheck(mockUserQS)
 
     return expect(
       EmailDuplicateCheckService.isDuplicated('bob@example.com'),

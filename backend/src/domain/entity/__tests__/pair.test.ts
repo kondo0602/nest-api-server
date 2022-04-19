@@ -1,20 +1,20 @@
-import { Participant } from '../participant'
+import { User } from '../user'
 import { Pair, PairNameVO } from '../pair'
 import { createRandomIdString } from 'src/util/random'
 
 describe('Pairのテスト', () => {
-  let participant1: Participant
-  let participant2: Participant
+  let user1: User
+  let user2: User
   let pair: Pair
 
   beforeEach(() => {
-    participant1 = new Participant({
+    user1 = new User({
       id: createRandomIdString(),
       name: 'Yamada Taro',
       email: 'yamada@example.com',
     })
 
-    participant2 = new Participant({
+    user2 = new User({
       id: createRandomIdString(),
       name: 'Tanaka Jiro',
       email: 'tanaka@example.com',
@@ -23,7 +23,7 @@ describe('Pairのテスト', () => {
     pair = new Pair({
       id: createRandomIdString(),
       name: 'a',
-      participants: [participant1, participant2],
+      users: [user1, user2],
     })
   })
 
@@ -36,19 +36,17 @@ describe('Pairのテスト', () => {
       expect(pair.getName()).toBe('a')
     })
 
-    it('getParticipants()でペアに所属する参加者の取得が行えること', () => {
-      expect(pair.getParticipants()).toContain(participant1)
-      expect(pair.getParticipants()).toContain(participant2)
+    it('getUsers()でペアに所属する参加者の取得が行えること', () => {
+      expect(pair.getUsers()).toContain(user1)
+      expect(pair.getUsers()).toContain(user2)
     })
 
-    it('getParticipantByParticipantId()でペアに所属する参加者の取得が行えること', () => {
-      expect(pair.getParticipantByParticipantId(participant1.getId())).toBe(
-        participant1,
-      )
+    it('getUserByUserId()でペアに所属する参加者の取得が行えること', () => {
+      expect(pair.getUserByUserId(user1.getId())).toBe(user1)
     })
 
-    it('getParticipantCount()でペアに所属する参加者の人数の取得が行えること', () => {
-      expect(pair.getParticipantCount()).toBe(2)
+    it('getUserCount()でペアに所属する参加者の人数の取得が行えること', () => {
+      expect(pair.getUserCount()).toBe(2)
     })
   })
 })

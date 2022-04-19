@@ -1,53 +1,45 @@
 import { PrismaClient } from '@prisma/client'
-import { ParticipantRepository } from 'src/infra/db/repository/participant-repository'
-import { RemovedParticipantRepository } from 'src/infra/db/repository/removed-participant-repository'
-import { ParticipantActivate } from '../participant-activate'
-import { Participant } from 'src/domain/entity/participant'
-import { RemovedParticipant } from 'src/domain/entity/removed-participant'
+import { UserRepository } from 'src/infra/db/repository/user-repository'
+import { RemovedUserRepository } from 'src/infra/db/repository/removed-user-repository'
+import { UserActivate } from '../user-activate'
+import { User } from 'src/domain/entity/user'
+import { RemovedUser } from 'src/domain/entity/removed-user'
 
 describe('do', () => {
   const prisma = new PrismaClient()
-  const participantRepo = new ParticipantRepository(prisma)
-  const removedParticipantRepo = new RemovedParticipantRepository(prisma)
-  const participantActivateService = new ParticipantActivate(
+  const userRepo = new UserRepository(prisma)
+  const removedUserRepo = new RemovedUserRepository(prisma)
+  const userActivateService = new UserActivate(
     prisma,
-    participantRepo,
-    removedParticipantRepo,
+    userRepo,
+    removedUserRepo,
   )
 
   it('対象の休会/退会参加者が存在する場合、①参加者として追加され ②休会/退会参加者からは削除されること', async () => {
-    const removedParticipantId = '9'
+    const removedUserId = '9'
 
-    await participantActivateService.participantActivate(removedParticipantId)
+    await userActivateService.userActivate(removedUserId)
 
-    const targetTeam = await participantRepo.getTeamByParticipantId(
-      removedParticipantId,
-    )
-    const targetPair = targetTeam.getPairByParticipantId(removedParticipantId)
+    const targetTeam = await userRepo.getTeamByUserId(removedUserId)
+    const targetPair = targetTeam.getPairByUserId(removedUserId)
 
-    expect(
-      targetPair.getParticipantByParticipantId(removedParticipantId),
-    ).toBeInstanceOf(Participant) // ①
+    expect(targetPair.getUserByUserId(removedUserId)).toBeInstanceOf(User) // ①
 
     await expect(
-      removedParticipantRepo.getRemovedParticipantByParticipantId(
-        removedParticipantId,
-      ),
+      removedUserRepo.getRemovedUserByUserId(removedUserId),
     ).resolves.toBeNull() // ②
   })
 
-  it('復帰した参加者の追加に失敗した場合、①participantActivateでエラーが発生し ②休会/退会参加者の削除も行われないこと', async () => {
-    // Participantテーブルにも存在するIDを指定し、Participantテーブルへの挿入を失敗させる
-    const removedParticipantId = '8'
+  it('復帰した参加者の追加に失敗した場合、①userActivateでエラーが発生し ②休会/退会参加者の削除も行われないこと', async () => {
+    // Userテーブルにも存在するIDを指定し、Userテーブルへの挿入を失敗させる
+    const removedUserId = '8'
 
     await expect(
-      participantActivateService.participantActivate(removedParticipantId),
+      userActivateService.userActivate(removedUserId),
     ).rejects.toThrow() // ①
 
     await expect(
-      removedParticipantRepo.getRemovedParticipantByParticipantId(
-        removedParticipantId,
-      ),
-    ).resolves.toBeInstanceOf(RemovedParticipant) // ②
+      removedUserRepo.getRemovedUserByUserId(removedUserId),
+    ).resolves.toBeInstanceOf(RemovedUser) // ②
   })
 })

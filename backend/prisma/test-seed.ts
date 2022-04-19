@@ -5,29 +5,27 @@ const prisma = new PrismaClient()
 
 async function main() {
   const delete1 = await prisma.$transaction([
-    prisma.participantOnTask.deleteMany(),
-    prisma.participant.deleteMany(),
-    prisma.removedParticipant.deleteMany(),
+    prisma.userOnTask.deleteMany(),
+    prisma.user.deleteMany(),
+    prisma.removedUser.deleteMany(),
     prisma.pair.deleteMany(),
     prisma.team.deleteMany(),
     prisma.task.deleteMany(),
-    prisma.participantStatus.deleteMany(),
-    prisma.removedParticipantStatus.deleteMany(),
+    prisma.userStatus.deleteMany(),
+    prisma.removedUserStatus.deleteMany(),
     prisma.taskStatus.deleteMany(),
   ])
 
-  const participantStatus = await prisma.participantStatus.createMany({
+  const userStatus = await prisma.userStatus.createMany({
     data: [{ id: '1', name: '在籍中' }],
   })
 
-  const removedParticipantStatus = await prisma.removedParticipantStatus.createMany(
-    {
-      data: [
-        { id: '2', name: '休会中' },
-        { id: '3', name: '退会済' },
-      ],
-    },
-  )
+  const removedUserStatus = await prisma.removedUserStatus.createMany({
+    data: [
+      { id: '2', name: '休会中' },
+      { id: '3', name: '退会済' },
+    ],
+  })
 
   const taskStatus = await prisma.taskStatus.createMany({
     data: [
@@ -55,7 +53,7 @@ async function main() {
           {
             id: createRandomIdString(),
             name: 'a',
-            participants: {
+            users: {
               create: [
                 {
                   id: '1',
@@ -75,7 +73,7 @@ async function main() {
           {
             id: createRandomIdString(),
             name: 'b',
-            participants: {
+            users: {
               create: [
                 {
                   id: '3',
@@ -106,7 +104,7 @@ async function main() {
           {
             id: createRandomIdString(),
             name: 'c',
-            participants: {
+            users: {
               create: [
                 {
                   id: '5',
@@ -126,7 +124,7 @@ async function main() {
           {
             id: createRandomIdString(),
             name: 'd',
-            participants: {
+            users: {
               create: [
                 {
                   id: '7',
@@ -148,7 +146,7 @@ async function main() {
     },
   })
 
-  const removedParticipant = await prisma.removedParticipant.createMany({
+  const removedUser = await prisma.removedUser.createMany({
     data: [
       {
         id: '8',
@@ -165,198 +163,198 @@ async function main() {
     ],
   })
 
-  const participantOnTask = await prisma.participantOnTask.createMany({
+  const userOnTask = await prisma.userOnTask.createMany({
     data: [
       {
         id: createRandomIdString(),
         statusId: '2',
-        participantId: '1',
+        userId: '1',
         taskId: '1',
       },
       {
         id: createRandomIdString(),
         statusId: '2',
-        participantId: '1',
+        userId: '1',
         taskId: '2',
       },
       {
         id: createRandomIdString(),
         statusId: '2',
-        participantId: '1',
+        userId: '1',
         taskId: '3',
       },
       {
         id: createRandomIdString(),
         statusId: '2',
-        participantId: '1',
+        userId: '1',
         taskId: '4',
       },
       {
         id: createRandomIdString(),
         statusId: '2',
-        participantId: '2',
+        userId: '2',
         taskId: '1',
       },
       {
         id: createRandomIdString(),
         statusId: '2',
-        participantId: '2',
+        userId: '2',
         taskId: '2',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '2',
+        userId: '2',
         taskId: '3',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '2',
+        userId: '2',
         taskId: '4',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '3',
+        userId: '3',
         taskId: '1',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '3',
+        userId: '3',
         taskId: '2',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '3',
+        userId: '3',
         taskId: '3',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '3',
+        userId: '3',
         taskId: '4',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '4',
+        userId: '4',
         taskId: '1',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '4',
+        userId: '4',
         taskId: '2',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '4',
+        userId: '4',
         taskId: '3',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '4',
+        userId: '4',
         taskId: '4',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '5',
+        userId: '5',
         taskId: '1',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '5',
+        userId: '5',
         taskId: '2',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '5',
+        userId: '5',
         taskId: '3',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '5',
+        userId: '5',
         taskId: '4',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '6',
+        userId: '6',
         taskId: '1',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '6',
+        userId: '6',
         taskId: '2',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '6',
+        userId: '6',
         taskId: '3',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '6',
+        userId: '6',
         taskId: '4',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '7',
+        userId: '7',
         taskId: '1',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '7',
+        userId: '7',
         taskId: '2',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '7',
+        userId: '7',
         taskId: '3',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '7',
+        userId: '7',
         taskId: '4',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '8',
+        userId: '8',
         taskId: '1',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '8',
+        userId: '8',
         taskId: '2',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '8',
+        userId: '8',
         taskId: '3',
       },
       {
         id: createRandomIdString(),
         statusId: '1',
-        participantId: '8',
+        userId: '8',
         taskId: '4',
       },
     ],

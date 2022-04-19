@@ -1,24 +1,20 @@
-import { IParticipantRepository } from '../../app/repository-interface/participant-repository'
+import { IUserRepository } from '../../app/repository-interface/user-repository'
 
 export class ChangePair {
-  private readonly participantRepo: IParticipantRepository
+  private readonly userRepo: IUserRepository
 
-  public constructor(participantRepo: IParticipantRepository) {
-    this.participantRepo = participantRepo
+  public constructor(userRepo: IUserRepository) {
+    this.userRepo = userRepo
   }
 
-  public async changePair(participantId: string, pairId: string) {
-    const targetTeam = await this.participantRepo.getTeamByParticipantId(
-      participantId,
-    )
-    const currentPair = targetTeam.getPairByParticipantId(participantId)
+  public async changePair(userId: string, pairId: string) {
+    const targetTeam = await this.userRepo.getTeamByUserId(userId)
+    const currentPair = targetTeam.getPairByUserId(userId)
     const targetPair = targetTeam.getPairByPairId(pairId)
-    const targetParticipant = currentPair.getParticipantByParticipantId(
-      participantId,
-    )
+    const targetUser = currentPair.getUserByUserId(userId)
 
-    currentPair.removeParticipant(participantId)
-    targetPair.addParticipant(targetParticipant)
+    currentPair.removeUser(userId)
+    targetPair.addUser(targetUser)
 
     targetTeam.removePair(currentPair.getId())
     targetTeam.addPair(currentPair)
@@ -26,6 +22,6 @@ export class ChangePair {
     targetTeam.removePair(currentPair.getId())
     targetTeam.addPair(currentPair)
 
-    await this.participantRepo.updateTeam(targetTeam)
+    await this.userRepo.updateTeam(targetTeam)
   }
 }

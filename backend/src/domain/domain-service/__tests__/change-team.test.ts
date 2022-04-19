@@ -1,31 +1,31 @@
 import { PrismaClient } from '@prisma/client'
 import { mocked } from 'ts-jest/utils'
 import { MockedObjectDeep } from 'ts-jest/dist/utils/testing'
-import { ParticipantRepository } from '../../../infra/db/repository/participant-repository'
+import { UserRepository } from '../../../infra/db/repository/user-repository'
 import { ChangeTeam } from '../change-team'
 import { TestTeamFactory } from '../../entity/__tests__/test-team-factory'
 
 jest.mock('@prisma/client')
-jest.mock('src/infra/db/repository/participant-repository')
+jest.mock('src/infra/db/repository/user-repository')
 
 describe('do', () => {
-  let mockParticipantRepo: MockedObjectDeep<ParticipantRepository>
+  let mockUserRepo: MockedObjectDeep<UserRepository>
 
   beforeAll(() => {
     const prisma = new PrismaClient()
-    mockParticipantRepo = mocked(new ParticipantRepository(prisma), true)
+    mockUserRepo = mocked(new UserRepository(prisma), true)
 
-    mockParticipantRepo.getTeamByPairId.mockResolvedValueOnce(
+    mockUserRepo.getTeamByPairId.mockResolvedValueOnce(
       TestTeamFactory.createTeam(),
     )
 
-    mockParticipantRepo.getTeamByTeamId.mockResolvedValueOnce(
+    mockUserRepo.getTeamByTeamId.mockResolvedValueOnce(
       TestTeamFactory.createAnotherTeam(),
     )
   })
 
   it('他のチームへの移動の場合、例外が発生しないこと', () => {
-    const ChangeTeamService = new ChangeTeam(mockParticipantRepo)
+    const ChangeTeamService = new ChangeTeam(mockUserRepo)
 
     return expect(ChangeTeamService.changeTeam('1', '2')).resolves.toBe(
       undefined,

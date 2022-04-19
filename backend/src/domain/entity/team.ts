@@ -1,5 +1,5 @@
 import { Pair } from 'src/domain/entity/pair'
-import { Participant } from 'src/domain/entity/participant'
+import { User } from 'src/domain/entity/user'
 
 export class Team {
   static readonly MINIIMUM_NUMBER_OF_PARTICIPANTS: number = 2
@@ -45,11 +45,9 @@ export class Team {
     }
   }
 
-  public getPairByParticipantId(participantId: string): Pair {
+  public getPairByUserId(userId: string): Pair {
     const pair = this.pairs.find((pair) => {
-      return pair
-        .getParticipants()
-        .find((participant) => participant.getId() === participantId)
+      return pair.getUsers().find((user) => user.getId() === userId)
     })
 
     if (pair) {
@@ -59,21 +57,16 @@ export class Team {
     }
   }
 
-  public getPairWithFewestParticipants() {
-    const pairWithFewestParticipants = this.pairs.reduce((pair, nextPair) => {
-      return pair.getParticipantCount() < nextPair.getParticipantCount()
-        ? pair
-        : nextPair
+  public getPairWithFewestUsers() {
+    const pairWithFewestUsers = this.pairs.reduce((pair, nextPair) => {
+      return pair.getUserCount() < nextPair.getUserCount() ? pair : nextPair
     })
 
-    return pairWithFewestParticipants
+    return pairWithFewestUsers
   }
 
-  public getParticipantCount(): number {
-    return this.pairs.reduce(
-      (count, pair) => count + pair.getParticipantCount(),
-      0,
-    )
+  public getUserCount(): number {
+    return this.pairs.reduce((count, pair) => count + pair.getUserCount(), 0)
   }
 
   public addPair(pair: Pair): void {

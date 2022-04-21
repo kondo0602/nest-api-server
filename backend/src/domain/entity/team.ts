@@ -1,5 +1,8 @@
 import { Pair } from 'src/domain/entity/pair'
-import { DomainBadRequestException } from 'src/domain/__shared__/exception/domain-exception'
+import {
+  DomainBadRequestException,
+  DomainNotFoundException,
+} from 'src/domain/__shared__/exception/domain-exception'
 
 export class Team {
   static readonly MINIIMUM_NUMBER_OF_PARTICIPANTS: number = 2
@@ -41,7 +44,7 @@ export class Team {
     if (pair) {
       return pair
     } else {
-      throw new Error('指定されたペアが見つかりませんでした.')
+      throw new DomainNotFoundException('指定されたペアが見つかりませんでした.')
     }
   }
 
@@ -53,7 +56,9 @@ export class Team {
     if (pair) {
       return pair
     } else {
-      throw new Error('指定された参加者が所属するペアが見つかりませんでした.')
+      throw new DomainNotFoundException(
+        '指定された参加者が所属するペアが見つかりませんでした.',
+      )
     }
   }
 

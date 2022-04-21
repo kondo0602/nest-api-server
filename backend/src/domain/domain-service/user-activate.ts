@@ -6,6 +6,7 @@ import { RemovedUser } from 'src/domain/entity/removed-user'
 import { IUserRepository } from 'src/app/repository-interface/user-repository'
 import { IRemovedUserRepository } from 'src/app/repository-interface/removed-user-repository'
 import { createRandomIdString } from 'src/util/random'
+import { DomainNotFoundException } from '../__shared__/exception/domain-exception'
 
 export class UserActivate {
   private readonly prismaClient: PrismaClient
@@ -28,7 +29,9 @@ export class UserActivate {
     )
 
     if (!removedUser) {
-      throw new Error('指定された参加者が見つかりませんでした.')
+      throw new DomainNotFoundException(
+        '指定された参加者が見つかりませんでした.',
+      )
     }
 
     const activateUser = new User({

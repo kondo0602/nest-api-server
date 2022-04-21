@@ -1,5 +1,6 @@
 import { IUserQS } from 'src/app/query-service-interface/user-qs'
 import { IRemovedUserRepository } from 'src/app/repository-interface/removed-user-repository'
+import { DomainNotFoundException } from '../__shared__/exception/domain-exception'
 
 export class UserEnrolledCheck {
   private readonly userQS: IUserQS
@@ -18,6 +19,6 @@ export class UserEnrolledCheck {
       return false
     }
 
-    throw new Error('指定された参加者が見つかりませんでした.')
+    throw new DomainNotFoundException('指定された参加者が見つかりませんでした.')
   }
 }

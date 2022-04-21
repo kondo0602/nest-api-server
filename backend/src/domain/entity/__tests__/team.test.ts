@@ -2,6 +2,7 @@ import { Team, TeamNameVO } from 'src/domain/entity/team'
 import { Pair } from 'src/domain/entity/pair'
 import { User } from 'src/domain/entity/user'
 import * as faker from 'faker'
+import { DomainBadRequestException } from 'src/domain/__shared__/exception/domain-exception'
 
 describe('Pairのテスト', () => {
   let user1: User
@@ -148,8 +149,8 @@ describe('TeamNameVOのテスト', () => {
     expect(new TeamNameVO('1')).toBeInstanceOf(TeamNameVO)
     expect(new TeamNameVO('11')).toBeInstanceOf(TeamNameVO)
     expect(new TeamNameVO('111')).toBeInstanceOf(TeamNameVO)
-    expect(() => new TeamNameVO('1111')).toThrow()
-    expect(() => new TeamNameVO('a')).toThrow()
+    expect(() => new TeamNameVO('1111')).toThrow(DomainBadRequestException)
+    expect(() => new TeamNameVO('a')).toThrow(DomainBadRequestException)
   })
 
   it('equals()で同一性の評価が行えること', () => {

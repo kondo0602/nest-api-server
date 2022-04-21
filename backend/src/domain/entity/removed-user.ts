@@ -1,6 +1,7 @@
 import { UserNameVO } from 'src/domain/entity/user-name-vo'
 import { UserEmailVO } from 'src/domain/entity/user-email-vo'
 import { RemovedUserStatusIdVO } from 'src/domain/entity/removed-user-status-id-vo'
+import { DomainBadRequestException } from '../__shared__/exception/domain-exception'
 
 export class RemovedUser {
   private id: string
@@ -50,7 +51,7 @@ export class RemovedUser {
     const receivedStatusId = new RemovedUserStatusIdVO(statusId)
 
     if (receivedStatusId.equals(this.statusId.getValue())) {
-      throw new Error('ステータスが更新されていません.')
+      throw new DomainBadRequestException('ステータスが更新されていません.')
     }
 
     this.statusId = receivedStatusId

@@ -1,5 +1,6 @@
 import { RemovedUser } from 'src/domain/entity/removed-user'
 import { RemovedUserStatus } from 'src/domain/entity/removed-user-status-id-vo'
+import { DomainBadRequestException } from 'src/domain/__shared__/exception/domain-exception'
 import { createRandomIdString } from 'src/util/random'
 
 describe('RemovedUserのテスト', () => {
@@ -49,7 +50,7 @@ describe('RemovedUserのテスト', () => {
     it('updateStatusId()で在籍ステータスの空更新が行えないこと', () => {
       expect(() =>
         removedUser.updateStatusId(RemovedUserStatus.Pending),
-      ).toThrow()
+      ).toThrow(DomainBadRequestException)
     })
   })
 })

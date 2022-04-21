@@ -1,4 +1,5 @@
 import { UserOnTask } from 'src/domain/entity/user-on-task'
+import { DomainBadRequestException } from 'src/domain/__shared__/exception/domain-exception'
 import { createRandomIdString } from 'src/util/random'
 
 describe('UserOnTaskのテスト', () => {
@@ -30,6 +31,8 @@ describe('UserOnTaskのテスト', () => {
 
   it('ステータス: 3（完了）の課題のステータスIDの更新が行えないこと', () => {
     userOnTask.changeStatus('3')
-    expect(() => userOnTask.changeStatus('1')).toThrow()
+    expect(() => userOnTask.changeStatus('1')).toThrow(
+      DomainBadRequestException,
+    )
   })
 })

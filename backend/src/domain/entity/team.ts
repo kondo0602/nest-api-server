@@ -1,4 +1,5 @@
 import { Pair } from 'src/domain/entity/pair'
+import { DomainBadRequestException } from 'src/domain/__shared__/exception/domain-exception'
 
 export class Team {
   static readonly MINIIMUM_NUMBER_OF_PARTICIPANTS: number = 2
@@ -105,7 +106,9 @@ export class TeamNameVO {
     const teamNameRegex = /^[0-9]{1,3}$/
 
     if (!teamNameRegex.test(value)) {
-      throw new Error('チームの名前は3桁以内の数字にしてください.')
+      throw new DomainBadRequestException(
+        'チームの名前は3桁以内の数字にしてください.',
+      )
     }
     this._value = value
   }

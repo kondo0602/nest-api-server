@@ -1,3 +1,5 @@
+import { DomainBadRequestException } from '../__shared__/exception/domain-exception'
+
 export const enum UserStatus {
   Enrolled = '1',
 }
@@ -6,7 +8,7 @@ export class UserStatusIdVO {
 
   public constructor(value: string) {
     if (value !== UserStatus.Enrolled) {
-      throw new Error('存在しない在籍ステータスです.')
+      throw new DomainBadRequestException('存在しない在籍ステータスです.')
     }
     this._value = value
   }

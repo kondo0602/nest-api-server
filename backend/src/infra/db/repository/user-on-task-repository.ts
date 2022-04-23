@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { IUserOnTaskRepository } from 'src/app/repository-interface/user-on-task-repository'
 import { UserOnTask } from 'src/domain/entity/user-on-task'
+import { DomainNotFoundException } from 'src/domain/__shared__/exception/domain-exception'
 
 export class UserOnTaskRepository implements IUserOnTaskRepository {
   private prismaClient: PrismaClient
@@ -23,7 +24,9 @@ export class UserOnTaskRepository implements IUserOnTaskRepository {
     if (userOnTask) {
       return new UserOnTask({ ...userOnTask })
     } else {
-      throw new Error('指定された参加者の課題が見つかりませんでした.')
+      throw new DomainNotFoundException(
+        '指定された参加者の課題が見つかりませんでした.',
+      )
     }
   }
 

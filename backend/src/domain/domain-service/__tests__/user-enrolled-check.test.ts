@@ -7,6 +7,7 @@ import { UserEnrolledCheck } from 'src/domain/domain-service/user-enrolled-check
 import { User } from 'src/domain/entity/user'
 import { RemovedUser } from 'src/domain/entity/removed-user'
 import * as faker from 'faker'
+import { DomainNotFoundException } from 'src/domain/__shared__/exception/domain-exception'
 
 jest.mock('@prisma/client')
 jest.mock('src/infra/db/query-service/user-qs')
@@ -67,6 +68,8 @@ describe('do', () => {
       mockRemovedUserRepository,
     )
 
-    return expect(UserEnrolledCheckService.isEnrolled('1')).rejects.toThrow()
+    return expect(UserEnrolledCheckService.isEnrolled('1')).rejects.toThrow(
+      DomainNotFoundException,
+    )
   })
 })

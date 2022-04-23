@@ -3,6 +3,7 @@ import { IUserRepository } from 'src/app/repository-interface/user-repository'
 import { Team } from 'src/domain/entity/team'
 import { Pair } from 'src/domain/entity/pair'
 import { User } from 'src/domain/entity/user'
+import { DomainNotFoundException } from 'src/domain/__shared__/exception/domain-exception'
 
 export class UserRepository implements IUserRepository {
   private prismaClient: PrismaClient
@@ -46,7 +47,9 @@ export class UserRepository implements IUserRepository {
         ),
       })
     } else {
-      throw new Error('指定されたチームが見つかりませんでした.')
+      throw new DomainNotFoundException(
+        '指定されたチームが見つかりませんでした.',
+      )
     }
   }
 
@@ -89,7 +92,9 @@ export class UserRepository implements IUserRepository {
         ),
       })
     } else {
-      throw new Error('指定されたペアが所属するチームが見つかりませんでした.')
+      throw new DomainNotFoundException(
+        '指定されたペアが所属するチームが見つかりませんでした.',
+      )
     }
   }
 
@@ -136,7 +141,9 @@ export class UserRepository implements IUserRepository {
         ),
       })
     } else {
-      throw new Error('指定された参加者が所属するチームが見つかりませんでした.')
+      throw new DomainNotFoundException(
+        '指定された参加者が所属するチームが見つかりませんでした.',
+      )
     }
   }
 
@@ -236,7 +243,7 @@ export class UserRepository implements IUserRepository {
         ),
       })
     } else {
-      throw new Error('チームが見つかりませんでした.')
+      throw new DomainNotFoundException('チームが見つかりませんでした.')
     }
   }
 

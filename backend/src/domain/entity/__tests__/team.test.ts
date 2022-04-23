@@ -2,6 +2,10 @@ import { Team, TeamNameVO } from 'src/domain/entity/team'
 import { Pair } from 'src/domain/entity/pair'
 import { User } from 'src/domain/entity/user'
 import * as faker from 'faker'
+import {
+  DomainBadRequestException,
+  DomainNotFoundException,
+} from 'src/domain/__shared__/exception/domain-exception'
 
 describe('Pairのテスト', () => {
   let user1: User
@@ -111,6 +115,22 @@ describe('Pairのテスト', () => {
       expect(team.getPairByPairId(pairId)).toBe(pair1)
     })
 
+    it('getPairByPairId()でペアが取得できなかった場合、例外が投げられること', () => {
+      const pairId = '1'
+
+      expect(() => team.getPairByPairId(pairId)).toThrow(
+        DomainNotFoundException,
+      )
+    })
+
+    it('getPairByUserId()でペアが取得できなかった場合、例外が投げられること', () => {
+      const userId = '1'
+
+      expect(() => team.getPairByUserId(userId)).toThrow(
+        DomainNotFoundException,
+      )
+    })
+
     it('getPairWithFewestUsers()でチームに所属する最も人数が少ないペアの取得が行えること', () => {
       expect(team.getPairWithFewestUsers()).toBe(pair1)
     })
@@ -148,8 +168,8 @@ describe('TeamNameVOのテスト', () => {
     expect(new TeamNameVO('1')).toBeInstanceOf(TeamNameVO)
     expect(new TeamNameVO('11')).toBeInstanceOf(TeamNameVO)
     expect(new TeamNameVO('111')).toBeInstanceOf(TeamNameVO)
-    expect(() => new TeamNameVO('1111')).toThrow()
-    expect(() => new TeamNameVO('a')).toThrow()
+    expect(() => new TeamNameVO('1111')).toThrow(DomainBadRequestException)
+    expect(() => new TeamNameVO('a')).toThrow(DomainBadRequestException)
   })
 
   it('equals()で同一性の評価が行えること', () => {

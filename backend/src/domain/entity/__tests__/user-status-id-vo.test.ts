@@ -1,4 +1,5 @@
 import { UserStatusIdVO } from 'src/domain/entity/user-status-id-vo'
+import { DomainBadRequestException } from 'src/domain/__shared__/exception/domain-exception'
 
 describe('UserStatusIdVOのテスト', () => {
   describe('正常系', () => {
@@ -18,7 +19,7 @@ describe('UserStatusIdVOのテスト', () => {
 
   describe('異常系', () => {
     it('存在しない在籍ステータスでインスタンスの生成が行えないこと', () => {
-      expect(() => new UserStatusIdVO('2')).toThrow()
+      expect(() => new UserStatusIdVO('2')).toThrow(DomainBadRequestException)
     })
   })
 })

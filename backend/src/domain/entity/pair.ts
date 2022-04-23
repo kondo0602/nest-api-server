@@ -1,4 +1,5 @@
 import { User } from 'src/domain/entity/user'
+import { DomainNotFoundException } from '../__shared__/exception/domain-exception'
 
 export class Pair {
   static readonly MAXIMUM_NUMBER_OF_PARTICIPANTS: number = 3
@@ -41,7 +42,9 @@ export class Pair {
     if (user) {
       return user
     } else {
-      throw new Error('指定された参加者が見つかりませんでした.')
+      throw new DomainNotFoundException(
+        '指定された参加者が見つかりませんでした.',
+      )
     }
   }
 

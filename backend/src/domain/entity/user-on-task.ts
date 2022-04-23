@@ -1,3 +1,5 @@
+import { DomainBadRequestException } from '../__shared__/exception/domain-exception'
+
 export const enum TaskStatus {
   Waiting = '1',
   Working = '2',
@@ -33,7 +35,9 @@ export class UserOnTask {
 
   public changeStatus(statusId: string) {
     if (this.statusId === TaskStatus.Completed) {
-      throw new Error('完了した課題のステータスは変更できません.')
+      throw new DomainBadRequestException(
+        '完了した課題のステータスは変更できません.',
+      )
     }
 
     this.statusId = statusId

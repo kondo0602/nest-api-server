@@ -6,6 +6,7 @@ import { RemovedUserRepository } from 'src/infra/db/repository/removed-user-repo
 import { TestTeamFactory } from 'src/domain/entity/__tests__/test-team-factory'
 import { TestRemovedUserFactory } from 'src/domain/entity/__tests__/test-removed-user-factory'
 import { UserActivate } from 'src/domain/domain-service/user-activate'
+import { DomainNotFoundException } from 'src/domain/__shared__/exception/domain-exception'
 
 jest.mock('@prisma/client')
 jest.mock('src/infra/db/repository/user-repository')
@@ -39,7 +40,7 @@ describe('do', () => {
     userActivateService.userActivate('1')
   })
 
-  it('対象の参加者が存在しない場合、例外が発生すること', () => {
+  it('対象の参加者が存在しない場合、例外が発生すること', async () => {
     mockUserRepo.getTeamByUserId.mockResolvedValueOnce(
       TestTeamFactory.createTeam(),
     )
@@ -52,6 +53,8 @@ describe('do', () => {
       mockRemovedUserRepo,
     )
 
-    expect(() => userActivateService.userActivate('1')).toThrow
+    await expect(() => userActivateService.userActivate('1')).rejects.toThrow(
+      DomainNotFoundException,
+    )
   })
 })

@@ -1,3 +1,5 @@
+import { DomainBadRequestException } from '../__shared__/exception/domain-exception'
+
 export const enum RemovedUserStatus {
   Pending = '2',
   Withdrawn = '3',
@@ -11,7 +13,7 @@ export class RemovedUserStatusIdVO {
       value !== RemovedUserStatus.Pending &&
       value !== RemovedUserStatus.Withdrawn
     ) {
-      throw new Error('存在しない在籍ステータスです.')
+      throw new DomainBadRequestException('存在しない在籍ステータスです.')
     }
     this._value = value
   }

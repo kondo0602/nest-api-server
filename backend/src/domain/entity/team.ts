@@ -1,4 +1,8 @@
 import { Pair } from 'src/domain/entity/pair'
+import {
+  DomainBadRequestException,
+  DomainNotFoundException,
+} from 'src/domain/__shared__/exception/domain-exception'
 
 export class Team {
   static readonly MINIIMUM_NUMBER_OF_PARTICIPANTS: number = 2
@@ -40,7 +44,7 @@ export class Team {
     if (pair) {
       return pair
     } else {
-      throw new Error('指定されたペアが見つかりませんでした.')
+      throw new DomainNotFoundException('指定されたペアが見つかりませんでした.')
     }
   }
 
@@ -52,7 +56,9 @@ export class Team {
     if (pair) {
       return pair
     } else {
-      throw new Error('指定された参加者が所属するペアが見つかりませんでした.')
+      throw new DomainNotFoundException(
+        '指定された参加者が所属するペアが見つかりませんでした.',
+      )
     }
   }
 
@@ -105,7 +111,9 @@ export class TeamNameVO {
     const teamNameRegex = /^[0-9]{1,3}$/
 
     if (!teamNameRegex.test(value)) {
-      throw new Error('チームの名前は3桁以内の数字にしてください.')
+      throw new DomainBadRequestException(
+        'チームの名前は3桁以内の数字にしてください.',
+      )
     }
     this._value = value
   }

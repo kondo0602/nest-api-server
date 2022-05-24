@@ -1,5 +1,6 @@
 import { Pair, PairNameVO } from 'src/domain/entity/pair'
 import { User } from 'src/domain/entity/user'
+import { DomainNotFoundException } from 'src/domain/__shared__/exception/domain-exception'
 import { createRandomIdString } from 'src/util/random'
 
 describe('Pairのテスト', () => {
@@ -43,6 +44,10 @@ describe('Pairのテスト', () => {
 
     it('getUserByUserId()でペアに所属する参加者の取得が行えること', () => {
       expect(pair.getUserByUserId(user1.getId())).toBe(user1)
+    })
+
+    it('getUserByUserId()で参加者が取得できなかった場合、例外が投げられること', () => {
+      expect(() => pair.getUserByUserId('1')).toThrow(DomainNotFoundException)
     })
 
     it('getUserCount()でペアに所属する参加者の人数の取得が行えること', () => {

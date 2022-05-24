@@ -5,6 +5,7 @@ import { UserQS } from 'src/infra/db/query-service/user-qs'
 import { UserEnrolledCheck } from 'src/domain/domain-service/user-enrolled-check'
 import { User } from 'src/domain/entity/user'
 import * as faker from 'faker'
+import { DomainNotFoundException } from 'src/domain/__shared__/exception/domain-exception'
 
 jest.mock('@prisma/client')
 jest.mock('src/infra/db/query-service/user-qs')

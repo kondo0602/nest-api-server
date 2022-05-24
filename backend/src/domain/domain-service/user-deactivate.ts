@@ -42,9 +42,8 @@ export class UserDeactivate {
       } else if (
         targetPair.getUserCount() < Pair.MINIIMUM_NUMBER_OF_PARTICIPANTS
       ) {
-        const leftUsers = targetPair.getUsers()
-
-        leftUsers.forEach((user) => fewestPair.addUser(user))
+        const leftUser = targetPair.getFirstUser()
+        fewestPair.addUser(leftUser)
 
         targetTeam.removePair(fewestPair.getId())
         targetTeam.addPair(fewestPair)

@@ -256,7 +256,7 @@ export class UserRepository implements IUserRepository {
           in: teamEntity
             .getPairs()
             .map((pair) => {
-              return pair.getUsers().map((user) => user.getId())
+              return pair.getUsersInRepository().map((user) => user.getId())
             })
             .reduce((acc, val) => acc.concat(val), []),
         },
@@ -277,7 +277,7 @@ export class UserRepository implements IUserRepository {
               id: pair.getId(),
               name: pair.getName(),
               users: {
-                create: pair.getUsers().map((user) => {
+                create: pair.getUsersInRepository().map((user) => {
                   return {
                     id: user.getId(),
                     name: user.getName(),

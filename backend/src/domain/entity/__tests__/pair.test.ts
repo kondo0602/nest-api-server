@@ -37,9 +37,9 @@ describe('Pairのテスト', () => {
       expect(pair.getName()).toBe('a')
     })
 
-    it('getUsers()でペアに所属する参加者の取得が行えること', () => {
-      expect(pair.getUsers()).toContain(user1)
-      expect(pair.getUsers()).toContain(user2)
+    it('getUsersInRepository()でペアに所属する参加者の取得が行えること', () => {
+      expect(pair.getUsersInRepository()).toContain(user1)
+      expect(pair.getUsersInRepository()).toContain(user2)
     })
 
     it('getUserByUserId()でペアに所属する参加者の取得が行えること', () => {

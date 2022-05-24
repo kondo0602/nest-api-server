@@ -50,7 +50,7 @@ export class Team {
 
   public getPairByUserId(userId: string): Pair {
     const pair = this.pairs.find((pair) => {
-      return pair.getUsers().find((user) => user.getId() === userId)
+      return pair.getUserByUserId(userId)
     })
 
     if (pair) {

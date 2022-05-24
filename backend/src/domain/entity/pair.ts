@@ -24,8 +24,8 @@ export class Pair {
     return this.name.getValue()
   }
 
-  public getUsers(): User[] {
-    return this.users
+  public getUsersInRepository(): User[] {
+    return [...this.users]
   }
 
   public getAllProperties() {
@@ -34,6 +34,10 @@ export class Pair {
       name: this.name.getValue(),
       users: this.users,
     }
+  }
+
+  public getFirstUser(): User {
+    return this.users[0]!
   }
 
   public getUserByUserId(userId: string): User {

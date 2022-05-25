@@ -6,7 +6,7 @@ import { UpdateUserRequest } from './request/update-user-request'
 import { GetUserUsecase } from 'src/app/get-user-usecase'
 import { PostUserUseCase } from 'src/app/post-user-usecase'
 import { UpdateUserUseCase } from 'src/app/update-user-status-usecase'
-import { UserRepository } from 'src/infra/db/repository/user-repository'
+import { TeamRepository } from 'src/infra/db/repository/team-repository'
 import { RemovedUserRepository } from 'src/infra/db/repository/removed-user-repository'
 import { PrismaClient } from '@prisma/client'
 import { UserQS } from 'src/infra/db/query-service/user-qs'
@@ -31,7 +31,7 @@ export class UserController {
   async postUser(@Body() postUserDto: PostUserRequest): Promise<void> {
     const prisma = new PrismaClient()
     const qs = new UserQS(prisma)
-    const repo = new UserRepository(prisma)
+    const repo = new TeamRepository(prisma)
     const usecase = new PostUserUseCase(qs, repo)
     await usecase.do({
       name: postUserDto.name,
@@ -47,7 +47,7 @@ export class UserController {
   ): Promise<void> {
     const prisma = new PrismaClient()
     const qs = new UserQS(prisma)
-    const userRepo = new UserRepository(prisma)
+    const userRepo = new TeamRepository(prisma)
     const removedUserRepo = new RemovedUserRepository(prisma)
     const usecase = new UpdateUserUseCase(prisma, qs, userRepo, removedUserRepo)
     await usecase.do({

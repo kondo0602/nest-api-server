@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { UserRepository } from 'src/infra/db/repository/user-repository'
+import { TeamRepository } from 'src/infra/db/repository/team-repository'
 import { RemovedUserRepository } from 'src/infra/db/repository/removed-user-repository'
 import { UserActivate } from 'src/domain/domain-service/user-activate'
 import { User } from 'src/domain/entity/user'
@@ -7,7 +7,7 @@ import { RemovedUser } from 'src/domain/entity/removed-user'
 
 describe('do', () => {
   const prisma = new PrismaClient()
-  const userRepo = new UserRepository(prisma)
+  const userRepo = new TeamRepository(prisma)
   const removedUserRepo = new RemovedUserRepository(prisma)
   const userActivateService = new UserActivate(
     prisma,

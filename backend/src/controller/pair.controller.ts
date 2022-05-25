@@ -4,7 +4,7 @@ import { GetPairResponse } from './response/get-pair-response'
 import { ChangePairRequest } from './request/change-pair-request'
 import { GetPairUsecase } from 'src/app/get-pair-usecase'
 import { ChangePairUseCase } from 'src/app/change-pair-usecase'
-import { UserRepository } from 'src/infra/db/repository/user-repository'
+import { TeamRepository } from 'src/infra/db/repository/team-repository'
 import { PrismaClient } from '@prisma/client'
 import { UserQS } from 'src/infra/db/query-service/user-qs'
 import { PairQS } from 'src/infra/db/query-service/pair-qs'
@@ -31,7 +31,7 @@ export class PairController {
   ): Promise<void> {
     const prisma = new PrismaClient()
     const qs = new UserQS(prisma)
-    const repo = new UserRepository(prisma)
+    const repo = new TeamRepository(prisma)
     const usecase = new ChangePairUseCase(qs, repo)
     await usecase.do({
       userId: id,

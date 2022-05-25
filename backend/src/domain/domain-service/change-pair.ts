@@ -1,9 +1,9 @@
-import { IUserRepository } from 'src/app/repository-interface/user-repository'
+import { ITeamRepository } from 'src/app/repository-interface/team-repository'
 
 export class ChangePair {
-  private readonly userRepo: IUserRepository
+  private readonly userRepo: ITeamRepository
 
-  public constructor(userRepo: IUserRepository) {
+  public constructor(userRepo: ITeamRepository) {
     this.userRepo = userRepo
   }
 

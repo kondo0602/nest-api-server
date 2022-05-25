@@ -1,19 +1,19 @@
 import { PrismaClient } from '@prisma/client'
 import { mocked } from 'ts-jest/utils'
 import { MockedObjectDeep } from 'ts-jest/dist/utils/testing'
-import { UserRepository } from 'src/infra/db/repository/user-repository'
+import { TeamRepository } from 'src/infra/db/repository/team-repository'
 import { ChangeTeam } from 'src/domain/domain-service/change-team'
 import { TestTeamFactory } from 'src/domain/entity/__tests__/test-team-factory'
 
 jest.mock('@prisma/client')
-jest.mock('src/infra/db/repository/user-repository')
+jest.mock('src/infra/db/repository/team-repository')
 
 describe('do', () => {
-  let mockUserRepo: MockedObjectDeep<UserRepository>
+  let mockUserRepo: MockedObjectDeep<TeamRepository>
 
   beforeAll(() => {
     const prisma = new PrismaClient()
-    mockUserRepo = mocked(new UserRepository(prisma), true)
+    mockUserRepo = mocked(new TeamRepository(prisma), true)
 
     mockUserRepo.getTeamByPairId.mockResolvedValueOnce(
       TestTeamFactory.createTeam(),

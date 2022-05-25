@@ -1,14 +1,14 @@
 import { User } from 'src/domain/entity/user'
 import { createRandomIdString } from 'src/util/random'
 import { IUserQS } from './query-service-interface/user-qs'
-import { IUserRepository } from './repository-interface/user-repository'
+import { ITeamRepository } from './repository-interface/team-repository'
 import { EmailDuplicateCheck } from 'src/domain/domain-service/email-duplicate-check'
 
 export class PostUserUseCase {
   private readonly userQS: IUserQS
-  private readonly userRepo: IUserRepository
+  private readonly userRepo: ITeamRepository
 
-  public constructor(userQS: IUserQS, userRepo: IUserRepository) {
+  public constructor(userQS: IUserQS, userRepo: ITeamRepository) {
     this.userQS = userQS
     this.userRepo = userRepo
   }

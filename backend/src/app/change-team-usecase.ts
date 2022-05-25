@@ -1,12 +1,12 @@
 import { IPairQS } from './query-service-interface/pair-qs'
-import { IUserRepository } from './repository-interface/user-repository'
+import { ITeamRepository } from './repository-interface/team-repository'
 import { ChangeTeam } from 'src/domain/domain-service/change-team'
 
 export class ChangeTeamUseCase {
   private readonly pairQS: IPairQS
-  private readonly userRepo: IUserRepository
+  private readonly userRepo: ITeamRepository
 
-  public constructor(pairQS: IPairQS, userRepo: IUserRepository) {
+  public constructor(pairQS: IPairQS, userRepo: ITeamRepository) {
     this.pairQS = pairQS
     this.userRepo = userRepo
   }

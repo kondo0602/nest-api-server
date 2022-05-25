@@ -1,21 +1,21 @@
-import { IUserRepository } from 'src/app/repository-interface/user-repository'
+import { ITeamRepository } from 'src/app/repository-interface/team-repository'
 
 export class ChangeTeam {
-  private readonly userRepo: IUserRepository
+  private readonly teamRepo: ITeamRepository
 
-  public constructor(userRepo: IUserRepository) {
-    this.userRepo = userRepo
+  public constructor(teamRepo: ITeamRepository) {
+    this.teamRepo = teamRepo
   }
 
   public async changeTeam(pairId: string, teamId: string) {
-    const currentTeam = await this.userRepo.getTeamByPairId(pairId)
+    const currentTeam = await this.teamRepo.getTeamByPairId(pairId)
     const currentPair = currentTeam.getPairByPairId(pairId)
-    const newTeam = await this.userRepo.getTeamByTeamId(teamId)
+    const newTeam = await this.teamRepo.getTeamByTeamId(teamId)
 
     currentTeam.removePair(pairId)
     newTeam.addPair(currentPair)
 
-    await this.userRepo.updateTeam(currentTeam)
-    await this.userRepo.updateTeam(newTeam)
+    await this.teamRepo.updateTeam(currentTeam)
+    await this.teamRepo.updateTeam(newTeam)
   }
 }

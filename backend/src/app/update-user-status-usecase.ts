@@ -42,10 +42,7 @@ export class UpdateUserUseCase {
       statusId === RemovedUserStatus.Pending ||
       statusId === RemovedUserStatus.Withdrawn
     ) {
-      const userEnrolledCheckService = new UserEnrolledCheck(
-        this.userQS,
-        this.removedUserRepo,
-      )
+      const userEnrolledCheckService = new UserEnrolledCheck(this.userQS)
 
       if (await userEnrolledCheckService.isEnrolled(id)) {
         // User -> RemovedUser

@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { mocked } from 'ts-jest/utils'
 import { MockedObjectDeep } from 'ts-jest/dist/utils/testing'
-import { UserRepository } from 'src/infra/db/repository/user-repository'
+import { TeamRepository } from 'src/infra/db/repository/team-repository'
 import { RemovedUserRepository } from 'src/infra/db/repository/removed-user-repository'
 import { TestTeamFactory } from 'src/domain/entity/__tests__/test-team-factory'
 import { TestRemovedUserFactory } from 'src/domain/entity/__tests__/test-removed-user-factory'
@@ -9,16 +9,16 @@ import { UserActivate } from 'src/domain/domain-service/user-activate'
 import { DomainNotFoundException } from 'src/domain/__shared__/exception/domain-exception'
 
 jest.mock('@prisma/client')
-jest.mock('src/infra/db/repository/user-repository')
+jest.mock('src/infra/db/repository/team-repository')
 jest.mock('src/infra/db/repository/removed-user-repository')
 
 describe('do', () => {
   const prisma = new PrismaClient()
-  let mockUserRepo: MockedObjectDeep<UserRepository>
+  let mockUserRepo: MockedObjectDeep<TeamRepository>
   let mockRemovedUserRepo: MockedObjectDeep<RemovedUserRepository>
 
   beforeAll(() => {
-    mockUserRepo = mocked(new UserRepository(prisma), true)
+    mockUserRepo = mocked(new TeamRepository(prisma), true)
     mockRemovedUserRepo = mocked(new RemovedUserRepository(prisma), true)
   })
 

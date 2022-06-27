@@ -1,15 +1,15 @@
 import { Team } from 'src/domain/entity/team'
 import { Pair } from 'src/domain/entity/pair'
 import { RemovedUser } from 'src/domain/entity/removed-user'
-import { IUserRepository } from 'src/app/repository-interface/user-repository'
+import { ITeamRepository } from 'src/app/repository-interface/team-repository'
 import { IRemovedUserRepository } from 'src/app/repository-interface/removed-user-repository'
 
 export class UserDeactivate {
-  private readonly userRepo: IUserRepository
+  private readonly userRepo: ITeamRepository
   private readonly removedUserRepo: IRemovedUserRepository
 
   public constructor(
-    userRepo: IUserRepository,
+    userRepo: ITeamRepository,
     removedUserRepo: IRemovedUserRepository,
   ) {
     this.userRepo = userRepo

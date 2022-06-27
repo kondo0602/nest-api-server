@@ -3,28 +3,28 @@ import { Team } from 'src/domain/entity/team'
 import { Pair } from 'src/domain/entity/pair'
 import { User } from 'src/domain/entity/user'
 import { RemovedUser } from 'src/domain/entity/removed-user'
-import { IUserRepository } from 'src/app/repository-interface/user-repository'
+import { ITeamRepository } from 'src/app/repository-interface/team-repository'
 import { IRemovedUserRepository } from 'src/app/repository-interface/removed-user-repository'
 import { createRandomIdString } from 'src/util/random'
 import { DomainNotFoundException } from '../__shared__/exception/domain-exception'
 
 export class UserActivate {
   private readonly prismaClient: PrismaClient
-  private readonly userRepo: IUserRepository
-  private readonly removedUserRepo: IRemovedUserRepository
+  private readonly teamRepo: ITeamRepository
+  private readonly removedteamRepo: IRemovedUserRepository
 
   public constructor(
     prismaClient: PrismaClient,
-    userRepo: IUserRepository,
-    removedUserRepo: IRemovedUserRepository,
+    teamRepo: ITeamRepository,
+    removedteamRepo: IRemovedUserRepository,
   ) {
     this.prismaClient = prismaClient
-    this.userRepo = userRepo
-    this.removedUserRepo = removedUserRepo
+    this.teamRepo = teamRepo
+    this.removedteamRepo = removedteamRepo
   }
 
   public async userActivate(userId: string) {
-    const removedUser = await this.removedUserRepo.getRemovedUserByUserId(
+    const removedUser = await this.removedteamRepo.getRemovedUserByUserId(
       userId,
     )
 
@@ -40,7 +40,7 @@ export class UserActivate {
       email: removedUser.getEmail(),
     })
 
-    const targetTeam = await this.userRepo.getTeamWithFewestUsers()
+    const targetTeam = await this.teamRepo.getTeamWithFewestUsers()
     const targetPair = targetTeam.getPairWithFewestUsers()
 
     // ペアに参加させた結果、ペアの定員を超えてしまわないか確認する

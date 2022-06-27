@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import { UserStatus } from 'src/domain/entity/user-status-id-vo'
 import { RemovedUserStatus } from 'src/domain/entity/removed-user-status-id-vo'
 import { IUserQS } from 'src/app/query-service-interface/user-qs'
-import { IUserRepository } from './repository-interface/user-repository'
+import { ITeamRepository } from './repository-interface/team-repository'
 import { IRemovedUserRepository } from './repository-interface/removed-user-repository'
 import { UserEnrolledCheck } from 'src/domain/domain-service/user-enrolled-check'
 import { UserActivate } from 'src/domain/domain-service/user-activate'
@@ -11,13 +11,13 @@ import { UserDeactivate } from 'src/domain/domain-service/user-deactivate'
 export class UpdateUserUseCase {
   private readonly prismaClient: PrismaClient
   private readonly userQS: IUserQS
-  private readonly userRepo: IUserRepository
+  private readonly userRepo: ITeamRepository
   private readonly removedUserRepo: IRemovedUserRepository
 
   public constructor(
     prismaClient: PrismaClient,
     userQS: IUserQS,
-    userRepo: IUserRepository,
+    userRepo: ITeamRepository,
     removedUserRepo: IRemovedUserRepository,
   ) {
     this.prismaClient = prismaClient
@@ -42,10 +42,7 @@ export class UpdateUserUseCase {
       statusId === RemovedUserStatus.Pending ||
       statusId === RemovedUserStatus.Withdrawn
     ) {
-      const userEnrolledCheckService = new UserEnrolledCheck(
-        this.userQS,
-        this.removedUserRepo,
-      )
+      const userEnrolledCheckService = new UserEnrolledCheck(this.userQS)
 
       if (await userEnrolledCheckService.isEnrolled(id)) {
         // User -> RemovedUser

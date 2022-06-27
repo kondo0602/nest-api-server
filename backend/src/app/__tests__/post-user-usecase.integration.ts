@@ -2,7 +2,7 @@ import { PrismaClient } from '@prisma/client'
 import { mocked } from 'ts-jest/utils'
 import { MockedObjectDeep } from 'ts-jest/dist/utils/testing'
 import { UserQS } from 'src/infra/db/query-service/user-qs'
-import { UserRepository } from 'src/infra/db/repository/user-repository'
+import { TeamRepository } from 'src/infra/db/repository/team-repository'
 import { PostUserUseCase } from 'src/app/post-user-usecase'
 import { Team } from 'src/domain/entity/team'
 import { Pair } from 'src/domain/entity/pair'
@@ -14,12 +14,12 @@ jest.mock('src/infra/db/repository/user-repository')
 
 describe('do', () => {
   let mockUserQS: MockedObjectDeep<UserQS>
-  let mockUserRepo: MockedObjectDeep<UserRepository>
+  let mockUserRepo: MockedObjectDeep<TeamRepository>
 
   beforeAll(() => {
     const prisma = new PrismaClient()
     mockUserQS = mocked(new UserQS(prisma), true)
-    mockUserRepo = mocked(new UserRepository(prisma), true)
+    mockUserRepo = mocked(new TeamRepository(prisma), true)
   })
 
   it('例外が発生しないこと', () => {

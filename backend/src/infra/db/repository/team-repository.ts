@@ -1,11 +1,11 @@
 import { Prisma, PrismaClient } from '@prisma/client'
-import { IUserRepository } from 'src/app/repository-interface/user-repository'
+import { ITeamRepository } from 'src/app/repository-interface/team-repository'
 import { Team } from 'src/domain/entity/team'
 import { Pair } from 'src/domain/entity/pair'
 import { User } from 'src/domain/entity/user'
 import { DomainNotFoundException } from 'src/domain/__shared__/exception/domain-exception'
 
-export class UserRepository implements IUserRepository {
+export class TeamRepository implements ITeamRepository {
   private prismaClient: PrismaClient
 
   public constructor(prismaClient: PrismaClient) {

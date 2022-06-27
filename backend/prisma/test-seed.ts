@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client'
-import { createRandomIdString } from 'src/util/random'
+import { createRandomIdString } from '../src/util/random'
 
 const prisma = new PrismaClient()
 

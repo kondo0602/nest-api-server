@@ -46,9 +46,8 @@ export class UserActivate {
     // ペアに参加させた結果、ペアの定員を超えてしまわないか確認する
     if (targetPair.getUserCount() > Pair.MAXIMUM_NUMBER_OF_PARTICIPANTS) {
       // ペアの定員を超えてしまう場合、最も参加人数が少ないペアのうち1人と新規参加者で新しいペアを作成する
-      const users = targetPair.getUsers()
-      const choicedUser = users[0]
-      targetPair.removeUser(choicedUser!.getId())
+      const choicedUser = targetPair.getFirstUser()
+      targetPair.removeUser(choicedUser.getId())
 
       const newPair = new Pair({
         id: createRandomIdString(),
@@ -105,7 +104,7 @@ export class UserActivate {
               id: pair.getId(),
               name: pair.getName(),
               users: {
-                create: pair.getUsers().map((user) => {
+                create: pair.getUsersInRepository().map((user) => {
                   return {
                     id: user.getId(),
                     name: user.getName(),

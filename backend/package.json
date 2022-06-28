@@ -21,7 +21,7 @@
     "model-generate": "prisma generate",
     "migrate:dev": "dotenv -e .local.env -- prisma migrate dev --preview-feature",
     "migrate:dev:reset": "dotenv -e .local.env -- prisma migrate reset --preview-feature",
-    "migrate:test": "dotenv -e .test.env -- prisma migrate reset --preview-feature",
+    "migrate:test": "dotenv -e .test.env -- prisma migrate --preview-feature",
     "migrate:prd": "prisma migrate deploy --preview-feature",
     "seed:dev": "dotenv -e .local.env -- ts-node prisma/dev-seed.ts",
     "seed:test": "dotenv -e .test.env -- ts-node prisma/test-seed.ts",

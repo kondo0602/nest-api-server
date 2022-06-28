@@ -33,7 +33,7 @@ jobs:
         ports:
           - 5432:5432
     env:
-      DATABASE_URL: postgresql://root:password@localhost:5432/prisma
+      DATABASE_URL: postgresql://root:password@postgres:5432/prisma
 
     steps:
       # Downloads a copy of the code in your repository before running CI tests

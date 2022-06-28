@@ -14,7 +14,7 @@ export class ChangePair {
     const targetUser = currentPair.getUserByUserId(userId)
 
     currentPair.removeUser(userId)
-    targetPair.addUser(targetUser)
+    targetPair.addUser(targetUser!)
 
     targetTeam.removePair(currentPair.getId())
     targetTeam.addPair(currentPair)

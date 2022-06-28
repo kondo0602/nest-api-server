@@ -40,16 +40,10 @@ export class Pair {
     return this.users[0]!
   }
 
-  public getUserByUserId(userId: string): User {
+  public getUserByUserId(userId: string): User | null {
     const user = this.users.find((user) => user.getId() === userId)
 
-    if (user) {
-      return user
-    } else {
-      throw new DomainNotFoundException(
-        '指定された参加者が見つかりませんでした.',
-      )
-    }
+    return user ? user : null
   }
 
   public getUserCount(): number {

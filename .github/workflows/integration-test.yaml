@@ -21,7 +21,6 @@ jobs:
         image: postgres
         # Provide information for postgres
         env:
-          DATABASE_URL: postgresql://root:prisma2020@localhost:5402/prisma
           POSTGRES_PASSWORD: postgres
         # Set health checks to wait until postgres has started
         options: >-
@@ -49,3 +48,4 @@ jobs:
           POSTGRES_HOST: postgres
           # デフォルトのPostgreSQLポート
           POSTGRES_PORT: 5432
+          DATABASE_URL: postgresql://root:prisma2020@localhost:5402/prisma

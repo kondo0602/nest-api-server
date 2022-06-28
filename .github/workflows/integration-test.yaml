@@ -22,6 +22,7 @@ jobs:
         # Provide information for postgres
         env:
           DATABASE_URL: postgresql://root:prisma2020@localhost:5402/prisma
+          POSTGRES_PASSWORD: postgres
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready

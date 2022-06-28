@@ -19,9 +19,9 @@ jobs:
       postgres:
         # Docker Hub image
         image: postgres
-        # Provide the password for postgres
+        # Provide information for postgres
         env:
-          POSTGRES_PASSWORD: postgres
+          DATABASE_URL: postgresql://root:prisma2020@localhost:5402/prisma
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready

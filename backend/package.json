@@ -26,7 +26,7 @@
     "seed:dev": "dotenv -e .local.env -- ts-node prisma/dev-seed.ts",
     "seed:test": "dotenv -e .test.env -- ts-node prisma/test-seed.ts",
     "test:unit": "dotenv -e .test.env -- jest",
-    "test:integration": "yarn migrate:test && yarn seed:test && dotenv -e .test.env -- jest -c ./jest.integration.config.js --runInBand"
+    "test:integration": "jest -c ./jest.integration.config.js --runInBand"
   },
   "dependencies": {
     "@nestjs/common": "^7.5.1",

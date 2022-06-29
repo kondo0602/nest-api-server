@@ -11,7 +11,7 @@ jobs:
     # Containers must run in Linux based operating systems
     runs-on: ubuntu-latest
     # Docker Hub image that `container-job` executes in
-    container: node:10.18-jessie
+    container: node:12.22.10
 
     # Service containers to run with `container-job`
     services:
@@ -19,15 +19,21 @@ jobs:
       postgres:
         # Docker Hub image
         image: postgres
-        # Provide the password for postgres
+        # Provide information for postgres
         env:
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: password
+          POSTGRES_DB: prisma
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          - 5432:5432
+    env:
+      DATABASE_URL: postgresql://root:password@postgres:5432/prisma
 
     steps:
       # Downloads a copy of the code in your repository before running CI tests
@@ -36,16 +42,8 @@ jobs:
 
       # Performs a clean installation of all dependencies in the `package.json` file
       # For more information, see https://docs.npmjs.com/cli/ci.html
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Run Integration Test
-        run: npx prisma migrate deploy
-        run: npm run seed:test
-        run: npm run test:integration
-
-        env:
-          # PostgreSQLサービスコンテナとの通信に使われるホスト名
-          POSTGRES_HOST: postgres
-          # デフォルトのPostgreSQLポート
-          POSTGRES_PORT: 5432
+      - run: cd backend && npm ci
+      - run: cd backend && npm install typescript@latest ts-node@latest
+      - run: cd backend && npx prisma migrate deploy
+      - run: cd backend && npm run seed:test
+      - run: cd backend && npm run test:integration

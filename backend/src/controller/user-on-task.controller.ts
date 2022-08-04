@@ -1,6 +1,6 @@
 import { Body, Controller, Post, Put, Param } from '@nestjs/common'
-import { SearchUsersByTaskStatusRequest } from 'src/Controller/request/search-users-by-task-status-request'
-import { SearchUserByTaskStatusResponse } from 'src/Controller/response/search-user-by-task-status-response'
+import { SearchUsersByTaskStatusRequest } from 'src/controller/request/search-users-by-task-status-request'
+import { SearchUserByTaskStatusResponse } from 'src/controller/response/search-user-by-task-status-response'
 import { UpdateTaskStatusRequest } from './request/update-task-status-request'
 import { GetUsersByTaskStatusUsecase } from 'src/app/search-users-by-task-status-usecase'
 import { UpdateTaskStatusUseCase } from 'src/app/update-task-status-usecase'

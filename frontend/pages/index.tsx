@@ -1,6 +1,8 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
+import UserCard from "../components/user-card";
+
 type Users = {
   user: User[];
 };
@@ -40,14 +42,10 @@ const Home = (props: Users) => {
           Welcome to <a href="#">Praha Challenge!</a>
         </h1>
 
-        <h2>Member List</h2>
+        <h2>User List</h2>
         <div className={styles.grid}>
           {props.user.map((user) => (
-            <a key={user.id} href="#" className={styles.card}>
-              <h2>{user.name}</h2>
-              <p>{user.email}</p>
-              <p>{`Status: ${user.statusId}`}</p>
-            </a>
+            <UserCard user={user} />
           ))}
         </div>
       </main>

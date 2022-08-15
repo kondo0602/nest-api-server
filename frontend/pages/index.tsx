@@ -1,9 +1,35 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import type { NextPage } from "next";
+import { setRevalidateHeaders } from "next/dist/server/send-payload";
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
 
-const Home: NextPage = () => {
+type Users = {
+  user: User[];
+};
+
+type User = {
+  id: string;
+  name: string;
+  email: string;
+  statusId: string;
+};
+
+export async function getServerSideProps() {
+  const response = await fetch("http://localhost:3001/user", {
+    method: "GET",
+  });
+
+  const json = await response.json();
+
+  const props = json;
+
+  return { props };
+}
+
+const Home = (props: Users) => {
+  console.log(props);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -14,13 +40,16 @@ const Home: NextPage = () => {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Welcome to <a href="https://nextjs.org">Praha Challenge!</a>
         </h1>
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.tsx</code>
-        </p>
+        {props.user.map((user) => (
+          <div key={user.id}>
+            <p>{`Name: ${user.name}`}</p>
+            <p>{`Email: ${user.email}`}</p>
+            <p>{`Status: ${user.statusId}`}</p>
+          </div>
+        ))}
 
         <div className={styles.grid}>
           <a href="https://nextjs.org/docs" className={styles.card}>
@@ -59,14 +88,14 @@ const Home: NextPage = () => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

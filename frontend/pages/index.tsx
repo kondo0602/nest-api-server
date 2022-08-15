@@ -1,7 +1,7 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
 
-import UserCard from "../components/user-card";
+import UserList from "../components/user-list";
 
 type Users = {
   user: User[];
@@ -27,8 +27,6 @@ export async function getServerSideProps() {
 }
 
 const Home = (props: Users) => {
-  console.log(props);
-
   return (
     <div className={styles.container}>
       <Head>
@@ -42,12 +40,7 @@ const Home = (props: Users) => {
           Welcome to <a href="#">Praha Challenge!</a>
         </h1>
 
-        <h2>User List</h2>
-        <div className={styles.grid}>
-          {props.user.map((user) => (
-            <UserCard user={user} />
-          ))}
-        </div>
+        <UserList users={props.user} />
       </main>
     </div>
   );

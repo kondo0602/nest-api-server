@@ -1,19 +1,13 @@
-import { useEffect } from "react";
 import Router from "next/router";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import SignInForm from "../components/sign-in-form";
-
-import "../utils/firebase/init";
+import { useAuthState } from "../hooks/useAuthState";
 
 const SignInPage = () => {
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
-      if (user) Router.replace("/");
-    });
+  const { isSignedIn } = useAuthState();
 
-    return () => unsubscribe();
-  }, []);
+  // 既にログイン済みの場合はHomeにリダイレクトする
+  if (isSignedIn) Router.replace("/");
 
   return <SignInForm />;
 };

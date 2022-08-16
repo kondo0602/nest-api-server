@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import Router from "next/router";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 import SignInForm from "../components/sign-in-form";
@@ -6,22 +7,15 @@ import SignInForm from "../components/sign-in-form";
 import "../utils/firebase/init";
 
 const SignInPage = () => {
-  const [userStatus, setUserStatus] = useState(false);
-
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(getAuth(), (user) => {
-      user ? setUserStatus(true) : setUserStatus(false);
+      if (user) Router.replace("/");
     });
 
     return () => unsubscribe();
   }, []);
 
-  if (userStatus) {
-    // TODO: バックエンドのユーザ一覧を表示するように修正
-    return <p>ログイン中</p>;
-  } else {
-    return <SignInForm />;
-  }
+  return <SignInForm />;
 };
 
 export default SignInPage;

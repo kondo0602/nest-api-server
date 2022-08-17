@@ -1,14 +1,9 @@
 import { FC } from "react";
 import styles from "../styles/Home.module.css";
 
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  statusId: string;
-};
+import { IUser } from "../types/UserType";
 
-const UserCard: FC<{ user: User }> = ({ user }) => {
+const UserCard: FC<{ user: IUser }> = ({ user }) => {
   return (
     <a key={user.id} href="#" className={styles.card}>
       <h2>{user.name}</h2>

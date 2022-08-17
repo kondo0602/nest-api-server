@@ -2,15 +2,9 @@ import { FC } from "react";
 import styles from "../styles/Home.module.css";
 
 import UserCard from "../components/user-card";
+import { IUser } from "../types/UserType";
 
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  statusId: string;
-};
-
-const UserList: FC<{ users: User[] }> = ({ users }) => {
+const UserList: FC<{ users: IUser[] }> = ({ users }) => {
   return (
     <div>
       <h2>User List</h2>

@@ -3,17 +3,7 @@ import styles from "../styles/Home.module.css";
 
 import UserList from "../components/user-list";
 import SignOutButton from "../components/sign-out-button";
-
-type Users = {
-  user: User[];
-};
-
-type User = {
-  id: string;
-  name: string;
-  email: string;
-  statusId: string;
-};
+import { IGetUserResponse } from "../types/UserType";
 
 export async function getServerSideProps() {
   const response = await fetch("http://localhost:3001/user", {
@@ -27,7 +17,7 @@ export async function getServerSideProps() {
   return { props };
 }
 
-const Home = (props: Users) => {
+const Home = (props: IGetUserResponse) => {
   return (
     <div className={styles.container}>
       <Head>

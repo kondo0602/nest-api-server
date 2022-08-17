@@ -6,13 +6,8 @@ import SignOutButton from "../components/sign-out-button";
 import { IGetUserResponse } from "../types/UserType";
 
 export async function getServerSideProps() {
-  const response = await fetch("http://localhost:3001/user", {
-    method: "GET",
-  });
-
-  const json = await response.json();
-
-  const props = json;
+  const response = await fetch("http://localhost:3001/user");
+  const props = response.json();
 
   return { props };
 }

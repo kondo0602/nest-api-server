@@ -1,7 +1,9 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import { getAuth, signOut } from "firebase/auth";
 
 import UserList from "../components/user-list";
+import "../utils/firebase/init";
 
 type Users = {
   user: User[];
@@ -42,6 +44,10 @@ const Home = (props: Users) => {
 
         <UserList users={props.user} />
       </main>
+
+      <footer className={styles.footer}>
+        <button onClick={() => signOut(getAuth())}>Sign Out</button>
+      </footer>
     </div>
   );
 };

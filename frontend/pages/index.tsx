@@ -1,18 +1,34 @@
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
+import { useEffect, useState } from "react";
 
 import UserList from "../components/user-list";
 import SignOutButton from "../components/sign-out-button";
-import { IGetUserResponse } from "../types/UserType";
+import { getAuth } from "firebase/auth";
 
-export async function getServerSideProps() {
-  const response = await fetch("http://localhost:3001/user");
-  const props = response.json();
+const Home = () => {
+  const [users, setUsers] = useState([]);
 
-  return { props };
-}
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const currentUser = getAuth().currentUser;
 
-const Home = (props: IGetUserResponse) => {
+      if (currentUser) {
+        const idToken = await currentUser.getIdToken();
+
+        const response = await fetch("http://localhost:3001/user", {
+          headers: { authorization: idToken },
+        });
+
+        const json = await response.json();
+
+        setUsers(json.user);
+      }
+    };
+
+    fetchUsers();
+  }, []);
+
   return (
     <div className={styles.container}>
       <Head>
@@ -26,7 +42,7 @@ const Home = (props: IGetUserResponse) => {
           Welcome to <a href="#">Praha Challenge!</a>
         </h1>
 
-        <UserList users={props.user} />
+        <UserList users={users} />
       </main>
 
       <footer className={styles.footer}>

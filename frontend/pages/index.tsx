@@ -26,7 +26,11 @@ const Home = () => {
       }
     };
 
-    fetchUsers();
+    try {
+      fetchUsers();
+    } catch (e) {
+      console.log(e);
+    }
   }, []);
 
   return (

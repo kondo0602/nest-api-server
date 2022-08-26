@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Put, Param } from '@nestjs/common'
+import { Body, Controller, Get, Post, Put, Param, UseInterceptors } from '@nestjs/common'
 import { ApiResponse } from '@nestjs/swagger'
 import { GetUserResponse } from './response/get-user-response'
 import { PostUserRequest } from './request/post-user-request'
@@ -10,12 +10,14 @@ import { TeamRepository } from 'src/infra/db/repository/team-repository'
 import { RemovedUserRepository } from 'src/infra/db/repository/removed-user-repository'
 import { PrismaClient } from '@prisma/client'
 import { UserQS } from 'src/infra/db/query-service/user-qs'
+import { RequestInterceptor } from 'src/interceptor/request.interceptor'
 
 @Controller({
   path: '/user',
 })
 export class UserController {
   // memo: @ApiResponseを定義しておかないとSwaggerに出力されない
+  @UseInterceptors(new RequestInterceptor)
   @Get()
   @ApiResponse({ status: 200, type: GetUserResponse })
   async getSomeData(): Promise<GetUserResponse> {
